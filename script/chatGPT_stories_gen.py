@@ -1,12 +1,14 @@
 import os
 import openai
 import csv
-import time
+from datetime import date
 
-openai.api_key = "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"
 
-start = time.time() # start time
 
+# Sets the key for the openai api
+openai.api_key_path = "key.txt"
+
+# Generates a message based on the marker
 def generate_message(marker):
     vowels = ('a','e','i','o','u','A','E','I','O','U')
     article = ""
@@ -16,6 +18,7 @@ def generate_message(marker):
         article = "a"
     return f"Write a 50 word plot summary for {article} {marker} children's novel."
 
+# Generates stories based on the user's input
 def generate_stories():
     messages = [ {"role": "system", "content": ""} ]
     stories = []
@@ -34,9 +37,11 @@ def generate_stories():
         reply = chat.choices[0].message.content
         # print(f"ChatGPT: {reply}")
 
-        # adds the replies to a list of the stories
-        stories.append([reply])
-        messages.append({"role": "assistant", "content": reply})
+        # Appends the prompt, reply, date, and modelname to the stories list
+        unit = (message, reply, date.today(), "gpt-3.5-turbo") 
+        stories.append(unit)
+        
+        
     return stories
 
 # Generate stories
@@ -44,12 +49,12 @@ stories = generate_stories()
 
 
 # Writes stories to a csv file
-with open ("stories.csv", "w") as f:
+with open (f"{stories[0][0].split()[8]}_stories.csv", "w", newline="") as f:
     writer = csv.writer(f)
+    writer.writerow(["prompt", "reply", "date" "modelname"])
     for story in stories:
         writer.writerow(story)
 
 
-end = time.time()
-print(f"Time elapsed: {end - start}")
+
 
