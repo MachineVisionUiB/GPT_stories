@@ -14,22 +14,25 @@ def generate_message(category):
         article = "an"
     else:
         article = "a"
-    return f"Write a 50 word plot summary for {article} {category} children's novel."
+    return f"Write a 50 word plot summary for {article} potential {category} children's novel."
 
 # Generates stories based on the user's input and writes them to a csv file
 def generate_stories():
     messages = [ {"role": "system", "content": ""} ]
     # The user has to specify a category (American, British, etc.)
-    category = input("Enter a marker: ")
-    message = generate_message(category)
+    category = input("Enter a category: ")
+    # message = generate_message(category)
+    message = f"Write a 50 word plot summary for a potential {category} children's novel."
     # The user has to specify how many stories to generate
     n = int(input("Enter the number of stories to generate: "))
+    # The user has to specify the name of the csv file
+    filename = input("Name your csv file: ") + ".csv"
     # For loop that prompts chatgpt a specified number of times and for each iteration writes the prompt, reply, date and model to a csv file
     for i in range(n):
-        with open (f"{category}_stories.csv", "a", newline="") as f:
+        with open (filename, "a", newline="") as f:
             writer = csv.DictWriter(f, delimiter=";", fieldnames=["prompt", "reply", "date", "modelname"])
             # If the file is empty, it writes the fieldnames
-            if os.stat(f"{category}_stories.csv").st_size == 0:
+            if os.stat(filename).st_size == 0:
                 writer.writeheader()
             messages.append({"role": "user", "content": message},)
             # Creates a chatgpt model based on the previous prompts and replies
