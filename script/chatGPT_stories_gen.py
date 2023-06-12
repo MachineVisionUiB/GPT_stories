@@ -49,7 +49,7 @@ def generate_stories():
     # For loop that prompts chatgpt a specified number of times and for each iteration writes the prompt, reply, date and model to a csv file
     for i in range(n):
         with open (filename, "a", newline="") as f:
-            writer = csv.DictWriter(f, delimiter=";", fieldnames=["prompt", "reply", "date", "modelname", "temperature"])
+            writer = csv.DictWriter(f, delimiter=";", fieldnames=["prompt", "reply", "date", "modelname", "temperature", "language", "culture"])
             # If the file is empty, it writes the fieldnames
             if os.stat(filename).st_size == 0:
                 writer.writeheader()
@@ -60,7 +60,7 @@ def generate_stories():
             messages = messages[:-1]
             # A call to the chatgpt model that generates a reply
             reply = chat.choices[0].message.content
-            unit = {"prompt": message, "reply": reply, "date": date.today(), "modelname": "gpt-3.5-turbo", "temperature": temp}
+            unit = {"prompt": message, "reply": reply, "date": date.today(), "modelname": "gpt-3.5-turbo", "temperature": temp, "language": "", "culture": category}
             # writes the prompt, reply, date and model to a csv file
             writer.writerow(unit)
             
