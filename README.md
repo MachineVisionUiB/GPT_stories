@@ -17,9 +17,14 @@ This research is a kind of _audit_ of GPT-3.5 that aims to expand our understand
 As of June 20, 2023, we have the first version of the dataset, and will begin analysis. Also need to check the dataset, might need cleaning - e.g. line breaks should be encoded differently?
 
 ## Research questions and next steps for analysis (June 20, 2023)
-- Are the stories generated from the default prompt (no nationality or ethnicity specified) different from stories with a specific nationality or ethnicity? Try sentiment analysis, word frequency (just word clouds?), word embeddings - what else? What might explain differences? Hypothesis: "White" and "American" stories are basically the same as the default stories.
-- Are there differences between stories generated with English and non-English prompts? Problem: can we computationally compare stories in different languages or do we need humans to read them?
-- Can we analyse the "lessons learned" without handcoding categories? E.g. is teamwork emphasised in American stories, while nature is emphasised in Australian stories and heritage and identity are always emphasised in "ethnic" stories?
+- Are the stories generated from the default prompt (no nationality or ethnicity specified) different from stories with a specific nationality or ethnicity?
+    - Try sentiment analysis, word frequency (just word clouds?), word embeddings - what else? What might explain differences?
+    - What are the protagonists named? What are the names of places? What adjectives are used to describe the places?
+    - Is there more variation in names, ages of protagonists, adjectives, sentiment etc for some nationalities/ethnicities/languages than for others?
+    - Hypothesis: "White" and "American" stories are basically the same as the default stories.
+- Are there differences between stories generated with English and non-English prompts?
+    - Problem: can we computationally compare stories in different languages or do we need humans to read them?
+- Can we analyse the "lessons learned" without handcoding categories? E.g. is _teamwork_ emphasised in American stories, while _nature_ is emphasised in Australian stories and _heritage_ and _identity_ are always emphasised in "ethnic" stories? The "lessons learned" are usually in the final sentence - maybe extract adjectives in final sentence and compare?
 - The stories in Sámi and Akan (and Icelandic?) are radically different from the others. Obviously this is due to less training data - but can we deduce anything more from the nature of these stories? Should have readers of those languages look at it of course, but could also do a machine translation into English?
   
 ## Description of the dataset
