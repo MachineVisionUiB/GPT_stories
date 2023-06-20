@@ -5,8 +5,22 @@ Analysing cultural stereotypes in the stories GPT tells.
 GPT-4 has an Anglo-American bias that is recreated in the kinds of stories it tells. 
 
 ## Data
-We have used the OpenAI API to generate 
+We have used the OpenAI API to generate around 4000 short plot summaries of stories from different nationalities or ethnic/cultural groups. Most are in English and focus on countries where English is extensively used. We included some other languages (official languages in Norway, French, Icelandic, Akan and Chinese) as counterpoints. 
 
+Note that these are _not_ stories that are _actually_ representative of any nationalities, ethnicities and cultural groups. Rather the generated stories are the result of statistical patterns in GPT-3.5's training data that the model has identified and replicated. We would expect this to be stereotypical both because of limitations in the training data and because large language models like GPT-3.5 are designed to find patterns (which could also be called biases) and to generate content that replicates the patterns (biases) in the training data. 
+
+This research is a kind of _audit_ of GPT-3.5 that aims to expand our understanding of AI bias. 
+
+## Status 
+As of June 20, 2023, we have the first version of the dataset, and will begin analysis. Also need to check the dataset, might need cleaning - e.g. line breaks should be encoded differently?
+
+## Research questions and next steps for analysis (June 20, 2023)
+- Are the stories generated from the default prompt (no nationality or ethnicity specified) different from stories with a specific nationality or ethnicity? Try sentiment analysis, word frequency (just word clouds?), word embeddings - what else? What might explain differences? Hypothesis: "White" and "American" stories are basically the same as the default stories.
+- Are there differences between stories generated with English and non-English prompts? Problem: can we computationally compare stories in different languages or do we need humans to read them?
+- Can we analyse the "lessons learned" without handcoding categories? E.g. is teamwork emphasised in American stories, while nature is emphasised in Australian stories and heritage and identity are always emphasised in "ethnic" stories?
+- The stories in Sámi and Akan (and Icelandic?) are radically different from the others. Obviously this is due to less training data - but can we deduce anything more from the nature of these stories? Should have readers of those languages look at it of course, but could also do a machine translation into English?
+  
+## Description of the dataset
 ### Basic structure
 `Write a 50 word plot summary for a potential [nationality or cultural group] children's novel.`
 
