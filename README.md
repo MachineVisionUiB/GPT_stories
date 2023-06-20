@@ -48,41 +48,41 @@ Finally, compile all the sets of 100 stories into a combined file titled `GPTsto
       - aka = Akan
       - isl = Icelandic 
   - `country`: If the prompt refers to a nationality, the [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-2) code for the name of the country referred to is stated here. For England, Northern Ireland, Scotland, Wales, extended codes are used (GB-ENG, GB-NIR, GB-SCT, GB-CYM following [UK guidelines](https://www.gov.uk/government/publications/open-standards-for-government/country-codes)). If the prompt refers to a cultural group (e.g. African-American) this field will be NA.] See #5 for which countries to include.
-  - India - 1,393,409,038
-  - United States - 332,915,073
-  - Pakistan - 225,199,937
-  - Nigeria - 211,400,708
-  - Philippines - 111,046,913
-  - United Kingdom - 68,207,116
-  - Tanzania - 61,498,437
-  - South Africa - 60,041,994
-  - Kenya - 54,985,698
-  - Canada - 38,067,903
-  - Australia - 25,788,215
-  - Liberia - 5,180,203
-  - Ireland - 4,982,907
-  - New Zealand - 4,860,643
-  - Jamaica - 2,973,463
-  - Trinidad and Tobago - 1,403,375
-  - Guyana - 790,326
-  - Scotland
-  - Wales
-  - England
-  - Northern-Ireland
-- `culture`: [e.g. American Indian - NA if a country rather than a culture]. Use the following cultures (see #6 for the rationale for this sampling strategy) 
-    - Native American 
-    - Asian-American
-    - African-American
-    - Native Hawaiian
-    - White American
-    - Hispanic
-    - Roma
-    - Afro-European
-    - European Muslim
-    - White European
-    - Akan
-    - Sámi
-    - Indigenous Australian
+      - India - 1,393,409,038
+      - United States - 332,915,073
+      - Pakistan - 225,199,937
+      - Nigeria - 211,400,708
+      - Philippines - 111,046,913
+      - United Kingdom - 68,207,116
+      - Tanzania - 61,498,437
+      - South Africa - 60,041,994
+      - Kenya - 54,985,698
+      - Canada - 38,067,903
+      - Australia - 25,788,215
+      - Liberia - 5,180,203
+      - Ireland - 4,982,907
+      - New Zealand - 4,860,643
+      - Jamaica - 2,973,463
+      - Trinidad and Tobago - 1,403,375
+      - Guyana - 790,326
+      - Scotland
+      - Wales
+      - England
+      - Northern-Ireland
+  - `culture`: [e.g. American Indian - NA if a country rather than a culture]. Use the following cultures (see #6 for the rationale for this sampling strategy) 
+      - Native American 
+      - Asian-American
+      - African-American
+      - Native Hawaiian
+      - White American
+      - Hispanic
+      - Roma
+      - Afro-European
+      - European Muslim
+      - White European
+      - Akan
+      - Sámi
+      - Indigenous Australian
 
 ### Different language versions:
 
