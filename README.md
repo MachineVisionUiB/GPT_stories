@@ -5,9 +5,11 @@ Analysing cultural stereotypes in the stories GPT tells.
 GPT-4 has an Anglo-American bias that is recreated in the kinds of stories it tells. 
 
 ## Data
+The dataset is available in this repository as `data/GPT_stories.csv`.
+
 We have used the OpenAI API to generate around 4000 short plot summaries of stories from different nationalities or ethnic/cultural groups. Most are in English and focus on countries where English is extensively used. We included some other languages (official languages in Norway, French, Icelandic, Akan and Chinese) as counterpoints. 
 
-Note that these are _not_ stories that are _actually_ representative of any nationalities, ethnicities and cultural groups. Rather the generated stories are the result of statistical patterns in GPT-3.5's training data that the model has identified and replicated. We would expect this to be stereotypical both because of limitations in the training data and because large language models like GPT-3.5 are designed to find patterns (which could also be called biases) and to generate content that replicates the patterns (biases) in the training data. 
+Note that these are _not_ stories that are _actually_ representative of any nationalities, ethnicities and cultural groups. Rather the generated stories are the result of statistical patterns in GPT-3.5's training data that the model has identified and replicated. We would expect this to be stereotypical both because of limitations in the training data and because large language models like GPT-3.5 are designed to find patterns (which could also be called biases) and to generate content that replicates the patterns (biases) in the training data. (See also Jill's blog post (ChatGPT is multilingual but monocultural, and it’s learning your values)[https://jilltxt.net/right-now-chatgpt-is-multilingual-but-monocultural-but-its-learning-your-values/])
 
 This research is a kind of _audit_ of GPT-3.5 that aims to expand our understanding of AI bias. 
 
