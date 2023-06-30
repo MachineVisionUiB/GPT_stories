@@ -1,9 +1,14 @@
-    """
+"""
     Calls the OpenAI API to generate short plot summaries and 
     save them to a csv file.
 
-    The OpenAI API key must be saved in a file called key.txt.
-
+    The OpenAI API key must be saved as the first line of a plain text file 
+    called key.txt. The first two lines after the libraries are imported reads
+    the first line of key.txt, strips any whitespace, and sets it as the API 
+    key. If you fork this repo, make sure never to commit your key.txt file to
+    GitHub or a public repository - it should be in your .gitignore file. You
+    should also make sure to set your maximum usage of tokens at the OpenAI site
+    to an amount you can afford.
  
     """
 import os
@@ -11,7 +16,8 @@ import openai
 #import pandas as pd
 
 with open('key.txt', 'r') as file:
-    openai.api_key = file.readline()[:-1] #change to line.strip?
+    openai.api_key = file.readline().strip()
+
 
 def create_stories_data_frame():
     pass
