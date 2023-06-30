@@ -4,6 +4,19 @@ Analysing cultural stereotypes in the stories GPT tells.
 ## Hypothesis
 GPT-4 has an Anglo-American bias that is recreated in the kinds of stories it tells. 
 
+## Development stage
+This is not yet fully functional, and the readme is under construction.
+
+## How to use
+- Install the required libraries by running the command `pip install -r requirements.txt`.
+- Set up your OpenAI API.
+-- You need an API key from OpenAI. 
+---If you do not already have one, create an account here https://auth0.openai.com/u/login/. When you are logged in, click your profile picture in the top right corner of the OpenAI platform homepage, and select "View API keys" from the dropdown menu. New users get some free credit; after that is used up you have to pay.
+-- Paste the key in the empty text file called key.txt 
+---There are other options for managing your key, like using the keychain library to store it in your password manager. The important thing is to never share your key, so make sure to never push key.txt to Git or send it to anyone. You should also make sure the spending limit on your OpenAI account is set to an amount that you can afford.
+-- Run [filename]
+
+
 ## Data
 The dataset is available in this repository as [`data/GPT_stories.csv`](https://github.com/MachineVisionUiB/GPT-stories/blob/main/data/GPT_stories.csv).
 
