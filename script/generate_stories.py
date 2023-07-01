@@ -24,19 +24,48 @@ with open('key.txt', 'r') as file:
 def create_stories_data_frame():
     pass
 
-def generate_plots(num_plots, topics): 
-    prompts = make_prompts(topics)
-    for n in range(len(prompts)):
-        print("Prompt number ", n, prompts[n])
-        for i in range(num_plots):
-            print("Iteration number", i, prompts[n])
+def generate_plots(topics: list[str], number_of_plots_per_topic: int):
+    """
+    Generates a prompt for each item in the topics list, then sends each 
+    prompt to the OpenAI API to generate a plot summary as many times as
+    specified by the number_of_plots_per_topic parameter. 
+    
+    The basic structure of the prompt is "Write a 50 word plot summary for a 
+    potential [topic] children's novel." The generated plot summaries are saved to a pandas
+    dataframe.
 
- 
+    Parameters
+    ----------
+    topics : list[str]
+        A list of topics, e.g. cultures or countries. A prompt will be
+        generated for each item in the list.
+    number_of_plots_per_topic : int
+        The number of plots to generate for each topic.
+
+    Returns
+    -------
+    int
+        A pandas dataframe containing the generated plots.
+
+    Examples
+    --------
+    >>> generate_plots(["Native American", "Asian American"], 2)
+
+    >>> generate_plots(["Norwegian", "Australian"], 3)
+    
+    """
+    prompts = make_prompts(topics)
+    for prompt_number in range(len(prompts)):
+        print("Prompt number ", prompt_number, prompts[prompt_number])
+        for prompt_iteration in range(number_of_plots_per_topic):
+            print("Iteration number", prompt_iteration, prompts[prompt_number])
+
+
         # story = openai.Completion.create(
         #     model="text-davinci-003",
         #     prompt=make_prompts(cultures),
         #     temperature=0.6,
-        #     n=3,
+        #     n=n,
         #     max_tokens=70,
         #     )
    
@@ -63,10 +92,10 @@ def test_make_prompts():
 
 if __name__ == "__main__":
     
-    cultures = ["Native American", "Asian American"]
+    cultures = ["Native American", "Asian American", "African American", "Latinx", "Middle Eastern", "South Asian", "East Asian", "Pacific Islander", "Indigenous Australian", "Indigenous Canadian", "Indigenous Mexican", "Indigenous South American", "Indigenous Central American"]
     countries = ["Norwegian", "Australian"]
 
     #make_prompts(cultures)
     # make_prompts("silly")
 
-    generate_plots(3, cultures)
+    generate_plots(cultures,40)
