@@ -9,6 +9,8 @@
     GitHub or a public repository - it should be in your .gitignore file. You
     should also make sure to set your maximum usage of tokens at the OpenAI site
     to an amount you can afford.
+
+    [more explanation of the module]
  
     """
 import os
@@ -22,7 +24,14 @@ with open('key.txt', 'r') as file:
 def create_stories_data_frame():
     pass
 
-def generate_plots(num_plots=5, topics): # need for loops for num_plots and topics  
+def generate_plots(num_plots, topics): 
+    prompts = make_prompts(topics)
+    for n in range(len(prompts)):
+        print("Prompt number ", n, prompts[n])
+        for i in range(num_plots):
+            print("Iteration number", i, prompts[n])
+
+ 
         # story = openai.Completion.create(
         #     model="text-davinci-003",
         #     prompt=make_prompts(cultures),
@@ -31,22 +40,17 @@ def generate_plots(num_plots=5, topics): # need for loops for num_plots and topi
         #     max_tokens=70,
         #     )
    
-def plots_for_each_topic_loop():
-    pass
-
-
     
 def make_prompts(topics):
     """Makes a prompt for the story generation.
     """
     prompts = []
-    if type(topics) != list:
-        print("Error: topics must be a list.")
-    else:
+    try:
         for topic in topics:
             prompt = f"Write a 50 word plot summary for a potential {topic} children's novel."
             prompts.append(prompt)
         print(prompts)
+    except: print("Error: topics must be a list of strings.")
     return prompts
 
 def test_make_prompts():
@@ -63,6 +67,6 @@ if __name__ == "__main__":
     countries = ["Norwegian", "Australian"]
 
     #make_prompts(cultures)
-    #make_prompts("silly")
+    # make_prompts("silly")
 
-    generate_plots()
+    generate_plots(3, cultures)
