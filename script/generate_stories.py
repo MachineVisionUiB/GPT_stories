@@ -10,39 +10,46 @@
     should also make sure to set your maximum usage of tokens at the OpenAI site
     to an amount you can afford.
 
+    The generate_stories function sends prompts to the OpenAI and requests a 
+    plot summary as many times as specified.
+
+    Only one prompt is sent to the model at a time, and no history is retained.
+    This means that each story iteration is generated as though from a blank 
+    slate, without knowledge of previous prompts or previously generated stories.
+
     [more explanation of the module]
  
     """
 import os
 import openai
-#import pandas as pd
+import pandas as pd
 
-with open('key.txt', 'r') as file:
+with open("key.txt", "r") as file:
     openai.api_key = file.readline().strip()
 
 
-def create_stories_data_frame():
-    pass
-
-def generate_plots(topics: list[str], number_of_plots_per_topic: int):
+def generate_stories(topics: list[str], number_of_stories_per_topic: int):
     """
-    Generates a prompt for each item in the topics list, then sends each 
+    Generates a prompt for each item in the topics list, then sends each
     prompt to the OpenAI API to generate a plot summary as many times as
-    specified by the number_of_plots_per_topic parameter. 
-    
-    The basic structure of the prompt is "Write a 50 word plot summary for a 
+    specified by the number_of_stories_per_topic parameter.
+
+    The basic structure of the prompt is "Write a 50 word plot summary for a
     potential [topic] children's novel." The generated plot summaries are saved to a pandas
     dataframe.
+
+    I use the term "story" instead of "plot" in the code to avoid confusion with the
+    plotting of data.
 
     Parameters
     ----------
     topics : list[str]
         A list of topics, e.g. cultures or countries. A prompt will be
         generated for each item in the list.
-    number_of_plots_per_topic : int
+    number_of_stories_per_topic : int
         The number of plots to generate for each topic.
 
-    Returns
+    Returns !!!!FINISH THIS LATER!!!!
     -------
     int
         A pandas dataframe containing the generated plots.
@@ -52,50 +59,113 @@ def generate_plots(topics: list[str], number_of_plots_per_topic: int):
     >>> generate_plots(["Native American", "Asian American"], 2)
 
     >>> generate_plots(["Norwegian", "Australian"], 3)
-    
+
     """
+    messages = [{"role": "system", "content": ""}]
     prompts = make_prompts(topics)
+    print(
+        "Sending",
+        len(prompts),
+        "unique prompts to the OpenAI API, and generating",
+        number_of_stories_per_topic,
+        "stories for each prompt.",
+    )
     for prompt_number in range(len(prompts)):
-        print("Prompt number ", prompt_number, prompts[prompt_number])
-        for prompt_iteration in range(number_of_plots_per_topic):
-            print("Iteration number", prompt_iteration, prompts[prompt_number])
+        print(
+            "\n---------------------------------\nPrompt",
+            prompt_number,
+            "of",
+            len(prompts),
+            ":",
+            prompts[prompt_number],
+        )
+        for story_iteration in range(number_of_stories_per_topic):
+            messages.append({"role": "user", "content": prompts[prompt_number]})
+            story = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=messages,
+                temperature=1,
+                n=1,
+            )
+            print(
+                "\nVersion",
+                story_iteration,
+                ":",
+                story["choices"][0]["message"]["content"],
+            )
+            print(story)
+    print(
+        "\n--------------------------",
+        "\nThat's it.\nThe next version of this program will save the output as a csv file.",
+    )
 
 
-        # story = openai.Completion.create(
-        #     model="text-davinci-003",
-        #     prompt=make_prompts(cultures),
-        #     temperature=0.6,
-        #     n=n,
-        #     max_tokens=70,
-        #     )
-   
-    
 def make_prompts(topics):
-    """Makes a prompt for the story generation.
+    """
+    Makes a prompt for the story generation.
     """
     prompts = []
     try:
         for topic in topics:
             prompt = f"Write a 50 word plot summary for a potential {topic} children's novel."
             prompts.append(prompt)
-        print(prompts)
-    except: print("Error: topics must be a list of strings.")
+        print("\n", len(prompts), "unique prompts generated.\n")
+    except:
+        print("Error: topics must be a list of strings.")
     return prompts
+
+
+def save_stories(stories):
+    pass
+
+
+# ----- TESTS -----#
+
 
 def test_make_prompts():
     topics = ["Native American", "Asian American"]
     prompts = make_prompts(topics)
-    assert prompts[0] == "Write a 50 word plot summary for a potential Native American children's novel."
-    assert prompts[1] == "Write a 50 word plot summary for a potential Asian American children's novel."
+    assert (
+        prompts[0]
+        == "Write a 50 word plot summary for a potential Native American children's novel."
+    )
+    assert (
+        prompts[1]
+        == "Write a 50 word plot summary for a potential Asian American children's novel."
+    )
 
 
+# ----- END OF TESTS -----#
 
 if __name__ == "__main__":
-    
-    cultures = ["Native American", "Asian American", "African American", "Latinx", "Middle Eastern", "South Asian", "East Asian", "Pacific Islander", "Indigenous Australian", "Indigenous Canadian", "Indigenous Mexican", "Indigenous South American", "Indigenous Central American"]
-    countries = ["Norwegian", "Australian"]
+    cultures = ["Native American", "Asian American"]
+    # cultures = ["Native American", "Asian American", "African American", "Latinx", "Middle Eastern", "South Asian", "East Asian", "Pacific Islander", "Indigenous Australian", "Indigenous Canadian", "Indigenous Mexican", "Indigenous South American", "Indigenous Central American"]
+    # countries = ["Norwegian", "Australian"]
+    countries = [
+        "Indian",
+        "American",
+        "Pakistani",
+        "Nigerian",
+        "Filipino",
+        "British",
+        "Tanzanian",
+        "South African",
+        "Kenyan",
+        "Canadian",
+        "Australian",
+        "Liberian",
+        "Irish",
+        "New Zealander",
+        "Jamaican",
+        "Trinidadian and Tobagonian",
+        "Guyanese",
+        "Scottish",
+        "Welsh",
+        "English",
+        "Northern Irish",
+    ]
 
-    #make_prompts(cultures)
+    # make_prompts(cultures)
     # make_prompts("silly")
 
-    generate_plots(cultures,40)
+    generate_stories(countries, 4)
