@@ -24,8 +24,8 @@ import os
 import openai
 import pandas as pd
 
-with open("key.txt", "r") as file:
-    openai.api_key = file.readline().strip()
+# loads API key from environment variable
+openai.api_key = os.environ["OPENAI_API_KEY"]
 
 
 def generate_stories(topics: list[str], number_of_stories_per_topic: int):
