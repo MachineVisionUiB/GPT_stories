@@ -23,10 +23,13 @@
 import os
 import openai
 import pandas as pd
+from dotenv import load_dotenv
+import sys
 
-# loads API key from environment variable
-openai.api_key = os.environ["OPENAI_API_KEY"]
 
+# Set the API key for OpenAI
+with open ("api_key.txt", "r") as f:
+    openai.api_key = f.read().strip()
 
 def generate_stories(topics: list[str], number_of_stories_per_topic: int):
     """
@@ -81,19 +84,18 @@ def generate_stories(topics: list[str], number_of_stories_per_topic: int):
         )
         for story_iteration in range(number_of_stories_per_topic):
             messages.append({"role": "user", "content": prompts[prompt_number]})
-            story = openai.ChatCompletion.create(
+            response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=messages,
                 temperature=1,
                 n=1,
             )
-            print(
-                "\nVersion",
-                story_iteration,
-                ":",
-                story["choices"][0]["message"]["content"],
-            )
-            print(story)
+            # Extract the generated story from the response
+            story = response.choices[0].message.content
+
+            # Print the version and story
+            print(f"\nVersion {story_iteration}: {story}")
+            
     print(
         "\n--------------------------",
         "\nThat's it.\nThe next version of this program will save the output as a csv file.",
@@ -143,26 +145,7 @@ if __name__ == "__main__":
     # countries = ["Norwegian", "Australian"]
     countries = [
         "Indian",
-        "American",
-        "Pakistani",
-        "Nigerian",
-        "Filipino",
-        "British",
-        "Tanzanian",
-        "South African",
-        "Kenyan",
-        "Canadian",
-        "Australian",
-        "Liberian",
-        "Irish",
-        "New Zealander",
-        "Jamaican",
-        "Trinidadian and Tobagonian",
-        "Guyanese",
-        "Scottish",
-        "Welsh",
-        "English",
-        "Northern Irish",
+        
     ]
 
     # make_prompts(cultures)
