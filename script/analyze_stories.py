@@ -8,13 +8,37 @@ it will be asked to give a step by step reasoning for the analysis.
 """
 
 import pandas as pd
-import os
 import openai
 import csv
+from dotenv import load_dotenv
+import os
 
-# Set the API key for OpenAI
-with open ("api_key.txt", "r") as f:
-    openai.api_key = f.read().strip()
+
+def load_api_key():
+    """
+    Loads the OpenAI API key from environment variables.
+
+    This function uses python-dotenv to load environment variables from a .env file,
+    retrieves the OPENAI_API_KEY, and sets it for the OpenAI client. If the API key
+    is not found, it raises a ValueError.
+
+    Raises:
+    -------
+    ValueError
+        If the API key is not found in the environment variables.
+
+    """
+    load_dotenv()  # Load environment variables from .env file
+    api_key = os.getenv("OPENAI_API_KEY")
+    
+    if not api_key:
+        raise ValueError("API Key not found. Please check your .env file or environment variables.")
+    
+    openai.api_key = api_key
+
+
+# Load the API key when the module is imported
+load_api_key()
 
 def analyze_stories(csv_file_path: str):
     """
@@ -37,7 +61,8 @@ def analyze_stories(csv_file_path: str):
         analysis_response = openai.chat.completions.create(
             model="gpt-4o-mini",
             messages=messages,
-            temperature=1,
+            temperature=0.8,
+            n=1,
             max_tokens=100
         )
 
@@ -48,8 +73,9 @@ def analyze_stories(csv_file_path: str):
         reasoning_response = openai.chat.completions.create(
             model="gpt-4o-mini",
             messages=messages,
-            temperature=1,
-            max_tokens=200
+            temperature=0.8,
+            max_tokens=200,
+            n=1,
         )
 
         step_by_step_reasoning = reasoning_response.choices[0].message.content
