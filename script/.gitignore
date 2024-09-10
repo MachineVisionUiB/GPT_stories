@@ -2,3 +2,4 @@ api_key.env
 api_key.txt
 analyzed_stories.csv
 generated_stories.csv
+.env
