@@ -88,11 +88,14 @@ def generate_stories(topics: list[str], number_of_stories_per_topic: int):
             )
             # Extract the generated story from the response
             story = response.choices[0].message.content
-            stories.append(story)
+            stories.append((story, prompts[prompt_number], topics[prompt_number]))
             # Print the version and story
             print(f"\nVersion {story_iteration+1}: {story}")
 
     return stories
+
+#def create_dataset(stories):
+
 
 
 def make_prompts(topics):
@@ -158,14 +161,14 @@ def test_make_prompts():
 
 if __name__ == "__main__":
     cultures = ["Native American", "Asian American"]
-    # cultures = ["Native American", "Asian American", "African American", "Latinx", "Middle Eastern", "South Asian", "East Asian", "Pacific Islander", "Indigenous Australian", "Indigenous Canadian", "Indigenous Mexican", "Indigenous South American", "Indigenous Central American"]
-    # countries = ["Norwegian", "Australian"]
+    
     countries = [
         "Indian",
         
     ]
 
-    # make_prompts(cultures)
-    # make_prompts("silly")
+    
 
-    generate_stories(countries, 4)
+    stories = generate_stories(countries, 4)
+    dataset = create_dataset(stories)
+    
