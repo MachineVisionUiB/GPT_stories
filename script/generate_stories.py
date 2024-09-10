@@ -24,7 +24,6 @@ import os
 import openai
 import pandas as pd
 from dotenv import load_dotenv
-import sys
 import csv
 
 
@@ -178,6 +177,8 @@ def make_prompts(topics):
 
 
 def prompt_init_print(prompts, number_of_stories_per_topic):
+    # Print the number of unique prompts being sent to the OpenAI API
+    # and the number of stories being generated for each prompt
     print(
         "Sending",
         len(prompts),
@@ -187,12 +188,14 @@ def prompt_init_print(prompts, number_of_stories_per_topic):
     )
 
 def prompt_counter_print(prompts):
+    # Get the number of prompts
     num_of_prompts = len(prompts)
+    
+    # Iterate through each prompt and print its details
     for prompt_number in range(num_of_prompts):
-
         print(
             "\n---------------------------------\nPrompt",
-            prompt_number+1,
+            prompt_number + 1,
             "of",
             num_of_prompts,
             ":",
