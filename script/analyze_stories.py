@@ -36,9 +36,10 @@ def load_api_key():
     
     openai.api_key = api_key
 
-
 # Load the API key when the module is imported
 load_api_key()
+
+
 
 def analyze_stories(csv_file_path: str):
     """
@@ -118,4 +119,4 @@ def analyze_stories(csv_file_path: str):
     
 if __name__ == "__main__":
     # Call the analyze_stories function with the input CSV file
-    analyze_stories("generated_stories.csv")  
+    analyze_stories("test_stories.csv")  

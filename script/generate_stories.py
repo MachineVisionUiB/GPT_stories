@@ -223,12 +223,14 @@ if __name__ == "__main__":
     cultures = ["Native American", "Asian American"]
     
     countries = [
-        "Indian", 
-        "American" 
+        "Norwegian", 
+        "Japanese",
+        "Australian",
+        "American"
     ]
 
     
     
-    stories = generate_stories(countries, 2)
+    stories = generate_stories(countries, 5)
     dataset = create_dataset(stories)
     
