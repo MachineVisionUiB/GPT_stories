@@ -2,10 +2,33 @@ import os
 import openai
 import csv
 from datetime import date
+from dotenv import load_dotenv
 
-# Sets the key for the openai api. You need to refer to the path where you saved your key.txt file
-openai.api_key_path = "key.txt"
+def load_api_key():
+    """
+    Loads the OpenAI API key from environment variables.
 
+    This function uses python-dotenv to load environment variables from a .env file,
+    retrieves the OPENAI_API_KEY, and sets it for the OpenAI client. If the API key
+    is not found, it raises a ValueError.
+
+    Raises:
+    -------
+    ValueError
+        If the API key is not found in the environment variables.
+
+    """
+    load_dotenv()  # Load environment variables from .env file
+    api_key = os.getenv("OPENAI_API_KEY")
+    
+    if not api_key:
+        raise ValueError("API Key not found. Please check your .env file or environment variables.")
+    
+    openai.api_key = api_key
+
+
+# Load the API key when the module is imported
+load_api_key()
 
 #  this function gives context to GPT and returns the list of messages
 def initiate_chat():
@@ -88,7 +111,7 @@ def analyze(messages, stories):
             messages.append({"role": "user", "content": line[1]})
             try:
                 # creating chat
-                chat = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
+                chat = openai.chat.completions.create(model="gpt-3.5-turbo", messages=messages)
                 reply = chat.choices[0].message.content
                 # splitting reply into separate lines
                 reply = reply.split("\n")
@@ -173,14 +196,14 @@ def generate_story(message, language, category, filename, temp):
 
     try:
         # Create a chatgpt model based on the previous prompts and replies
-        chat = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages, temperature=temp)
+        chat = openai.chat.completions.create(model="gpt-3.5-turbo", messages=messages, temperature=temp)
         reply = chat.choices[0].message.content
         unit = {"prompt": message, "reply": reply, "date": date.today(), "modelname": "gpt-3.5-turbo",
                 "temperature": temp, "language": language, "culture": category}
 
         with open(filename, "a", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, delimiter=";", fieldnames=["prompt", "reply", "date", "modelname",
-                                                                  "temperature", "language", "culture", "country"])
+                                                                  "temperature", "language", "culture"])
             if os.stat(filename).st_size == 0:
                 writer.writeheader()
             writer.writerow(unit)
@@ -195,19 +218,29 @@ def generate_stories(num_of_stories, message, language, category, filename, temp
     for i in range(num_of_stories):
         generate_story(message, language, category, filename, temp)
 
+def generate_stories_test():
+    num_of_stories = 2
+    message = "Write a 50 word plot summary for a potential Norwegian children's novel."
+    language = "English"
+    category = "Norwegian"
+    filename = "old_code_test.csv"
+    temp = 0.8
+    generate_stories(num_of_stories, message, language, category, filename, temp)
+
 
 def main():
     if create_or_analyze():
-        cat = category()
-        num_of_stories = num_stories()
-        lan = language()
-        # to use the message function, uncomment the following line, and comment the next one
-        mes = message(cat)
-        # to have a specific message, uncomment the following line, write your message, and comment the previous one
-        mes = ""
-        temp = temperature()
-        fil = filename()
-        generate_stories(num_of_stories, mes, lan, cat, fil, temp)
+        # cat = category()
+        # num_of_stories = num_stories()
+        # lan = language()
+        # # to use the message function, uncomment the following line, and comment the next one
+        # mes = message(cat)
+        # # to have a specific message, uncomment the following line, write your message, and comment the previous one
+        # # mes = ""
+        # temp = temperature()
+        # fil = filename()
+        # generate_stories(num_of_stories, mes, lan, cat, fil, temp)
+        generate_stories_test()
     else:
         chat = initiate_chat()
         stories = input("Enter the name of the file containing the stories: ")
