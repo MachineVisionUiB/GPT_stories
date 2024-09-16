@@ -6,6 +6,15 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from gensim import corpora
 from gensim.models.ldamodel import LdaModel
+import pyLDAvis.gensim_models as gensimvis
+import pyLDAvis
+import warnings
+import webbrowser
+
+
+warnings.filterwarnings("ignore", category=DeprecationWarning, module='joblib.externals.loky.backend.fork_exec')
+
+
 
 
 # Bypass SSL certificate verification
@@ -17,7 +26,7 @@ else:
     ssl._create_default_https_context = _create_unverified_https_context
 
 # Load dataset
-df = pd.read_csv('/Users/hermannwigers/Documents/AI STORIES/GPT_stories/samples/japanese_name_test.csv')
+df = pd.read_csv('/Users/hermannwigers/Documents/AI STORIES/GPT_stories/australian_name_test.csv')
 summaries = df['Story'].tolist()
 
 # Preprocessing
@@ -39,3 +48,18 @@ processed_summaries = [preprocess(summary) for summary in summaries]
 dictionary = corpora.Dictionary(processed_summaries)
 corpus = [dictionary.doc2bow(summary) for summary in processed_summaries]
 
+# Train LDA model
+num_topics = 5
+lda_model = LdaModel(corpus, num_topics=num_topics, id2word=dictionary, passes=10, random_state=42)
+
+# Display topics
+topics = lda_model.print_topics(num_topics=num_topics, num_words=5)
+for topic in topics:
+    print(topic)
+
+lda_vis = gensimvis.prepare(lda_model, corpus, dictionary)
+# Save the visualization as an HTML file
+pyLDAvis.save_html(lda_vis, 'australian_lda_visualization.html')
+
+# Open the HTML file in the default web browser
+webbrowser.open('australian_lda_visualization.html')
