@@ -35,4 +35,7 @@ def preprocess(text):
 
 processed_summaries = [preprocess(summary) for summary in summaries]
 
-print(processed_summaries)
+# Create dictionary and corpus
+dictionary = corpora.Dictionary(processed_summaries)
+corpus = [dictionary.doc2bow(summary) for summary in processed_summaries]
+
