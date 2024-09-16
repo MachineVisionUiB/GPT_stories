@@ -231,6 +231,6 @@ if __name__ == "__main__":
 
     
     
-    stories = generate_stories(["Australian"], 100)
+    stories = generate_stories(["Japanese"], 500)
     dataset = create_dataset(stories)
     
