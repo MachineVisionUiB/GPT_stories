@@ -26,7 +26,7 @@ else:
     ssl._create_default_https_context = _create_unverified_https_context
 
 # Load dataset
-df = pd.read_csv('/Users/hermannwigers/Documents/AI STORIES/GPT_stories/australian_name_test.csv')
+df = pd.read_csv('/Users/hermannwigers/Documents/AI STORIES/GPT_stories/samples/1000_jpn_stories.csv')
 summaries = df['Story'].tolist()
 
 # Preprocessing
@@ -49,7 +49,7 @@ dictionary = corpora.Dictionary(processed_summaries)
 corpus = [dictionary.doc2bow(summary) for summary in processed_summaries]
 
 # Train LDA model
-num_topics = 5
+num_topics = 10
 lda_model = LdaModel(corpus, num_topics=num_topics, id2word=dictionary, passes=10, random_state=42)
 
 # Display topics
@@ -59,7 +59,7 @@ for topic in topics:
 
 lda_vis = gensimvis.prepare(lda_model, corpus, dictionary)
 # Save the visualization as an HTML file
-pyLDAvis.save_html(lda_vis, 'australian_lda_visualization.html')
+pyLDAvis.save_html(lda_vis, 'jpn1000_lda_visualization_t10.html')
 
 # Open the HTML file in the default web browser
-webbrowser.open('australian_lda_visualization.html')
+webbrowser.open('jpn1000_lda_visualization_t10.html')
