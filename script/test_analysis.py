@@ -57,7 +57,7 @@ def analyze_stories(csv_file_path: str):
         
         # Prepare the initial message for the GPT model
         messages = [
-            {"role": "user", "content": f"Identify the main themes and character roles in this story.:\n\n{story}"}
+            {"role": "user", "content": f"Identify the name of the main character and only the name of the main character in this story:\n\n{story}"}
         ]
 
         # Send the story to the GPT model for analysis
@@ -79,11 +79,11 @@ def analyze_stories(csv_file_path: str):
     df['Analysis and Reasoning'] = [result[1] for result in results]
 
     # Save the updated DataFrame to a new CSV file
-    output_file = "analyzed_stories_single_prompt_test.csv"
+    output_file = "samples/main_character_test.csv"
     df.to_csv(output_file, index=False, quoting=csv.QUOTE_ALL)
 
     print(f"Analysis complete. Results saved to {output_file}")
 
 if __name__ == "__main__":
     # Call the analyze_stories function with the input CSV file
-    analyze_stories("test_stories.csv")
+    analyze_stories("australian_name_test.csv")

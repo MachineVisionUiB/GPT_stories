@@ -3,3 +3,4 @@ api_key.txt
 analyzed_stories.csv
 generated_stories.csv
 .env
+name_analysis.py
