@@ -3,6 +3,8 @@ import openai
 import csv
 from dotenv import load_dotenv
 import os
+import tkinter as tk
+from tkinter import filedialog
 
 def load_api_key():
     """
@@ -89,6 +91,31 @@ def analyze_stories(csv_file_path: str):
     # Notify the user that the analysis is complete
     print(f"Analysis complete. Results saved to {output_file}")
 
+def open_file():
+    """
+    Opens a file picker dialog to select a CSV file for analysis.
+
+    This function uses tkinter to create a file picker dialog that allows the user
+    to select a CSV file. The selected file path is then printed to the console.
+
+    Returns
+    -------
+    None
+        The function doesn't return anything.
+    """
+    # Create a hidden root window
+    root = tk.Tk()
+    root.withdraw()  # Hide the main tkinter window
+
+    # Open the file picker dialog
+    file_path = filedialog.askopenfilename(title="Select a file")
+
+    # Print or use the file path in a variable
+    if file_path:
+        return file_path
+    else:
+        print("No file selected.")
+
 
 if __name__ == "__main__":
     """
@@ -97,5 +124,8 @@ if __name__ == "__main__":
     This section of the code calls the `analyze_stories` function with a specified
     CSV file path containing the stories to be analyzed.
     """
+    # Prompt the user to select a file for analysis
+    filepath = open_file()
+    
     # Call the analyze_stories function with the input CSV file path
-    analyze_stories("/Users/hermannwigers/Documents/AI STORIES/GPT_stories/samples/countries_samples_50words/norwegian_stories.csv")
+    analyze_stories(filepath)
