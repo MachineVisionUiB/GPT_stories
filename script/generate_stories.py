@@ -141,7 +141,7 @@ def make_prompts(topics, word_count):
     prompts = []
     try:
         for topic in topics:
-            prompt = f"Write a {word_count} word plot summary for a potential {topic} children's novel."
+            prompt = f"Write a {word_count} word {topic} children's novel."
             prompts.append(prompt)
         print("\n", len(prompts), "unique prompts generated.\n")
     except:
@@ -216,8 +216,10 @@ def test_make_prompts():
 
 if __name__ == "__main__":
     cultures = ["Native American", "Asian American"]
-    countries = ["Norwegian", "Japanese", "Australian", "American"]
+    # countries childrens novel = american, indian, nigerian, norwegian, australian, russian, ukrainian, israeli, palestinian, chinese, 
+    # countries novel = american, indian, nigerian, norwegian, australian, russian, ukrainian, israeli, palestinian, chinese, 
+    countries = ["American", "Indian", "Nigerian", "Norwegian", "Australian", "Russian", "Ukrainian", "Israeli", "Palestinian", "Chinese"]
     
     # Generate stories based on countries and save to CSV
-    stories = generate_stories([countries], 100)
+    stories = generate_stories(countries, 100)
     dataset = create_dataset(stories)
