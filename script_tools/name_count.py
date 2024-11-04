@@ -1,16 +1,31 @@
 import csv
 from collections import Counter
 import os
+import re
 
 def count_names(input_file, output_file):
-    # Read names from the 5th column of the input CSV file
+    # List to store individual names
     names = []
+
     with open(input_file, mode='r', newline='', encoding='utf-8') as file:
         reader = csv.reader(file)
         next(reader)  # Skip header row if it exists
         for row in reader:
             if len(row) >= 5:
-                names.append(row[4])  # Append the name from the 5th column
+                # Get the raw string from the 5th column
+                raw_names = row[4]
+
+                # Split the string based on different delimiters:
+                # - comma
+                # - numbers followed by a period (like "1. Earl")
+                # - any other non-alphanumeric symbols (generalized)
+                split_names = re.split(r',|\d+\.\s*|[^a-zA-Z\s]+', raw_names)
+
+                # Clean up extra whitespace and filter out any empty strings
+                split_names = [name.strip() for name in split_names if name.strip()]
+
+                # Extend the names list with these individual names
+                names.extend(split_names)
 
     # Count occurrences of each name
     name_counts = Counter(names)
@@ -26,13 +41,11 @@ def count_names(input_file, output_file):
             writer.writerow([name, count])
 
 # Example usage
-
-directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/stories/full_stories_analysis/main_char'
+directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/stories/full_stories_analysis/place_names'
 for filename in os.listdir(directory):
     print(filename)
     f = os.path.join(directory, filename)
-    output_file = 'name_counts_' + os.path.basename(os.path.normpath(f))
+    output_file = 'placename_counts_' + os.path.basename(os.path.normpath(f))
     if os.path.isfile(f):
         count_names(f, output_file)
-
-
+        print(f"Name counts saved to {output_file}")

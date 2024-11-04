@@ -37,21 +37,17 @@ def analyze_emotions(text):
             return None
 
 # Specify the file paths manually
-directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/stories/summaries'
-csv_file_paths = []
-for filename in os.listdir(directory):
-    f = os.path.join(directory, filename)
-    if os.path.isfile(f):
-        csv_file_paths.append(f)
-
-output_data = []  # List to store output data
+directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/stories/full_stories'
+csv_file_paths = [os.path.join(directory, filename) for filename in os.listdir(directory) if os.path.isfile(os.path.join(directory, filename))]
 
 # Read each specified CSV file and perform analysis
 for csv_file in csv_file_paths:
     print(f"Analyzing emotions in {csv_file}...")
     df = pd.read_csv(csv_file)  # Read each CSV file
+    output_data = []  # Reset output data for each file
+
     for index, row in df.iterrows():
-        text_to_analyze = row[4]  # choose the column in the []. [1] is the second column
+        text_to_analyze = row[1]  # choose the column in the []. [1] is the second column
         emotions = analyze_emotions(text_to_analyze)  # Analyze emotions
         if emotions:  # Proceed only if analysis was successful
             output_data.append({
@@ -63,16 +59,19 @@ for csv_file in csv_file_paths:
                 'anger': emotions['anger']
             })
 
-            # Create a DataFrame from the output data and save to CSV
-            output_df = pd.DataFrame(output_data)
+    # Create a DataFrame from the output data and save to a new CSV
+    output_df = pd.DataFrame(output_data)
 
-             # Calculate averages for each emotion and append as a new row
-            if not output_df.empty:
-                averages = output_df[['sadness', 'joy', 'fear', 'disgust', 'anger']].mean().round(2)
-                avg_row = pd.DataFrame([['Averages'] + averages.tolist()], columns=output_df.columns)
-                output_df = pd.concat([output_df, avg_row], ignore_index=True)
+    # Calculate averages for each emotion and append as a new row
+    if not output_df.empty:
+        averages = output_df[['sadness', 'joy', 'fear', 'disgust', 'anger']].mean().round(2)
+        avg_row = pd.DataFrame([['Averages'] + averages.tolist()], columns=output_df.columns)
+        output_df = pd.concat([output_df, avg_row], ignore_index=True)
 
-            filename = os.path.basename(os.path.normpath(csv_file))
-            output_df.to_csv('emotion_analysis_' + filename, index=False)
+    # Save the output with a unique filename based on the input filename
+    output_filename = f"emotion_analysis_{os.path.basename(csv_file)}"
+    output_path = os.path.join(directory, output_filename)
+    output_df.to_csv(output_path, index=False)
+    print(f"Emotion analysis saved to {output_filename}")
 
-print("Emotion analysis completed and saved to emotion_analysis_output.csv")
+print("Emotion analysis completed.")
