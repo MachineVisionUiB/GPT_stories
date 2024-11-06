@@ -67,11 +67,12 @@ def analyze_stories(csv_file_path: str):
 
     # Iterate through each story in the DataFrame
     for index, row in df.iterrows():
+        print(f'analysing story number: {index} of {len(df)}')
         story = row['Story']
         
         # Prepare the initial message for the GPT model
         messages = [
-            {"role": "user", "content": f"Only list 3 traits that are most valued in this story:\n\n{story}"}
+            {"role": "user", "content": f"Create a 50 word plot summary of this story:\n\n{story}"}
         ]
 
         # Send the story to the GPT model for analysis
@@ -86,31 +87,17 @@ def analyze_stories(csv_file_path: str):
         # Extract the analysis from the model's response
         analysis = analysis_response.choices[0].message.content
         
-        # Prepare follow-up messages for step-by-step reasoning
-        messages.append({"role": "assistant", "content": analysis})
-        messages.append({"role": "user", "content": f"Provide a step-by-step reasoning for your analysis of the children's story."})
-
-        # Send the follow-up request to the GPT model
-        reasoning_response = openai.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=messages,
-            temperature=0.8,
-            max_tokens=200,
-            n=1,
-        )
-
-        # Extract the step-by-step reasoning from the model's response
-        step_by_step_reasoning = reasoning_response.choices[0].message.content
+        
         
         # Append results to list
-        results.append((story, analysis, step_by_step_reasoning))
+        results.append((story, analysis))
 
     # Add new columns to the DataFrame
-    df['Analysis'] = [result[1] for result in results]
-    df['Step-by-Step Reasoning'] = [result[2] for result in results]
+    df['summary'] = [result[1] for result in results]
 
     # Save the updated DataFrame to a new CSV file
-    output_file = "analyzed_stories.csv"
+
+    output_file = 'summary_' + + os.path.basename(os.path.normpath(filename))
     df.to_csv(output_file, index=False, quoting=csv.QUOTE_ALL)
 
     print(f"Analysis complete. Results saved to {output_file}")
@@ -119,4 +106,13 @@ def analyze_stories(csv_file_path: str):
     
 if __name__ == "__main__":
     # Call the analyze_stories function with the input CSV file
-    analyze_stories("test_stories.csv")  
+    directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/stories'
+    for filename in os.listdir(directory):
+        print(filename)
+        
+        f = os.path.join(directory, filename)
+        print(f)
+        
+        if os.path.isfile(f):
+            analyze_stories(f)
+        

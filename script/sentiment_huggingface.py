@@ -1,28 +1,35 @@
 import pandas as pd
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from transformers import pipeline
+import os
 
-# Load the CSV file
-input_filename = input("Enter the input filename: ")+'.csv'
+directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/stories/summaries'
 
-df = pd.read_csv('/Users/hermannwigers/Documents/AI STORIES/GPT_stories/samples/countries_samples/'+input_filename)
+for filename in os.listdir(directory):
+    print(filename)
+    f = os.path.join(directory, filename)
+    if os.path.isfile(f):
+        df = pd.read_csv(f)
 
-texts = df.iloc[:, 1].tolist()
+   
 
-#model_name = 'distilbert-base-uncased-finetuned-sst-2-english'
-model_name = "bhadresh-savani/distilbert-base-uncased-emotion"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForSequenceClassification.from_pretrained(model_name)
+        texts = df.iloc[:, 4].tolist() # Adjust if the column index is different. df.iloc[:, x] where x is the column index
 
-# Create a sentiment-analysis pipeline
-sentiment_analyzer = pipeline('sentiment-analysis', model=model, tokenizer=tokenizer, device=0)
+        #model_name = 'distilbert-base-uncased-finetuned-sst-2-english'
+        model_name = "bhadresh-savani/distilbert-base-uncased-emotion"
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        model = AutoModelForSequenceClassification.from_pretrained(model_name)
 
-# Apply the sentiment analysis
-results = sentiment_analyzer(texts)
+        # Create a sentiment-analysis pipeline
+        sentiment_analyzer = pipeline('sentiment-analysis', model=model, tokenizer=tokenizer, device=0)
 
-df['sentiment'] = [result['label'] for result in results]
-df['confidence'] = [round(result['score'], 2) for result in results]
+        # Apply the sentiment analysis
+        results = sentiment_analyzer(texts)
 
-output_filename = input("Enter the output filename: ")
-# Save the updated DataFrame to a new CSV file
-df.to_csv(output_filename+'_sentiment_hf.csv', index=False)
+        df['sentiment'] = [result['label'] for result in results]
+        df['confidence'] = [round(result['score'], 2) for result in results]
+
+        output_filename = 'hf_' + filename
+
+        # Save the updated DataFrame to a new CSV file
+        df.to_csv(filename, index=False)

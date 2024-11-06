@@ -57,7 +57,8 @@ def generate_stories(topics: list[str], number_of_stories_per_topic: int):
     >>> generate_stories(["Norwegian", "Japanese"], 2)
     """
     messages = [{"role": "system", "content": ""}]  # Initial system message
-    word_count = input("Enter the word count: ")  # User input for word count
+    # word_count = input("Enter the word count: ")  # User input for word count
+    word_count = 1500
     prompts = make_prompts(topics, word_count)  # Generate prompts based on topics
     stories = []
 
@@ -87,7 +88,7 @@ def generate_stories(topics: list[str], number_of_stories_per_topic: int):
     return stories
 
 
-def create_dataset(stories):
+def create_dataset(stories, country):
     """
     Creates a CSV file from the generated stories.
 
@@ -109,7 +110,7 @@ def create_dataset(stories):
     df = pd.DataFrame(stories, columns=['Story ID', 'Story', 'Prompt', 'Topic'])
 
     # Generate a unique filename from user input
-    filename = input("\n---------------------\n\nEnter a filename for the dataset: ") + ".csv"
+    filename =  country + "_children_stories.csv"
 
     # Save the DataFrame to a CSV file
     df.to_csv(filename, index=False, quoting=csv.QUOTE_ALL)
@@ -141,7 +142,7 @@ def make_prompts(topics, word_count):
     prompts = []
     try:
         for topic in topics:
-            prompt = f"Write a {word_count} word {topic} children's novel."
+            prompt = f"Write a {word_count} word potential {topic} novel."
             prompts.append(prompt)
         print("\n", len(prompts), "unique prompts generated.\n")
     except:
@@ -218,8 +219,10 @@ if __name__ == "__main__":
     cultures = ["Native American", "Asian American"]
     # countries childrens novel = american, indian, nigerian, norwegian, australian, russian, ukrainian, israeli, palestinian, chinese, 
     # countries novel = american, indian, nigerian, norwegian, australian, russian, ukrainian, israeli, palestinian, chinese, 
-    countries = ["American", "Indian", "Nigerian", "Norwegian", "Australian", "Russian", "Ukrainian", "Israeli", "Palestinian", "Chinese"]
+    countries = ["American", "Indian", "Nigerian", "Norwegian", "Australian", "Russian", "Ukrainian", "Israelian", "Palestinian", "Chinese"]
     
     # Generate stories based on countries and save to CSV
-    stories = generate_stories(countries, 100)
-    dataset = create_dataset(stories)
+    for country in countries:
+        stories = generate_stories([country], 100)
+        dataset = create_dataset(stories, country)
+    

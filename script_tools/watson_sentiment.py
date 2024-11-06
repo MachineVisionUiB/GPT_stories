@@ -37,7 +37,7 @@ def analyze_emotions(text):
             return None
 
 # Specify the file paths manually
-directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/stories/full_stories'
+directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/childrens_stories/full_stories'
 csv_file_paths = [os.path.join(directory, filename) for filename in os.listdir(directory) if os.path.isfile(os.path.join(directory, filename))]
 
 # Read each specified CSV file and perform analysis
