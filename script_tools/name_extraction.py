@@ -61,11 +61,11 @@ def analyze_stories(csv_file_path: str):
         story = row['Story']  # Get the story from the current row
         print(f"Analyzing story {index + 1} of {len(df)}...")
 
-        # Prepare the prompt for the GPT model to identify the main character
+        # Prepare the prompts for the GPT model to identify the main character or places
         main_char_prompt = f"Identify the name of the main character and only the name of the main character in this story:\n\n{story}"
-        place_name_prompt = f"Identify the name of the places (cities, towns) and only the name of the places in this story:\n\n{story}"
+        place_name_prompt = f"Identify the name of the places (only real place names) and only the name of the places in this story:\n\n{story}"
         messages = [
-            {"role": "user", "content": place_name_prompt}
+            {"role": "user", "content": place_name_prompt} # Choose which prompt to use depending on main character or place
         ]
 
         # Send the story to the GPT model for analysis
@@ -87,7 +87,7 @@ def analyze_stories(csv_file_path: str):
     df['place'] = [result[1] for result in results]
 
     # Prompt the user for an output file name and save the updated DataFrame
-    output_file = f"place_names_{os.path.basename(csv_file_path)}"
+    output_file = f"placenames_{os.path.basename(csv_file_path)}"
     df.to_csv(output_file, index=False, quoting=csv.QUOTE_ALL)
 
     # Notify the user that the analysis is complete
@@ -134,7 +134,7 @@ if __name__ == "__main__":
 
 
     
-    directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/stories/full_stories'
+    directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/childrens_stories/full_stories'
     for filename in os.listdir(directory):
         print(filename)
         f = os.path.join(directory, filename)
