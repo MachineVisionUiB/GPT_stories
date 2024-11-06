@@ -31,7 +31,7 @@ def extract_noun_phrases(file):
 
 
 if __name__ == "__main__":
-    directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/stories/summaries'
+    directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/childrens_stories/summaries'
     for filename in os.listdir(directory):
         print(filename)
         f = os.path.join(directory, filename)

@@ -41,7 +41,7 @@ def count_names(input_file, output_file):
             writer.writerow([name, count])
 
 # Example usage
-directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/stories/full_stories_analysis/place_names'
+directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/childrens_stories/full_stories_analysis/place_names'
 for filename in os.listdir(directory):
     print(filename)
     f = os.path.join(directory, filename)

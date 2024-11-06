@@ -19,28 +19,43 @@ def load_word_frequency_csvs(csv_files):
 # Function to create a heatmap of word frequencies
 def plot_word_frequencies_heatmap(combined_df, top_n=10):
     # Get the top N words for each source
-    top_words = combined_df.groupby('Source').apply(lambda x: x.nlargest(top_n, 'Frequency')).reset_index(drop=True)
+    top_words = combined_df.groupby('Source').apply(lambda x: x.nlargest(top_n, 'Frequency').head(top_n)).reset_index(drop=True)
+
+    
+    # Get all unique words from the top words across all sources
+    unique_words = top_words['Word'].unique()
+    
+    # Filter the combined dataframe to include only the unique words
+    filtered_df = combined_df[combined_df['Word'].isin(unique_words)]
     
     # Pivot the DataFrame to create a matrix for the heatmap
-    heatmap_data = top_words.pivot(index='Word', columns='Source', values='Frequency').fillna(0)
+    heatmap_data = filtered_df.pivot(index='Word', columns='Source', values='Frequency').fillna(0)
+    
+    # Reorder the rows to match the most frequent words in the heatmap
+    heatmap_data = heatmap_data.loc[unique_words]
     
     # Create the heatmap
     plt.figure(figsize=(10, 6))
     sns.heatmap(heatmap_data, annot=True, fmt='.0f', cmap='Blues', cbar_kws={'label': 'Frequency'})
-    plt.title(f'Top {top_n} Word Frequencies Heatmap')
+    plt.title(f'Top 21 Word Frequencies Heatmap (summaries)')
     plt.xlabel('Source')
     plt.ylabel('Words')
     plt.tight_layout()
-    plt.savefig('word_frequencies_heatmap.png')
+    plt.savefig('word_frequencies_heatmap_1500w_summaries.png')
     plt.show()
 
-# Example usage
-csv_files = [
-    '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/samples/word_freq/100_words/american_stories_word_frequency.csv',
-    '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/samples/word_freq/100_words/norwegian_stories_word_frequency.csv',
-    '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/samples/word_freq/100_words/persian_stories_word_frequency.csv',
-    '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/samples/word_freq/100_words/japanese_stories_word_frequency.csv'
-]  # Add your CSV filenames here
-combined_df = load_word_frequency_csvs(csv_files)
-plot_word_frequencies_heatmap(combined_df, top_n=10)
 
+
+
+if __name__ == "__main__":
+    # Call the analyze_stories function with the input CSV file
+    directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/stories/full_stories_analysis/word_freq'
+    csv_files = []
+    for filename in os.listdir(directory):
+        f = os.path.join(directory, filename)
+        if os.path.isfile(f):
+            csv_files.append(f)
+
+    print(csv_files)
+    combined_df = load_word_frequency_csvs(csv_files)
+    plot_word_frequencies_heatmap(combined_df, top_n=10)

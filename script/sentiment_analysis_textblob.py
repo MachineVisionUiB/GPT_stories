@@ -1,9 +1,7 @@
 import pandas as pd
 from textblob import TextBlob
+import os
 
-# Load the CSV file
-input_filename = input("Enter the input file name: ") + ".csv"
-df = pd.read_csv('/Users/hermannwigers/Documents/AI STORIES/GPT_stories/samples/countries_samples_50words/' + input_filename)
 
 
 def get_sentiment(text: str):
@@ -31,24 +29,34 @@ def get_sentiment(text: str):
     return polarity, subjectivity
 
 
-# Apply sentiment analysis to the second column of the DataFrame
-df[['Polarity', 'Subjectivity']] = df.iloc[:, 1].apply(lambda x: pd.Series(get_sentiment(str(x))))
+
+directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/childrens_stories/summaries'
+
+for filename in os.listdir(directory):
+    print(filename)
+    f = os.path.join(directory, filename)
+    if os.path.isfile(f):
+        df = pd.read_csv(f)
 
 
-# Calculate the averages of the Polarity and Subjectivity columns
-average_polarity = round(df['Polarity'].mean(), 2)
-average_subjectivity = round(df['Subjectivity'].mean(), 2)
+        # Apply sentiment analysis 
+        df[['Polarity', 'Subjectivity']] = df.iloc[:, 4].apply(lambda x: pd.Series(get_sentiment(str(x)))) # Adjust if the column index is different. df.iloc[:, x] where x is the column index
 
 
-# Create a new DataFrame to hold the averages, using 'Average' as a label in the first column
-average_row = pd.DataFrame({'Column1': ['Average'], 'Polarity': [average_polarity], 'Subjectivity': [average_subjectivity]})
+        # Calculate the averages of the Polarity and Subjectivity columns
+        average_polarity = round(df['Polarity'].mean(), 2)
+        average_subjectivity = round(df['Subjectivity'].mean(), 2)
 
 
-# Append the average row to the original DataFrame
-df_with_avg = pd.concat([df, average_row], ignore_index=True)
+        # Create a new DataFrame to hold the averages, using 'Average' as a label in the first column
+        average_row = pd.DataFrame({'Column1': ['Average'], 'Polarity': [average_polarity], 'Subjectivity': [average_subjectivity]})
 
 
-# Prompt the user for the output file name and save the modified DataFrame to a CSV file
-output_filename = input("Enter the output file name: ") + ".csv"
-df_with_avg.to_csv(output_filename, index=False)
+        # Append the average row to the original DataFrame
+        df_with_avg = pd.concat([df, average_row], ignore_index=True)
+
+
+        # Prompt the user for the output file name and save the modified DataFrame to a CSV file
+        output_filename = 'tb_' + filename
+        df_with_avg.to_csv(output_filename, index=False)
 
