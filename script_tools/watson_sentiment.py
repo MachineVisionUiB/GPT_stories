@@ -8,6 +8,7 @@ import time
 import os
 
 # Replace these variables with your own values
+# should I somehow refer to the documentation for the API key and URL?
 api_key = 'FlCsPXUVqv472VYMKv5H5Q935eX9p-_qsM6GOHld6pkE'
 url = 'https://api.eu-de.natural-language-understanding.watson.cloud.ibm.com/instances/51702159-6356-4e72-8f69-f2de11aa007c'
 
@@ -37,28 +38,29 @@ def analyze_emotions(text):
             return None
 
 # Specify the file paths manually
+# Directory containing the CSV files
 directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/childrens_stories/full_stories'
-csv_file_paths = [os.path.join(directory, filename) for filename in os.listdir(directory) if os.path.isfile(os.path.join(directory, filename))]
 
-# Read each specified CSV file and perform analysis
-for csv_file in csv_file_paths:
-    print(f"Analyzing emotions in {csv_file}...")
-    df = pd.read_csv(csv_file)  # Read each CSV file
-    output_data = []  # Reset output data for each file
+# Iterate directly through the directory
+for filename in os.listdir(directory):
+    csv_file = os.path.join(directory, filename)
+    if os.path.isfile(csv_file):
+        print(f"Analyzing emotions in {csv_file}...")
+        df = pd.read_csv(csv_file)  # Read each CSV file
+        output_data = []  # Reset output data for each file
 
-    for index, row in df.iterrows():
-        text_to_analyze = row[1]  # choose the column in the []. [1] is the second column
-        emotions = analyze_emotions(text_to_analyze)  # Analyze emotions
-        if emotions:  # Proceed only if analysis was successful
-            output_data.append({
-                'stories': text_to_analyze,
-                'sadness': emotions['sadness'],
-                'joy': emotions['joy'],
-                'fear': emotions['fear'],
-                'disgust': emotions['disgust'],
-                'anger': emotions['anger']
-            })
-
+        for index, row in df.iterrows():
+            text_to_analyze = row[1]  # Choose the column index, here the second column
+            emotions = analyze_emotions(text_to_analyze)  # Analyze emotions
+            if emotions:  # Proceed only if analysis was successful
+                output_data.append({
+                    'stories': text_to_analyze,
+                    'sadness': emotions['sadness'],
+                    'joy': emotions['joy'],
+                    'fear': emotions['fear'],
+                    'disgust': emotions['disgust'],
+                    'anger': emotions['anger']
+                })
     # Create a DataFrame from the output data and save to a new CSV
     output_df = pd.DataFrame(output_data)
 
