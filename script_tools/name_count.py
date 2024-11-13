@@ -4,6 +4,30 @@ import os
 import re
 
 def count_names(input_file, output_file):
+    """
+    Processes a CSV file to count occurrences of names from a specified column and saves the results to an output file.
+
+    This function reads a CSV file, extracts names from the fifth column of each row, and counts their occurrences.
+    Names are split based on commas, numbers followed by periods (e.g., "1. Earl"), or other non-alphanumeric symbols.
+    The counts are then sorted in descending order and written to an output CSV file.
+
+    Parameters
+    ----------
+    input_file : str
+        Path to the input CSV file containing the names data.
+    output_file : str
+        Path to the output CSV file where name counts will be saved.
+
+    Raises
+    ------
+    IOError
+        If there is an issue reading from `input_file` or writing to `output_file`.
+
+    Examples
+    --------
+    >>> count_names('input.csv', 'output.csv')
+    This will read 'input.csv', count names from the fifth column, and save results to 'output.csv'.
+    """
     # List to store individual names
     names = []
 
@@ -23,10 +47,10 @@ def count_names(input_file, output_file):
 
                 # Clean up extra whitespace and filter out any empty strings
                 split_names = [name.strip() for name in split_names if name.strip()]
-
+                
                 # Extend the names list with these individual names
                 names.extend(split_names)
-
+                
     # Count occurrences of each name
     name_counts = Counter(names)
 
@@ -40,8 +64,8 @@ def count_names(input_file, output_file):
         for name, count in sorted_name_counts:
             writer.writerow([name, count])
 
-# Example usage
-directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/childrens_stories/full_stories_analysis/place_names'
+# Run the name counting function on the provided CSV files in a directory
+directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/childrens_stories/full_stories_analysis/place_names'  # Replace with your directory path
 for filename in os.listdir(directory):
     print(filename)
     f = os.path.join(directory, filename)
