@@ -37,8 +37,8 @@ def analyze_stories(csv_file_path: str):
     Analyzes stories from a CSV file using OpenAI's GPT model.
 
     This function reads stories from a CSV file, sends each story to the GPT model
-    to extract the name of the main character, and saves the results (including the 
-    original story and the identified main character) to a new CSV file.
+    to extract the name of the main character or place names, and saves the results (including the 
+    original story and the identified datapoints) to a new CSV file.
 
     Parameters
     ----------
