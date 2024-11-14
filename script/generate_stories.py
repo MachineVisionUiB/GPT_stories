@@ -36,8 +36,7 @@ def generate_stories(topics: list[str], number_of_stories_per_topic: int):
     Generates plot summaries based on a list of topics using the OpenAI API.
 
     This function takes a list of topics and generates a prompt for each topic.
-    The prompt asks the model to generate a 50-word plot summary for a children's novel
-    based on the topic. For each topic, the specified number of stories are generated 
+    For each topic, the specified number of stories are generated 
     and stored in a list.
 
     Parameters
@@ -93,8 +92,7 @@ def create_dataset(stories, country):
     Creates a CSV file from the generated stories.
 
     This function takes the generated stories, which are stored in a list of tuples,
-    and writes them to a CSV file using pandas. The user is prompted to provide a 
-    filename for the dataset.
+    and writes them to a CSV file using pandas. 
 
     Parameters
     ----------
@@ -125,7 +123,7 @@ def make_prompts(topics, word_count):
     Generates a list of prompts based on a list of topics.
 
     For each topic in the list, this function creates a prompt asking for a
-    plot summary of a specific word count for a children's novel.
+    story, or a children's story of a specific word count.
 
     Parameters
     ----------
