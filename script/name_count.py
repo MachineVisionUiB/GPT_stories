@@ -4,6 +4,25 @@ import os
 import re
 
 def count_names(input_file, output_file):
+    """
+    Count occurrences of individual names in a specified column of a CSV file
+    and write the results to an output CSV file.
+
+    This function extracts names from the fifth column of the input CSV file,
+    splitting based on various delimiters (e.g., commas, numeric labels like "1.").
+    It cleans and counts the occurrences of each name, then writes these counts
+    to an output CSV file in descending order.
+
+    Args:
+        input_file (str): The path to the input CSV file containing names.
+        output_file (str): The path to the output CSV file where results will be saved.
+
+    Example:
+        input_file = '/path/to/input.csv'
+        output_file = '/path/to/output.csv'
+        count_names(input_file, output_file)
+    """
+    
     # List to store individual names
     names = []
 
@@ -40,7 +59,7 @@ def count_names(input_file, output_file):
         for name, count in sorted_name_counts:
             writer.writerow([name, count])
 
-# Example usage
+# run
 directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/childrens_stories/full_stories_analysis/place_names'
 for filename in os.listdir(directory):
     print(filename)
