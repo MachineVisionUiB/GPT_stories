@@ -56,11 +56,14 @@ def generate_stories(topics: list[str], number_of_stories_per_topic: int):
     -------
     >>> generate_stories(["Norwegian", "Japanese"], 2)
     """
-    messages = [{"role": "system", "content": ""}]  # Initial system message
+    
     # word_count = input("Enter the word count: ")  # User input for word count
     word_count = 1500
     prompts = make_prompts(topics, word_count)  # Generate prompts based on topics
+
     stories = []
+
+    messages = [{"role": "system", "content": ""}]  # Initial system message
 
     # Print initial statement about prompts and stories to be generated
     prompt_init_print(prompts, number_of_stories_per_topic)
@@ -93,8 +96,7 @@ def create_dataset(stories, country):
     Creates a CSV file from the generated stories.
 
     This function takes the generated stories, which are stored in a list of tuples,
-    and writes them to a CSV file using pandas. The user is prompted to provide a 
-    filename for the dataset.
+    and writes them to a CSV file using pandas. 
 
     Parameters
     ----------
@@ -124,15 +126,15 @@ def make_prompts(topics, word_count):
     """
     Generates a list of prompts based on a list of topics.
 
-    For each topic in the list, this function creates a prompt asking for a
-    plot summary of a specific word count for a children's novel.
+    For each topic in the list, this function creates a prompt for 
+    either a childrens novel or a novel based on a certain word count.
 
     Parameters
     ----------
     topics : list[str]
         A list of topics, such as countries or cultures.
     word_count : int
-        The word count for the plot summary.
+        The word count for the plot summary or story.
 
     Returns
     -------
@@ -224,5 +226,6 @@ if __name__ == "__main__":
     # Generate stories based on countries and save to CSV
     for country in countries:
         stories = generate_stories([country], 100)
+        
         dataset = create_dataset(stories, country)
     

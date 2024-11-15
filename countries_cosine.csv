@@ -1,0 +1,11 @@
+﻿country;9;8;7;6;5;4;3;2;1
+Russian;Ukrainian (.86);Norwegian (.82);American (.81);Nigerian (.81);Australian (.81);Indian (.78);Israelian (.7);Palestinian (.66);Chinese (.62)
+Nigerian;Ukrainian (.86);Indian (.82);Australian (.82);Russian (.81);Norwegian (.8);American (.78);Israelian (.76);Palestinian (.74);Chinese (.64)
+Indian;Ukrainian (.85);Nigerian (.82);Australian (.81);Russian (.78);American (.78);Norwegian (.78);Israelian (.74);Palestinian (.68);Chinese (.61)
+Ukrainian;Nigerian (.86);Russian (.86);Indian (.85);Australian (.83);Norwegian (.82);American (.8);Israelian (.76);Palestinian (.73);Chinese (.64)
+American;Australian (.9);Russian (.81);Ukrainian (.8);Nigerian (.78);Indian (0.78);Norwegian (.78);Israelian (.69);Palestinian (.62);Chinese (.55)
+Israelian;Palestinian (.9);Nigerian (.76);Ukrainian (.76);Indian (.74);Australian (.74);Russian (.7);American (0.69);Norwegian (0.69);Chinese (.57)
+Australian;American (0.9);Ukrainian (0.83);Nigerian (0.82);Russian (.81);Indian (0.81);Norwegian (.81);Israelian (.74);Palestinian (.67);Chinese (.57)
+Palestinian;Israelian (0.9);Nigerian (.74);Ukrainian (.73);Indian (.68);Australian (.67);Russian (.66);Norwegian (0.65);American (0.62);Chinese (.55)
+Chinese;Nigerian (.64);Ukrainian (0.64);Norwegian (0.63);Russian (.62);Indian (.61);Israelian (0.57);Australian (0.57);Palestinian (.55);American (.55)
+Norwegian;Russian (.82);Ukrainian (.82);Australian (.81);Nigerian (.80);Indian (0.78);American (.78);Israelian (.69);Palestinian (.65);Chinese (.63)

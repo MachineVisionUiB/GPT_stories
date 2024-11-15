@@ -6,15 +6,38 @@ import os
 # Load SpaCy's English language model
 nlp = spacy.load('en_core_web_sm')
 
-# Function to lemmatize and count word frequencies
 def lemmatize_and_count(texts):
+    """
+    Lemmatize words and count frequencies in a list of text entries.
+
+    Processes a list of text entries, lemmatizing each word and counting 
+    the occurrences of each unique word, excluding stop words and non-alphabetic tokens.
+
+    Parameters:
+        texts (list of str): List of text entries to process.
+
+    Returns:
+        Counter: A Counter object with lemmatized word frequencies.
+    """
     word_freq = Counter()
     for doc in nlp.pipe(texts, disable=['ner', 'parser']):
         word_freq.update([token.lemma_.lower() for token in doc if token.is_alpha and not token.is_stop])
     return word_freq
 
-# Read CSV and extract the text column
 def word_frequency_with_lemmatization(input_file):
+    """
+    Count word frequencies in a CSV file and save results.
+
+    Reads a CSV file, extracts text data from a specific column, lemmatizes 
+    and counts word frequencies, and saves the results to a new CSV file.
+
+    Parameters:
+        input_file (str): Path to the input CSV file.
+
+    Raises:
+        IOError: If there is an issue reading from `input_file` or writing to the output file.
+        IndexError: If the specified text column does not exist in the input file.
+    """
     df = pd.read_csv(input_file)
 
     text_column = df.iloc[:, 4].dropna().astype(str)  # df.iloc[:, x] where x refers to the column index
@@ -28,7 +51,6 @@ def word_frequency_with_lemmatization(input_file):
     
     # Create output file name based on the input file name
     output_file = 'word_freq_' + os.path.basename(os.path.normpath(input_file))
-    
     
     # Save the word frequency data to a CSV file
     word_freq_df.to_csv(output_file, index=False)
