@@ -8,16 +8,16 @@ nlp = spacy.load('en_core_web_sm')
 
 def lemmatize_and_count(texts):
     """
-    Lemmatize words and count frequencies in a list of text entries.
+    Perform lemmatization on a list of texts and count word frequencies.
 
-    Processes a list of text entries, lemmatizing each word and counting 
-    the occurrences of each unique word, excluding stop words and non-alphabetic tokens.
+    This function uses SpaCy to lemmatize the words in the provided texts and
+    counts the frequency of each lemma that is an alphabetic word and not a stopword.
 
-    Parameters:
-        texts (list of str): List of text entries to process.
+    Args:
+        texts (iterable of str): List or series of texts to process.
 
     Returns:
-        Counter: A Counter object with lemmatized word frequencies.
+        Counter: A Counter object with word frequencies.
     """
     word_freq = Counter()
     for doc in nlp.pipe(texts, disable=['ner', 'parser']):
@@ -26,39 +26,43 @@ def lemmatize_and_count(texts):
 
 def word_frequency_with_lemmatization(input_file):
     """
-    Count word frequencies in a CSV file and save results.
+    Calculate word frequencies with lemmatization for text in a specified column of a CSV file.
 
-    Reads a CSV file, extracts text data from a specific column, lemmatizes 
-    and counts word frequencies, and saves the results to a new CSV file.
+    Reads a CSV file, extracts a column of text, lemmatizes the words, and calculates
+    the frequency of each unique lemma. The results are saved to a new CSV file with
+    frequencies in descending order.
 
-    Parameters:
-        input_file (str): Path to the input CSV file.
+    Args:
+        input_file (str): The path to the input CSV file.
 
-    Raises:
-        IOError: If there is an issue reading from `input_file` or writing to the output file.
-        IndexError: If the specified text column does not exist in the input file.
+    Returns:
+        None
     """
     df = pd.read_csv(input_file)
 
-    text_column = df.iloc[:, 4].dropna().astype(str)  # df.iloc[:, x] where x refers to the column index
-    
-    # Perform lemmatization and word frequency counting
+    # Extract the target text column for processing
+    text_column = df.iloc[:, 4].dropna().astype(str)  # Adjust column index if necessary
+
+    # Perform lemmatization and count word frequencies
     word_freq = lemmatize_and_count(text_column)
-    
-    # Convert the frequency counter to a DataFrame
+
+    # Convert the frequency data to a DataFrame and sort by frequency
     word_freq_df = pd.DataFrame(word_freq.items(), columns=['Word', 'Frequency'])
     word_freq_df = word_freq_df.sort_values(by='Frequency', ascending=False)
-    
-    # Create output file name based on the input file name
+
+    # Create output file name based on input file name
     output_file = 'word_freq_' + os.path.basename(os.path.normpath(input_file))
-    
+
     # Save the word frequency data to a CSV file
     word_freq_df.to_csv(output_file, index=False)
     print(f'Word frequency saved to {output_file}')
 
 
 if __name__ == "__main__":
+    # Specify directory containing CSV files
     directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/childrens_stories/summaries'
+    
+    # Process each file in the directory
     for filename in os.listdir(directory):
         print(filename)
         f = os.path.join(directory, filename)
