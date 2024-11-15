@@ -3,6 +3,7 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from transformers import pipeline
 import os
 
+# Set the directory containing the CSV files
 directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/stories/summaries'
 
 for filename in os.listdir(directory):
@@ -11,11 +12,10 @@ for filename in os.listdir(directory):
     if os.path.isfile(f):
         df = pd.read_csv(f)
 
-   
+        # Extract text data from the specified column (adjust the index if needed)
+        texts = df.iloc[:, 4].tolist()  # df.iloc[:, x] where x is the column index
 
-        texts = df.iloc[:, 4].tolist() # Adjust if the column index is different. df.iloc[:, x] where x is the column index
-
-        #model_name = 'distilbert-base-uncased-finetuned-sst-2-english'
+        # Load the pre-trained model and tokenizer for emotion analysis
         model_name = "bhadresh-savani/distilbert-base-uncased-emotion"
         tokenizer = AutoTokenizer.from_pretrained(model_name)
         model = AutoModelForSequenceClassification.from_pretrained(model_name)
@@ -23,13 +23,13 @@ for filename in os.listdir(directory):
         # Create a sentiment-analysis pipeline
         sentiment_analyzer = pipeline('sentiment-analysis', model=model, tokenizer=tokenizer, device=0)
 
-        # Apply the sentiment analysis
+        # Apply sentiment analysis to the list of texts
         results = sentiment_analyzer(texts)
 
+        # Append sentiment labels and confidence scores to the DataFrame
         df['sentiment'] = [result['label'] for result in results]
         df['confidence'] = [round(result['score'], 2) for result in results]
 
+        # Generate the output filename with a prefix and save the updated DataFrame to a new CSV file
         output_filename = 'hf_' + filename
-
-        # Save the updated DataFrame to a new CSV file
-        df.to_csv(filename, index=False)
+        df.to_csv(output_filename, index=False)

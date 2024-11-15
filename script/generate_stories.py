@@ -36,8 +36,7 @@ def generate_stories(topics: list[str], number_of_stories_per_topic: int):
     Generates plot summaries based on a list of topics using the OpenAI API.
 
     This function takes a list of topics and generates a prompt for each topic.
-    The prompt asks the model to generate a 50-word plot summary for a children's novel
-    based on the topic. For each topic, the specified number of stories are generated 
+    For each topic, the specified number of stories are generated 
     and stored in a list.
 
     Parameters
@@ -56,14 +55,11 @@ def generate_stories(topics: list[str], number_of_stories_per_topic: int):
     -------
     >>> generate_stories(["Norwegian", "Japanese"], 2)
     """
-    
+    messages = [{"role": "system", "content": ""}]  # Initial system message
     # word_count = input("Enter the word count: ")  # User input for word count
     word_count = 1500
     prompts = make_prompts(topics, word_count)  # Generate prompts based on topics
-
     stories = []
-
-    messages = [{"role": "system", "content": ""}]  # Initial system message
 
     # Print initial statement about prompts and stories to be generated
     prompt_init_print(prompts, number_of_stories_per_topic)
@@ -126,15 +122,15 @@ def make_prompts(topics, word_count):
     """
     Generates a list of prompts based on a list of topics.
 
-    For each topic in the list, this function creates a prompt for 
-    either a childrens novel or a novel based on a certain word count.
+    For each topic in the list, this function creates a prompt asking for a
+    story, or a children's story of a specific word count.
 
     Parameters
     ----------
     topics : list[str]
         A list of topics, such as countries or cultures.
     word_count : int
-        The word count for the plot summary or story.
+        The word count for the plot summary.
 
     Returns
     -------
@@ -226,6 +222,5 @@ if __name__ == "__main__":
     # Generate stories based on countries and save to CSV
     for country in countries:
         stories = generate_stories([country], 100)
-        
         dataset = create_dataset(stories, country)
     
