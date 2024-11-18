@@ -33,8 +33,7 @@ def load_api_key():
     
     openai.api_key = api_key
 
-# Load the API key when the module is imported
-load_api_key()
+
 
 
 
@@ -101,6 +100,8 @@ def analyze_stories(csv_file_path: str, filename: str):
 
 
 def main():
+    # Load the API key when the module is imported
+    load_api_key()
     # Call the analyze_stories function with the input CSV file
     directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/stories'
     for filename in os.listdir(directory):
