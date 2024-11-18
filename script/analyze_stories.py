@@ -100,8 +100,7 @@ def analyze_stories(csv_file_path: str):
     print(f"Analysis complete. Results saved to {output_file}")
 
 
-    
-if __name__ == "__main__":
+def main():
     # Call the analyze_stories function with the input CSV file
     directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/stories'
     for filename in os.listdir(directory):
@@ -112,4 +111,9 @@ if __name__ == "__main__":
         
         if os.path.isfile(f):
             analyze_stories(f)
+
+    
+if __name__ == "__main__":
+    main()
+    
         
