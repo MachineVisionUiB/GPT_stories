@@ -3,10 +3,9 @@ import spacy
 from collections import Counter
 import os
 
-# Load SpaCy's English language model
-nlp = spacy.load('en_core_web_sm')
 
-def lemmatize_and_count(texts):
+
+def lemmatize_and_count(texts, nlp):
     """
     Perform lemmatization on a list of texts and count word frequencies.
 
@@ -58,7 +57,10 @@ def word_frequency_with_lemmatization(input_file):
     print(f'Word frequency saved to {output_file}')
 
 
-if __name__ == "__main__":
+
+def main():
+    # Load SpaCy's English language model
+    nlp = spacy.load('en_core_web_sm')
     # Specify directory containing CSV files
     directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/childrens_stories/summaries'
     
@@ -67,4 +69,8 @@ if __name__ == "__main__":
         print(filename)
         f = os.path.join(directory, filename)
         if os.path.isfile(f):
-            word_frequency_with_lemmatization(f)
+            word_frequency_with_lemmatization(f, nlp)
+
+
+if __name__ == "__main__":
+    main()
