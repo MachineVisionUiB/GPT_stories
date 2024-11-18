@@ -1,0 +1,10 @@
+filename,sentiment,count
+summary_Russian_stories.csv,anger,3
+summary_Russian_stories.csv,fear,21
+summary_Russian_stories.csv,joy,12
+summary_Russian_stories.csv,love,1
+summary_Russian_stories.csv,sadness,19
+summary_Ukrainian_stories.csv,fear,7
+summary_Ukrainian_stories.csv,joy,48
+summary_Ukrainian_stories.csv,love,1
+summary_Ukrainian_stories.csv,sadness,7
