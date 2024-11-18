@@ -28,8 +28,7 @@ def load_api_key():
     openai.api_key = api_key
 
 
-# Load the API key when the module is imported
-load_api_key()
+
 
 
 def analyze_stories(csv_file_path: str):
@@ -122,22 +121,24 @@ def analyze_stories(csv_file_path: str):
 #         print("No file selected.")
 
 
-if __name__ == "__main__":
-    """
-    Entry point for the script.
+def main():
+    # Load the OpenAI API key
+    load_api_key()
 
-    This section of the code calls the `analyze_stories` function with a specified
-    CSV file path containing the stories to be analyzed.
-    """
-    # # Prompt the user to select a file for analysis
-    # filepath = open_file()
-
-
-    
     directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/childrens_stories/full_stories'
     for filename in os.listdir(directory):
         print(filename)
         f = os.path.join(directory, filename)
         if os.path.isfile(f):
             analyze_stories(f)
+
+if __name__ == "__main__":
+    main()
+
+    # # Prompt the user to select a file for analysis
+    # filepath = open_file()
+
+
+    
+    
    
