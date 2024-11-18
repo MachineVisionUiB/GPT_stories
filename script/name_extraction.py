@@ -1,23 +1,14 @@
 import pandas as pd
 import openai
-import csv
-from dotenv import load_dotenv
 import os
-import tkinter as tk
-from tkinter import filedialog
+from dotenv import load_dotenv
+from collections import Counter
+import re
+
 
 def load_api_key():
     """
     Loads the OpenAI API key from environment variables.
-
-    This function uses python-dotenv to load environment variables from a .env file,
-    retrieves the OPENAI_API_KEY, and sets it for the OpenAI client. If the API key
-    is not found, it raises a ValueError.
-
-    Raises
-    ------
-    ValueError
-        If the API key is not found in the environment variables.
     """
     load_dotenv()  # Load environment variables from .env file
     api_key = os.getenv("OPENAI_API_KEY")
@@ -28,117 +19,143 @@ def load_api_key():
     openai.api_key = api_key
 
 
+def initiate_chat():
+    
+    messages = [{"role": "system", "content": ""}]
+    messages.append({"role": "user", "content": """Identify the name of the main character and only the name of the main character in this story:\n\n**Chapter 1: The Call of the Grove**
+
+In a small village nestled between the misty hills of southern China, legends whispered through the air like a gentle breeze. The villagers of Xianglin spoke of the Wu Yi Bamboo Grove, a place where the wind carried the secrets of the ancients and where the spirits of nature danced under the moonlight. For centuries, the grove had remained untouched, a sanctuary for those seeking solace from the tumult of life.
+
+Li Mei, a spirited young woman of twenty, had always felt a magnetic pull towards the grove. With her raven-black hair cascading in soft waves and her almond-shaped eyes shimmering with curiosity, she often wandered to the edge of the forest, listening to the rustle of the bamboo. The villagers warned her of the grove's powers, tales of lost souls and enchanting encounters, but Li Mei's heart was a canvas painted with dreams, and fear was merely a distant shadow.
+
+One fateful evening, as the sun dipped below the horizon, casting a golden hue over the landscape, Li Mei made her decision. She would venture into the grove, driven by an insatiable hunger for understanding, for connection with the world around her. With a woven basket on her arm, filled with offerings of rice cakes and incense, she stepped into the emerald embrace of the bamboo.
+
+The path was narrow, winding like a serpent, flanked by towering stalks that swayed gently with the evening breeze. On the way she saw visions of her friend, Sung Lee. As she walked deeper into the grove, the air thickened with an otherworldly presence. Shadows danced, and the soft sound of whispers brushed against her ears. ""Welcome,"" they seemed to say, ""we’ve been waiting for you."""})
+    messages.append({"role": "system", "content": "Li Mei"})
+    
+    return messages
 
 
-
-def analyze_stories(csv_file_path: str):
+def analyze_stories(directory):
     """
-    Analyzes stories from a CSV file using OpenAI's GPT model.
-
-    This function reads stories from a CSV file, sends each story to the GPT model
-    to extract the name of the main character, and saves the results (including the 
-    original story and the identified main character) to a new CSV file.
+    Analyzes stories from CSV files in a directory using OpenAI's GPT model.
 
     Parameters
     ----------
-    csv_file_path : str
-        The path to the input CSV file containing the stories to be analyzed.
+    directory : str
+        Path to the directory containing CSV files with stories.
 
     Returns
     -------
-    None
-        The function saves the results to a new CSV file but doesn't return anything.
+    dict
+        A dictionary of DataFrames, where keys are filenames and values are DataFrames
+        with the original stories and identified names/places.
     """
-    # Read the CSV file into a DataFrame
-    df = pd.read_csv(csv_file_path)
+    dfs = {}
 
-    # Initialize a list to store analysis results
-    results = []
-
-    # Iterate through each story in the DataFrame
-    for index, row in df.iterrows():
-        story = row['Story']  # Get the story from the current row
-        print(f"Analyzing story {index + 1} of {len(df)}...")
-
-        # Prepare the prompts for the GPT model to identify the main character or places
-        main_char_prompt = f"Identify the name of the main character and only the name of the main character in this story:\n\n{story}"
-        place_name_prompt = f"Identify the name of the places (only real place names) and only the name of the places in this story:\n\n{story}"
-        messages = [
-            {"role": "user", "content": place_name_prompt} # Choose which prompt to use depending on main character or place
-        ]
-
-        # Send the story to the GPT model for analysis
-        response = openai.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=messages,
-            temperature=0.8,
-            n=1,
-            max_tokens=300
-        )
-
-        # Extract the main character's name from the response
-        main_char = response.choices[0].message.content
+    for filename in os.listdir(directory):
+        file_path = os.path.join(directory, filename)
+        if not os.path.isfile(file_path):
+            continue
         
-        # Append the original story and main character to the results list
-        results.append((story, main_char))
-    
-    # Add the identified main characters or places to the DataFrame as a new column
-    df['place'] = [result[1] for result in results]
+        # Read the CSV file into a DataFrame
+        df = pd.read_csv(file_path)
 
-    # Prompt the user for an output file name and save the updated DataFrame
-    output_file = f"placenames_{os.path.basename(csv_file_path)}"
-    df.to_csv(output_file, index=False, quoting=csv.QUOTE_ALL)
+        # Ensure 'Story' column exists
+        if 'Story' not in df.columns:
+            print(f"Skipping {filename}: 'Story' column not found.")
+            continue
 
-    # Notify the user that the analysis is complete
-    print(f"Analysis complete. Results saved to {output_file}")
+        # Initialize lists for storing GPT results
+        results_names = []
+
+        for index, row in df.iterrows():
+            story = row['Story']
+            print(f"Analyzing story {index + 1} of {len(df)} in {filename}...")
+
+            # Prepare prompts
+            main_char_prompt = f"Identify the name of the main character and only the name of the main character in this story:\n\n{story}"
+            place_name_prompt = f"Identify the name of the places (only real place names) and only the name of the places in this story:\n\n{story}"
+
+            # Get main character name
+            messages = initiate_chat()
+            messages.append({"role": "user", "content": main_char_prompt})
+            main_char_response = openai.chat.completions.create(
+                model="gpt-4-0613",
+                messages=messages,
+                temperature=0.8,
+                max_tokens=50,
+            )
+            main_char = main_char_response.choices[0].message.content.strip()
+            results_names.append(main_char)
+
+            
+
+        # Add results to DataFrame
+        df['Name'] = results_names
+
+        # Store the updated DataFrame
+        dfs[filename] = df
+
+    return dfs
 
 
+def count_names(dataframes):
+    """
+    Counts occurrences of names in the 'Name' column across multiple DataFrames.
 
+    Parameters
+    ----------
+    dataframes : dict
+        A dictionary of DataFrames where the 'Name' column contains names to count.
 
-# def open_file():
-#     """
-#     Opens a file picker dialog to select a CSV file for analysis.
+    Returns
+    -------
+    dict
+        A dictionary where keys are filenames and values are DataFrames with name counts.
+    """
+    result_counts = {}
 
-#     This function uses tkinter to create a file picker dialog that allows the user
-#     to select a CSV file. The selected file path is then printed to the console.
+    for filename, df in dataframes.items():
+        if 'Name' not in df.columns:
+            print(f"Skipping {filename}: 'Name' column not found.")
+            continue
 
-#     Returns
-#     -------
-#     None
-#         The function doesn't return anything.
-#     """
-#     # Create a hidden root window
-#     root = tk.Tk()
-#     root.withdraw()  # Hide the main tkinter window
+        # Extract and count names
+        names = []
+        for name_list in df['Name']:
+            split_names = re.split(r',|\d+\.\s*|[^a-zA-Z\s]+', name_list)
+            names.extend([name.strip() for name in split_names if name.strip()])
 
-#     # Open the file picker dialog
-#     file_path = filedialog.askopenfilename(title="Select a file")
+        name_counts = Counter(names)
 
-#     # Print or use the file path in a variable
-#     if file_path:
-#         return file_path
-#     else:
-#         print("No file selected.")
+        # Create a new DataFrame for counts
+        counts_df = pd.DataFrame(name_counts.items(), columns=['Name', 'Count']).sort_values(by='Count', ascending=False)
+        result_counts[filename] = counts_df
+
+    return result_counts
 
 
 def main():
-    # Load the OpenAI API key
+    # Load the API key
     load_api_key()
 
-    directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/childrens_stories/full_stories'
-    for filename in os.listdir(directory):
-        print(filename)
-        f = os.path.join(directory, filename)
-        if os.path.isfile(f):
-            analyze_stories(f)
+    # Directory containing CSV files
+    input_directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/stories/full_stories2'
+
+    # Analyze stories and get DataFrames
+    analyzed_dataframes = analyze_stories(input_directory)
+    print(analyzed_dataframes)
+
+    # Count names in the analyzed DataFrames
+    name_counts = count_names(analyzed_dataframes)
+
+    # Print or process the results
+    for filename, counts_df in name_counts.items():
+        counts_df.to_csv(f'output_{filename}', index=False)
+        print(f"Results for {filename}:")
+        print(counts_df.head())  # Display top counts for each file
+
 
 if __name__ == "__main__":
     main()
-
-    # # Prompt the user to select a file for analysis
-    # filepath = open_file()
-
-
-    
-    
-   
