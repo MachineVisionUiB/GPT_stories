@@ -55,9 +55,9 @@ def generate_stories(topics: list[str], number_of_stories_per_topic: int):
     -------
     >>> generate_stories(["Norwegian", "Japanese"], 2)
     """
-    messages = [{"role": "system", "content": ""}]  # Initial system message
+    
     # word_count = input("Enter the word count: ")  # User input for word count
-    word_count = 1500
+    word_count = 100
     prompts = make_prompts(topics, word_count)  # Generate prompts based on topics
     stories = []
 
@@ -69,7 +69,9 @@ def generate_stories(topics: list[str], number_of_stories_per_topic: int):
         prompt_counter_print(prompts, prompt_number)
 
         for story_iteration in range(number_of_stories_per_topic):
+            messages = [{"role": "system", "content": ""}]  # Initial system message
             messages.append({"role": "user", "content": prompts[prompt_number]})
+            print(messages)
             response = openai.chat.completions.create(
                 model="gpt-4o-mini",
                 messages=messages,
