@@ -38,7 +38,7 @@ load_api_key()
 
 
 
-def analyze_stories(csv_file_path: str):
+def analyze_stories(csv_file_path: str, filename: str):
     """
     Analyzes stories from a CSV file using OpenAI's GPT model.
 
@@ -110,7 +110,7 @@ def main():
         print(f)
         
         if os.path.isfile(f):
-            analyze_stories(f)
+            analyze_stories(f, filename)
 
     
 if __name__ == "__main__":
