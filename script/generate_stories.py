@@ -27,8 +27,6 @@ def load_api_key():
     openai.api_key = api_key
 
 
-# Load the API key when the module is imported
-load_api_key()
 
 
 def generate_stories(topics: list[str], number_of_stories_per_topic: int):
@@ -215,7 +213,16 @@ def test_make_prompts():
 
 # ----- END OF TESTS -----#
 
+def main():
+    # Load the API key when the module is imported
+    load_api_key()
+    # Generate stories based on countries and save to CSV
+    for country in countries:
+        stories = generate_stories([country], 100)
+        dataset = create_dataset(stories, country)
+
 if __name__ == "__main__":
+    main()
     cultures = ["Native American", "Asian American"]
     # countries childrens novel = american, indian, nigerian, norwegian, australian, russian, ukrainian, israeli, palestinian, chinese, 
     # countries novel = american, indian, nigerian, norwegian, australian, russian, ukrainian, israeli, palestinian, chinese, 
