@@ -41,12 +41,4 @@ plt.tight_layout()
 plt.savefig('stories_cosine_similarity_heatmap.png')
 plt.show()
 
-# # Venn Diagram (limited to 2 or 3 files)
-# if len(word_sets) == 2:
-#     venn2(word_sets, keys[:2])
-# elif len(word_sets) == 3:
-#     venn3(word_sets, keys[:3])
-# else:
-#     print("Venn diagrams only support up to 3 sets.")
-# plt.title("Word Overlap")
-# plt.show()
+
