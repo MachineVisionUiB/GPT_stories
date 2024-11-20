@@ -90,3 +90,9 @@ for csv_file in csv_file_paths:
 
 print("Emotion analysis completed.")
 
+
+def main(api_key, url):
+    pass
+
+if __name__ == "main":
+    main()
