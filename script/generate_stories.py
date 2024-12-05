@@ -217,15 +217,21 @@ def main():
     # Load the API key when the module is imported
     load_api_key()
     # Generate stories based on countries and save to CSV
+    country_datasets = []
     for country in countries:
         stories = generate_stories([country], 100)
         dataset = create_dataset(stories, country)
+        country_datasets.append(dataset)
+    return country_datasets
+
+
 
 if __name__ == "__main__":
     main()
-    cultures = ["Native American", "Asian American"]
-    # countries childrens novel = american, indian, nigerian, norwegian, australian, russian, ukrainian, israeli, palestinian, chinese, 
-    # countries novel = american, indian, nigerian, norwegian, australian, russian, ukrainian, israeli, palestinian, chinese, 
+
+
+
+
     countries = ["American", "Indian", "Nigerian", "Norwegian", "Australian", "Russian", "Ukrainian", "Israelian", "Palestinian", "Chinese"]
     
     # Generate stories based on countries and save to CSV
