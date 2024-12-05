@@ -49,44 +49,47 @@ def analyze_emotions(text):
         else:
             print(f"Error: {e}")
             return None
+        
 
-# Directory and CSV file paths
-directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/childrens_stories/full_stories'
-csv_file_paths = [os.path.join(directory, filename) for filename in os.listdir(directory) if os.path.isfile(os.path.join(directory, filename))]
 
-# Process each CSV file and perform emotion analysis
-for csv_file in csv_file_paths:
-    print(f"Analyzing emotions in {csv_file}...")
-    df = pd.read_csv(csv_file)  # Load the current CSV file
-    output_data = []  # Reset output data for each file
+def data_processing(input):
+    # Directory and CSV file paths
+    directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/childrens_stories/full_stories'
+    csv_file_paths = [os.path.join(directory, filename) for filename in os.listdir(directory) if os.path.isfile(os.path.join(directory, filename))]
 
-    for index, row in df.iterrows():
-        text_to_analyze = row[1]  # Adjust column index as needed
-        emotions = analyze_emotions(text_to_analyze)  # Perform emotion analysis
-        if emotions:  # Only proceed if analysis was successful
-            output_data.append({
-                'stories': text_to_analyze,
-                'sadness': emotions['sadness'],
-                'joy': emotions['joy'],
-                'fear': emotions['fear'],
-                'disgust': emotions['disgust'],
-                'anger': emotions['anger']
-            })
+    # Process each CSV file and perform emotion analysis
+    for csv_file in csv_file_paths:
+        print(f"Analyzing emotions in {csv_file}...")
+        df = pd.read_csv(csv_file)  # Load the current CSV file
+        output_data = []  # Reset output data for each file
 
-    # Create a DataFrame from the collected emotion data and save it
-    output_df = pd.DataFrame(output_data)
+        for index, row in df.iterrows():
+            text_to_analyze = row[1]  # Adjust column index as needed
+            emotions = analyze_emotions(text_to_analyze)  # Perform emotion analysis
+            if emotions:  # Only proceed if analysis was successful
+                output_data.append({
+                    'stories': text_to_analyze,
+                    'sadness': emotions['sadness'],
+                    'joy': emotions['joy'],
+                    'fear': emotions['fear'],
+                    'disgust': emotions['disgust'],
+                    'anger': emotions['anger']
+                })
 
-    # Calculate emotion averages and append them as a summary row
-    if not output_df.empty:
-        averages = output_df[['sadness', 'joy', 'fear', 'disgust', 'anger']].mean().round(2)
-        avg_row = pd.DataFrame([['Averages'] + averages.tolist()], columns=output_df.columns)
-        output_df = pd.concat([output_df, avg_row], ignore_index=True)
+        # Create a DataFrame from the collected emotion data and save it
+        output_df = pd.DataFrame(output_data)
 
-    # Save the results to a new CSV file with a unique name
-    output_filename = f"emotion_analysis_{os.path.basename(csv_file)}"
-    output_path = os.path.join(directory, output_filename)
-    output_df.to_csv(output_path, index=False)
-    print(f"Emotion analysis saved to {output_filename}")
+        # Calculate emotion averages and append them as a summary row
+        if not output_df.empty:
+            averages = output_df[['sadness', 'joy', 'fear', 'disgust', 'anger']].mean().round(2)
+            avg_row = pd.DataFrame([['Averages'] + averages.tolist()], columns=output_df.columns)
+            output_df = pd.concat([output_df, avg_row], ignore_index=True)
+
+        # Save the results to a new CSV file with a unique name
+        output_filename = f"emotion_analysis_{os.path.basename(csv_file)}"
+        output_path = os.path.join(directory, output_filename)
+        output_df.to_csv(output_path, index=False)
+        print(f"Emotion analysis saved to {output_filename}")
 
 print("Emotion analysis completed.")
 

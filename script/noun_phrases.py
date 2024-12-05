@@ -5,46 +5,42 @@ import os
 
 def extract_noun_phrases(file):
     """
-    Extract and count noun phrases from a specified column in a CSV file
-    and save the counts to a new CSV file.
-
-    This function reads a CSV file, extracts text from a specified column,
-    and uses TextBlob to identify noun phrases. It counts occurrences of each
-    noun phrase and writes the results to a new CSV file in descending order
-    of frequency.
+    Extract and count multi-word noun phrases (containing a space) from a specified 
+    column in a CSV file and save the counts to a new CSV file.
 
     Args:
         file (str): The path to the input CSV file containing text data.
 
-    Example:
-        file = '/path/to/input.csv'
-        extract_noun_phrases(file)
+    Returns:
+        pd.DataFrame: DataFrame containing filtered noun phrases and their counts.
     """
     
     df = pd.read_csv(file)
     # Extract stories from the fifth column
     stories = df.iloc[:, 4].tolist()  # Adjust if the column index is different
 
-    # Extract noun phrases
+    # Extract noun phrases 
     noun_phrases = []
     for story in stories:
         blob = TextBlob(story)
         noun_phrases.extend(blob.noun_phrases)
 
+    # Filter noun phrases to include only those with a space
+    multi_word_phrases = [phrase for phrase in noun_phrases if ' ' in phrase]
+
     # Count and sort noun phrases
-    noun_phrase_counts = Counter(noun_phrases)
+    noun_phrase_counts = Counter(multi_word_phrases)
     sorted_noun_phrases = noun_phrase_counts.most_common()
 
     # Create a DataFrame for the output
     output_df = pd.DataFrame(sorted_noun_phrases, columns=['Noun Phrase', 'Count'])
 
-    # Save to a new CSV file
-    output_file = 'noun_phrases_' + os.path.basename(os.path.normpath(file))  # Replace with your desired output file path
-    output_df.to_csv(output_file, index=False)
+    return output_df
 
-if __name__ == "__main__":
+
+def main():
     """
-    Process all CSV files in the specified directory to extract noun phrases,
+    Process all CSV files in the specified directory to extract multi-word noun phrases,
     count their occurrences, and save each result to a new CSV file.
     """
     
@@ -53,4 +49,14 @@ if __name__ == "__main__":
         print(filename)
         f = os.path.join(directory, filename)
         if os.path.isfile(f):
-            extract_noun_phrases(f)
+            output_df = extract_noun_phrases(f)
+            # Save the output to a CSV file
+            # output_file = 'filtered_noun_phrases_' + os.path.basename(f)
+            # output_df.to_csv(output_file, index=False)
+    
+    return output_df
+        
+
+
+if __name__ == "__main__":
+    main()

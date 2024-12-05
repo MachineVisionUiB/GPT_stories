@@ -50,7 +50,7 @@ def count_high_scoring_sentiments(input_df, threshold=0.85):
     return results
 
 def main():
-    directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/stories/summaries1'
+    directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/stories/full_stories2'
     input_df = sentiment_analysis(directory)
     print("Sentiment Analysis Output:")
     print(input_df.head())  # Preview the combined DataFrame
