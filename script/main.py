@@ -21,49 +21,58 @@ def cli(ctx):
 @cli.command()
 @click.argument('countries')
 @click.argument('num_story_per_topic', type=int)
-def generate():
+@click.pass_context()
+def generate(ctx, countries, num_story_per_topic):
     """Generate stories."""
-    generate_stories()
+    ctx.obj['stories'] = generate_stories(countries, num_story_per_topic)
 
 @cli.command()
-def analyze():
+@click.pass_context()
+def analyze(ctx):
     """Analyze stories."""
-    analyze_stories()
+
+    analyze_stories(ctx)
 
 @cli.command()
-def extract_names():
+@click.pass_context()
+def extract_names(ctx):
     """Extract names from stories."""
-    extract_names()
+    extract_names(ctx)
 
 @cli.command()
-def extract_noun_phrases():
+@click.pass_context()
+def extract_noun_phrases(ctx):
     """Extract noun phrases from stories."""
-    extract_noun_phrases()
+    extract_noun_phrases(ctx)
 
 @cli.command()
-def tb_sentiment_analysis():
+@click.pass_context()
+def tb_sentiment_analysis(ctx):
     """Perform sentiment analysis using TextBlob."""
-    tb_sentiment()
+    tb_sentiment(ctx)
 
 @cli.command()
-def hf_sentiment_analysis():
+@click.pass_context()
+def hf_sentiment_analysis(ctx):
     """Perform sentiment analysis using HuggingFace."""
-    hf_sentiment()
+    hf_sentiment(ctx)
+
+# @cli.command()
+# def watson_sentiment_analysis():
+#     """Perform sentiment analysis using Watson."""
+#     watson_sentiment()
 
 @cli.command()
-def watson_sentiment_analysis():
-    """Perform sentiment analysis using Watson."""
-    watson_sentiment()
-
-@cli.command()
-def compare_words():
+@click.pass_context()
+def compare_words(ctx):
     """Compare words in stories."""
-    word_compare()
+    word_compare(ctx)
 
 @cli.command()
-def word_frequency():
+@click.pass_context()
+def word_frequency(ctx):
     """Calculate word frequency in stories."""
-    word_freq()
+    word_freq(ctx)
 
 if __name__ == '__main__':
     cli()
