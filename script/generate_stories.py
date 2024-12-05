@@ -69,7 +69,6 @@ def generate_stories(topics: list[str], number_of_stories_per_topic: int):
         for story_iteration in range(number_of_stories_per_topic):
             messages = [{"role": "system", "content": ""}]  # Initial system message
             messages.append({"role": "user", "content": prompts[prompt_number]})
-            print(messages)
             response = openai.chat.completions.create(
                 model="gpt-4o-mini",
                 messages=messages,
@@ -213,15 +212,16 @@ def test_make_prompts():
 
 # ----- END OF TESTS -----#
 
-def main():
+def main(countries, num_story_per_topic):
     # Load the API key when the module is imported
     load_api_key()
     # Generate stories based on countries and save to CSV
     country_datasets = []
     for country in countries:
-        stories = generate_stories([country], 100)
+        stories = generate_stories([country], num_story_per_topic)
         dataset = create_dataset(stories, country)
         country_datasets.append(dataset)
+    print(country_datasets)
     return country_datasets
 
 
@@ -232,10 +232,10 @@ if __name__ == "__main__":
 
 
 
-    countries = ["American", "Indian", "Nigerian", "Norwegian", "Australian", "Russian", "Ukrainian", "Israelian", "Palestinian", "Chinese"]
+    # countries = ["American", "Indian", "Nigerian", "Norwegian", "Australian", "Russian", "Ukrainian", "Israelian", "Palestinian", "Chinese"]
     
-    # Generate stories based on countries and save to CSV
-    for country in countries:
-        stories = generate_stories([country], 100)
-        dataset = create_dataset(stories, country)
+    # # Generate stories based on countries and save to CSV
+    # for country in countries:
+    #     stories = generate_stories([country], 100)
+    #     dataset = create_dataset(stories, country)
     
