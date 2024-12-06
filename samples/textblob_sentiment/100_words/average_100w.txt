@@ -1,0 +1,5 @@
+Countries	Average polarity	Average subjectivty
+American	0.15	0.68
+Japanese	0.18	0.65
+Norwegian	0.22	0.64
+Persian	0.25	0.68
