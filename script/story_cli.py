@@ -82,7 +82,6 @@ def check_context(ctx):
 
 
 cli.add_command(generate)
-cli.add_command(analyze)
 cli.add_command(extract_names)
 cli.add_command(extract_noun_phrases)
 cli.add_command(tb_sentiment_analysis)
