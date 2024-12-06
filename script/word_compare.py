@@ -7,8 +7,8 @@ import os
 
 
 def main():
+    
     # Load the data
-
     directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/stories/full_stories_analysis/word_freq'
     # List all CSV files in the directory
     csv_files = [f for f in os.listdir(directory) if f.endswith('.csv')]
