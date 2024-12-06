@@ -21,7 +21,7 @@ def sentiment_analysis(directory):
             df = pd.read_csv(f)
 
             # Extract text data from the specified column (adjust the index if needed)
-            texts = df.iloc[:, 4].tolist()
+            texts = df.iloc[:, 1].tolist()
 
             # Apply sentiment analysis to the list of texts
             results = sentiment_analyzer(texts)

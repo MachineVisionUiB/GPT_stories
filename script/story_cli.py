@@ -1,11 +1,10 @@
 import click
 from generate_stories import main as generate_stories
-from analyze_stories import main as analyze_stories
+# from analyze_stories import main as analyze_stories
 from name_extraction import main as extract_names
 from noun_phrases import main as extract_noun_phrases
 from sentiment_analysis_textblob import main as tb_sentiment
 from sentiment_huggingface import main as hf_sentiment
-# from watson_sentiment import main as watson_sentiment
 from word_compare import main as word_compare
 from word_freq import main as word_freq
 
@@ -27,12 +26,12 @@ def generate(ctx, countries, num_story_per_topic):
     countries = list(countries)
     ctx.obj['stories'] = generate_stories(countries, num_story_per_topic)
 
-@cli.command()
-@click.pass_context
-def analyze(ctx):
-    """Analyze stories."""
 
-    analyze_stories(ctx)
+# @cli.command()
+# @click.pass_context
+# def analyze(ctx):
+#     """Analyze stories."""
+#     analyze_stories(ctx)
 
 @cli.command()
 @click.pass_context
