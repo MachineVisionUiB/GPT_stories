@@ -55,7 +55,7 @@ def generate_stories(topics: list[str], number_of_stories_per_topic: int):
     """
     
     # word_count = input("Enter the word count: ")  # User input for word count
-    word_count = 100
+    word_count = 350
     prompts = make_prompts(topics, word_count)  # Generate prompts based on topics
     stories = []
 
@@ -107,12 +107,12 @@ def create_dataset(stories, country):
     df = pd.DataFrame(stories, columns=['Story ID', 'Story', 'Prompt', 'Topic'])
 
     # Generate a unique filename from user input
-    filename =  country + "_children_stories.csv"
+    filepath = "./data/stories/" + country + "_stories.csv"
 
     # Save the DataFrame to a CSV file
-    df.to_csv(filename, index=False, quoting=csv.QUOTE_ALL)
+    df.to_csv(filepath, index=False, quoting=csv.QUOTE_ALL)
 
-    print(f"Dataset saved to {filename}")
+    print(f"\nDataset saved to {filepath}\n")
 
     return df
 
@@ -221,13 +221,13 @@ def main(countries, num_story_per_topic):
         stories = generate_stories([country], num_story_per_topic)
         dataset = create_dataset(stories, country)
         country_datasets.append(dataset)
-    print(country_datasets)
+    print("Created stories\n\n-------------------\n\n")
     return country_datasets
 
 
 
 if __name__ == "__main__":
-    main()
+    main(["American", "Indian", "Nigerian"], 3)
 
 
 
