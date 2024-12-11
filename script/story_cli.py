@@ -7,88 +7,96 @@ from sentiment_analysis_textblob import main as tb_sentiment
 from sentiment_huggingface import main as hf_sentiment
 from word_compare import main as word_compare
 from word_freq import main as word_freq
+import csv
+import os
 
 
 
 @click.group()
-@click.pass_context
-def cli(ctx):
-    """CLI for story processing tasks."""
-    ctx.ensure_object(dict)
+def cli():
+    pass
     
 
 @cli.command()
-@click.argument('countries', nargs=-1)
+@click.argument('countries', nargs=-1, type=str) # country codes or 'all' for all countries
 @click.argument('num_story_per_topic', type=int)
-@click.pass_context
-def generate(ctx, countries, num_story_per_topic):
+def run(countries, num_story_per_topic):
     """Generate stories."""
-    countries = list(countries)
-    ctx.obj['stories'] = generate_stories(countries, num_story_per_topic)
+    print("Generating stories...")
+    # Read the country codes from the CSV file
+    with open ("country_codes.csv", 'r', encoding="utf-8") as f:
+        reader = csv.reader(f)
+        next(reader) 
+        for line in reader:
+            if line [3] != "":
+                country_code = line[0]
+                country_name = line[1]
+                demonym = line[3]
+
+                if 'all' in countries and len(countries) == 1:
+                    generate_stories(num_story_per_topic, demonym, country_code, country_name)
+
+                elif country_code in countries:
+                     generate_stories(num_story_per_topic, demonym, country_code, country_name)
+                
+                    
+
+
+
+@cli.command()
+@click.argument('countries', nargs=-1, type=str) # country codes or 'all' for all countries
+def analyze(countries):
+    for dirpath in os.listdir('../test_data'):
+        print(dirpath)
+    
+        if 'all' in countries:
+            analyze_stories(dirpath)
+        elif dirpath.split('/')[-1] in countries:
+            analyze_stories(dirpath)
+
+
+    
+def analyze_stories(dir):
+    extract_names(dir)
 
 
 # @cli.command()
 # @click.pass_context
-# def analyze(ctx):
-#     """Analyze stories."""
-#     analyze_stories(ctx)
-
-@cli.command()
-@click.pass_context
-def extract_names(ctx):
-    """Extract names from stories."""
-    extract_names(ctx)
-
-@cli.command()
-@click.pass_context
-def extract_noun_phrases(ctx):
-    """Extract noun phrases from stories."""
-    extract_noun_phrases(ctx)
-
-@cli.command()
-@click.pass_context
-def tb_sentiment_analysis(ctx):
-    """Perform sentiment analysis using TextBlob."""
-    tb_sentiment(ctx)
-
-@cli.command()
-@click.pass_context
-def hf_sentiment_analysis(ctx):
-    """Perform sentiment analysis using HuggingFace."""
-    hf_sentiment(ctx)
+# def extract_names(ctx):
+#     """Extract names from stories."""
+#     extract_names(ctx)
 
 # @cli.command()
-# def watson_sentiment_analysis():
-#     """Perform sentiment analysis using Watson."""
-#     watson_sentiment()
+# @click.pass_context
+# def extract_noun_phrases(ctx):
+#     """Extract noun phrases from stories."""
+#     extract_noun_phrases(ctx)
 
-@cli.command()
-@click.pass_context
-def compare_words(ctx):
-    """Compare words in stories."""
-    word_compare(ctx)
+# @cli.command()
+# @click.pass_context
+# def tb_sentiment_analysis(ctx):
+#     """Perform sentiment analysis using TextBlob."""
+#     tb_sentiment(ctx)
 
-@cli.command()
-@click.pass_context
-def word_frequency(ctx):
-    """Calculate word frequency in stories."""
-    word_freq(ctx)
+# @cli.command()
+# @click.pass_context
+# def word_frequency(ctx):
+#     """Calculate word frequency in stories."""
+#     word_freq(ctx)
 
-@cli.command()
-@click.pass_context
-def check_context(ctx):
-    """Check the current context."""
-    click.echo(f"Context contents: {ctx.obj}")
+# @cli.command()
+# @click.pass_context
+# def check_context(ctx):
+#     """Check the current context."""
+#     click.echo(f"Context contents: {ctx.obj}")
 
 
-cli.add_command(generate)
-cli.add_command(extract_names)
-cli.add_command(extract_noun_phrases)
-cli.add_command(tb_sentiment_analysis)
-cli.add_command(hf_sentiment_analysis)
-cli.add_command(compare_words)
-cli.add_command(word_frequency)
-cli.add_command(check_context)
+cli.add_command(run)
+# cli.add_command(extract_names)
+# cli.add_command(extract_noun_phrases)
+# cli.add_command(tb_sentiment_analysis)
+# cli.add_command(word_frequency)
+# cli.add_command(check_context)
 
 
 if __name__ == '__main__':
