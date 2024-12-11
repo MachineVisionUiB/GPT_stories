@@ -3,7 +3,12 @@ import openai
 import pandas as pd
 from dotenv import load_dotenv
 import csv
+from datetime import date
+import time
 
+
+# time program execution
+start_time = time.time()
 
 def load_api_key():
     """
@@ -29,7 +34,7 @@ def load_api_key():
 
 
 
-def generate_stories(topics: list[str], number_of_stories_per_topic: int):
+def generate_stories(number_of_stories_per_topic: int, demonym: str, country_code: str, country_name: str):
     """
     Generates plot summaries based on a list of topics using the OpenAI API.
 
@@ -55,38 +60,39 @@ def generate_stories(topics: list[str], number_of_stories_per_topic: int):
     """
     
     # word_count = input("Enter the word count: ")  # User input for word count
-    word_count = 350
-    prompts = make_prompts(topics, word_count)  # Generate prompts based on topics
+    word_count = 50
+    prompt = f"Write a {word_count} word potential {demonym} story."  # Generate prompts based on topics
     stories = []
 
-    # Print initial statement about prompts and stories to be generated
-    prompt_init_print(prompts, number_of_stories_per_topic)
+    # Choose GPT model and temperature
+    gpt_model = "gpt-4o-mini"
+    temperature = 0.8
 
-    for prompt_number in range(len(prompts)):
-        # Print details of the current prompt and prompt count
-        prompt_counter_print(prompts, prompt_number)
+    
 
-        for story_iteration in range(number_of_stories_per_topic):
-            messages = [{"role": "system", "content": ""}]  # Initial system message
-            messages.append({"role": "user", "content": prompts[prompt_number]})
-            response = openai.chat.completions.create(
-                model="gpt-4o-mini",
-                messages=messages,
-                temperature=0.8,
-                n=1,
-            )
-            # Extract generated story from the response
-            story = response.choices[0].message.content
-            # Create a unique identifier for each story
-            story_id = f"{topics[prompt_number]}_{story_iteration+1}"
-            stories.append((story_id, story, prompts[prompt_number], topics[prompt_number]))
-            # Print the generated story
-            print(f"\nVersion {story_iteration+1}: {story}")
+    for story_iteration in range(number_of_stories_per_topic):
+        messages = [{"role": "system", "content": ""}]  # Initial system message
+        messages.append({"role": "user", "content": prompt})
+        response = openai.chat.completions.create(
+            model=gpt_model,
+            messages=messages,
+            temperature=temperature,
+        )
+        # Extract generated story from the response
+        story = response.choices[0].message.content
+        # Create a unique identifier for each story
+        story_id = f"{country_code}_{story_iteration+1}"
+
+        time = date.today().strftime("%d-%m-%Y")
+        stories.append((story_id, country_code, country_name, demonym, story, prompt, time, gpt_model, temperature))
+        
+        # Print the generated story
+        # print(f"\nVersion {story_iteration+1}: {story}")
 
     return stories
 
 
-def create_dataset(stories, country):
+def create_dataset(stories, country_code):
     """
     Creates a CSV file from the generated stories.
 
@@ -104,10 +110,14 @@ def create_dataset(stories, country):
         A DataFrame containing the stories, prompts, and topics.
     """
     # Create a DataFrame from the stories list
-    df = pd.DataFrame(stories, columns=['Story ID', 'Story', 'Prompt', 'Topic'])
+    df = pd.DataFrame(stories, columns=['Story_ID', 'ISO-3361', 'Country_Name', 'Demonym', 'Story', 'Prompt', 'Date', 'GPT_Model', 'Temperature'])
 
     # Generate a unique filename from user input
-    filepath = "./data/stories/" + country + "_stories.csv"
+
+    directory = "../test_data/"+country_code
+    if not os.path.exists(directory):
+        os.mkdir(directory)
+    filepath = f"{directory}/{country_code}_stories.csv"
 
     # Save the DataFrame to a CSV file
     df.to_csv(filepath, index=False, quoting=csv.QUOTE_ALL)
@@ -117,54 +127,8 @@ def create_dataset(stories, country):
     return df
 
 
-def make_prompts(topics, word_count):
-    """
-    Generates a list of prompts based on a list of topics.
-
-    For each topic in the list, this function creates a prompt asking for a
-    story, or a children's story of a specific word count.
-
-    Parameters
-    ----------
-    topics : list[str]
-        A list of topics, such as countries or cultures.
-    word_count : int
-        The word count for the plot summary.
-
-    Returns
-    -------
-    list
-        A list of generated prompts.
-    """
-    prompts = []
-    try:
-        for topic in topics:
-            prompt = f"Write a {word_count} word potential {topic} novel."
-            prompts.append(prompt)
-        print("\n", len(prompts), "unique prompts generated.\n")
-    except:
-        print("Error: topics must be a list of strings.")
-    return prompts
 
 
-def prompt_init_print(prompts, number_of_stories_per_topic):
-    """
-    Prints the number of unique prompts and the number of stories per prompt.
-
-    Parameters
-    ----------
-    prompts : list
-        A list of generated prompts.
-    number_of_stories_per_topic : int
-        The number of stories to generate for each prompt.
-    """
-    print(
-        "Sending",
-        len(prompts),
-        "unique prompts to the OpenAI API, and generating",
-        number_of_stories_per_topic,
-        "stories for each prompt.",
-    )
 
 
 def prompt_counter_print(prompts, prompt_number):
@@ -191,43 +155,25 @@ def prompt_counter_print(prompts, prompt_number):
     )
 
 
-# ----- TESTS -----#
-
-
-def test_make_prompts():
-    """
-    Unit test for the make_prompts function.
-    """
-    topics = ["Native American", "Asian American"]
-    prompts = make_prompts(topics, 50)
-    assert (
-        prompts[0]
-        == "Write a 50 word plot summary for a potential Native American children's novel."
-    )
-    assert (
-        prompts[1]
-        == "Write a 50 word plot summary for a potential Asian American children's novel."
-    )
-
 
 # ----- END OF TESTS -----#
 
-def main(countries, num_story_per_topic):
+def main(num_story_per_topic, demonym, country_code, country_name):
     # Load the API key when the module is imported
     load_api_key()
     # Generate stories based on countries and save to CSV
-    country_datasets = []
-    for country in countries:
-        stories = generate_stories([country], num_story_per_topic)
-        dataset = create_dataset(stories, country)
-        country_datasets.append(dataset)
-    print("Created stories\n\n-------------------\n\n")
-    return country_datasets
+    stories = generate_stories(num_story_per_topic, demonym, country_code, country_name)
+    print(stories)
+    dataset = create_dataset(stories, country_code)
+    # time program execution
+    end_time = time.time()
+    print(f"Execution time: {end_time - start_time} seconds")
+    return dataset
 
 
 
 if __name__ == "__main__":
-    main(["American", "Indian", "Nigerian"], 3)
+    main()
 
 
 
