@@ -32,11 +32,17 @@ One fateful evening, as the sun dipped below the horizon, casting a golden hue o
 
 The path was narrow, winding like a serpent, flanked by towering stalks that swayed gently with the evening breeze. On the way she saw visions of her friend, Sung Lee. As she walked deeper into the grove, the air thickened with an otherworldly presence. Shadows danced, and the soft sound of whispers brushed against her ears. ""Welcome,"" they seemed to say, ""we’ve been waiting for you."""})
     messages.append({"role": "system", "content": "Li Mei"})
+
+    messages.append({"role": "user", "content": """Identify the name of the main character and only the name of the main character in this story:\n\nA In a quiet village near the Caspian Sea, an old fisherman discovered a shimmering, ancient lantern buried in the sand. When he rubbed it, a gentle spirit emerged, offering wishes. Torn between personal desires and the needs of his struggling community, he chose to share his fortune, transforming their lives forever. If the main character's name is not mentioned, please type 'Unknown'."""})
+    messages.append({"role": "system", "content": "Unknown"})
+
+    messages.append({"role": "user", "content": """Identify the name of the main character and only the name of the main character in this story:\n\nA forgotten letter reveals secrets, changing a family's destiny forever. If the main character's name is not mentioned, please type 'Unknown'."""})
+    messages.append({"role": "system", "content": "Unknown"})
     
     return messages
 
 
-def analyze_stories(directory):
+def analyze_stories(dir_name):
     """
     Analyzes stories from CSV files in a directory using OpenAI's GPT model.
 
@@ -51,56 +57,40 @@ def analyze_stories(directory):
         A dictionary of DataFrames, where keys are filenames and values are DataFrames
         with the original stories and identified names/places.
     """
-    dfs = {}
+    df_with_names = {}
+    filepath = filepath = f"../test_data/{dir_name}/{dir_name}_stories.csv"
 
-    for filename in os.listdir(directory):
-        file_path = os.path.join(directory, filename)
-        if not os.path.isfile(file_path):
-            continue
-        
-        # Read the CSV file into a DataFrame
-        df = pd.read_csv(file_path)
+    results_names = []
+    df = pd.read_csv(filepath)
 
-        # Ensure 'Story' column exists
-        if 'Story' not in df.columns:
-            print(f"Skipping {filename}: 'Story' column not found.")
-            continue
+    for index, row in df.iterrows():
+        story = row['Story']
+        print(f"Analyzing story {index + 1} of {len(df)} in {filepath}...")
 
-        # Initialize lists for storing GPT results
-        results_names = []
+        main_char_prompt = f"Identify the name of the main character and only the name of the main character in this story:\n\n{story}"
 
-        for index, row in df.iterrows():
-            story = row['Story']
-            print(f"Analyzing story {index + 1} of {len(df)} in {filename}...")
+        # Get main character name
+        messages = initiate_chat()
+        messages.append({"role": "user", "content": main_char_prompt})
+        main_char_response = openai.chat.completions.create(
+            model="gpt-4-0613",
+            messages=messages,
+            temperature=0.8,
+            max_tokens=50,
+        )
+        main_char = main_char_response.choices[0].message.content.strip()
+        results_names.append(main_char)
 
-            # Prepare prompts
-            main_char_prompt = f"Identify the name of the main character and only the name of the main character in this story:\n\n{story}"
-            place_name_prompt = f"Identify the name of the places (only real place names) and only the name of the places in this story:\n\n{story}"
+    # Add results to DataFrame
+    df['Name'] = results_names
 
-            # Get main character name
-            messages = initiate_chat()
-            messages.append({"role": "user", "content": main_char_prompt})
-            main_char_response = openai.chat.completions.create(
-                model="gpt-4-0613",
-                messages=messages,
-                temperature=0.8,
-                max_tokens=50,
-            )
-            main_char = main_char_response.choices[0].message.content.strip()
-            results_names.append(main_char)
+    
 
-            
-
-        # Add results to DataFrame
-        df['Name'] = results_names
-
-        # Store the updated DataFrame
-        dfs[filename] = df
-
-    return dfs
+    return df
 
 
-def count_names(dataframes):
+
+def count_names(dict_with_names):
     """
     Counts occurrences of names in the 'Name' column across multiple DataFrames.
 
@@ -114,47 +104,39 @@ def count_names(dataframes):
     dict
         A dictionary where keys are filenames and values are DataFrames with name counts.
     """
-    result_counts = {}
 
-    for filename, df in dataframes.items():
-        if 'Name' not in df.columns:
-            print(f"Skipping {filename}: 'Name' column not found.")
-            continue
+    names = []
+    
 
-        # Extract and count names
-        names = []
-        for name_list in df['Name']:
-            split_names = re.split(r',|\d+\.\s*|[^a-zA-Z\s]+', name_list)
-            names.extend([name.strip() for name in split_names if name.strip()])
+    for name_list in dict_with_names['Name']:
+        split_names = re.split(r',|\d+\.\s*|[^a-zA-Z\s]+', name_list)
+        names.extend([name.strip() for name in split_names if name.strip()])
 
-        name_counts = Counter(names)
+    name_counts = Counter(names)
 
-        # Create a new DataFrame for counts
-        counts_df = pd.DataFrame(name_counts.items(), columns=['Name', 'Count']).sort_values(by='Count', ascending=False)
-        result_counts[filename] = counts_df
-
-    return result_counts
+    # Create a new DataFrame for counts
+    counts_df = pd.DataFrame(name_counts.items(), columns=['Name', 'Count']).sort_values(by='Count', ascending=False)
+    return counts_df
 
 
-def main():
+def main(dir_name):
     # Load the API key
     load_api_key()
 
-    # Directory containing CSV files
-    input_directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/stories/full_stories2'
 
     # Analyze stories and get DataFrames
-    analyzed_dataframes = analyze_stories(input_directory)
-    print(analyzed_dataframes)
+    analyzed_dataframe = analyze_stories(dir_name)
+    print("analyzed dataframe:\n")
+    print(analyzed_dataframe)
 
     # Count names in the analyzed DataFrames
-    name_counts = count_names(analyzed_dataframes)
+    name_count = count_names(analyzed_dataframe)
+    filepath = f"../test_data/{dir_name}/{dir_name}_names.csv"
 
-    # Print or process the results
-    for filename, counts_df in name_counts.items():
-        counts_df.to_csv(f'output_{filename}', index=False)
-        print(f"Results for {filename}:")
-        print(counts_df.head())  # Display top counts for each file
+    name_count.to_csv(filepath, index=False)
+    
+    print(f"Results for {filepath}:")
+    print(name_count.head())  # Display top counts for each file
 
 
 if __name__ == "__main__":
