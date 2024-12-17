@@ -15,8 +15,8 @@ def extract_noun_phrases(dir):
         pd.DataFrame: DataFrame containing filtered noun phrases and their counts.
     """
 
-    filepath = f'../test_data/{dir}/{dir}_stories.csv'
-    print(f'\nExtracting noun phrases from {filepath}...\n')
+    filepath = f'../data/{dir}/{dir}_stories.csv'
+    print(f'Extracting noun phrases from {filepath}...\n')
     
     df = pd.read_csv(filepath)
     # Extract stories from the fifth column
@@ -24,7 +24,8 @@ def extract_noun_phrases(dir):
 
     # Extract noun phrases 
     noun_phrases = []
-    for story in stories:
+    for i, story in enumerate(stories):
+        print(f"•Processing story {i + 1} of {len(stories)}")
         blob = TextBlob(story)
         noun_phrases.extend(blob.noun_phrases)
 
@@ -38,14 +39,15 @@ def extract_noun_phrases(dir):
     # Create a DataFrame for the output
     output_df = pd.DataFrame(sorted_noun_phrases, columns=['Noun Phrase', 'Count'])
 
+    print(f"\nTop results for {filepath}:\n")
+    print(f'{output_df.head()}')  # Display top counts for each file
+
     # Location and name of output file
-    output_filepath = f'../test_data/{dir}/{dir}_noun_phrases.csv'
+    output_filepath = f'../data/{dir}/{dir}_noun_phrases.csv'
     output_df.to_csv(output_filepath, index=False)
+    print(f'\nNoun phrases saved to {output_filepath}\n\n--------------------\n')
 
     
-
-
-
 
 def main(countries, startfrom):
     """
@@ -54,20 +56,18 @@ def main(countries, startfrom):
     """
     
     if 'all' in countries and len(countries) == 1:
-        for dir in sorted(os.listdir("../test_data")):
+        for dir in sorted(os.listdir("../data")):
             if startfrom != "" and startfrom != dir:
                 continue
             else:
                 startfrom = ""
                 extract_noun_phrases(dir)
     else:
-        for dir in sorted(os.listdir("../test_data")):
+        for dir in sorted(os.listdir("../data")):
             if dir in countries:
                 extract_noun_phrases(dir)
 
                 
         
-
-
 if __name__ == "__main__":
     main()

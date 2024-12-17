@@ -58,16 +58,15 @@ def analyze_stories(countries):
         with the original stories and identified names/places.
     """
     
+    filepath = filepath = f"../data/{countries}/{countries}_stories.csv"
+    print(f'Extracting main character names from {filepath}...\n')
     
-
-    filepath = filepath = f"../test_data/{countries}/{countries}_stories.csv"
-
     results_names = []
     df = pd.read_csv(filepath)
 
     for index, row in df.iterrows():
         story = row['Story']
-        print(f"Analyzing story {index + 1} of {len(df)} in {filepath}...")
+        print(f"•Processing story {index + 1} of {len(df)}...")
 
         main_char_prompt = f"Identify the name of the main character and only the name of the main character in this story:\n\n{story}"
 
@@ -85,8 +84,6 @@ def analyze_stories(countries):
 
     # Add results to DataFrame
     df['Name'] = results_names
-
-    
 
     return df
 
@@ -109,7 +106,6 @@ def count_names(dict_with_names):
 
     names = []
     
-
     for name_list in dict_with_names['Name']:
         split_names = re.split(r',|\d+\.\s*|[^a-zA-Z\s]+', name_list)
         names.extend([name.strip() for name in split_names if name.strip()])
@@ -123,16 +119,16 @@ def count_names(dict_with_names):
 
 def analyse_and_save(dir):
     analyzed_dataframe = analyze_stories(dir)
-    print(f"\nanalyzed dataframe:\n{analyzed_dataframe}\n")
-
+    
     # Count names in the analyzed DataFrames
     name_count = count_names(analyzed_dataframe)
-    filepath = f"../test_data/{dir}/{dir}_names.csv"
+    output_filepath = f"../data/{dir}/{dir}_names.csv"
 
-    name_count.to_csv(filepath, index=False)
+    print(f"\nTop results for {output_filepath}:\n")
+    print(f'{name_count.head()}')  # Display top counts for each file
 
-    print(f"\nResults for {filepath}:")
-    print(f'{name_count.head()}\n\n --------------------\n')  # Display top counts for each file
+    name_count.to_csv(output_filepath, index=False)
+    print(f'\nMain character names saved to {output_filepath}\n\n--------------------\n')
 
 
 
@@ -141,7 +137,7 @@ def main(countries, startfrom):
     load_api_key()
 
     if 'all' in countries and len(countries) == 1:
-        for dir in sorted(os.listdir("../test_data")):
+        for dir in sorted(os.listdir("../data")):
             if startfrom != "" and startfrom != dir:
                 continue
             else:
@@ -149,7 +145,7 @@ def main(countries, startfrom):
                 analyse_and_save(dir)
     
     else:
-        for dir in sorted(os.listdir("../test_data")):
+        for dir in sorted(os.listdir("../data")):
             if dir in countries:
                 analyse_and_save(dir)
 
