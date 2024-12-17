@@ -32,8 +32,6 @@ def load_api_key():
     openai.api_key = api_key
 
 
-
-
 def generate_stories(number_of_stories_per_topic: int, demonym: str, country_code: str, country_name: str):
     """
     Generates plot summaries based on a list of topics using the OpenAI API.
@@ -67,8 +65,6 @@ def generate_stories(number_of_stories_per_topic: int, demonym: str, country_cod
     # Choose GPT model and temperature
     gpt_model = "gpt-4o-mini"
     temperature = 0.8
-
-    
 
     for story_iteration in range(number_of_stories_per_topic):
         print(f"\nGenerating story {story_iteration+1} for {country_name}...\n")
@@ -116,7 +112,7 @@ def create_dataset(stories, country_code):
 
     # Generate a unique filename from user input
 
-    directory = "../test_data/"+country_code
+    directory = "../data/"+country_code
     if not os.path.exists(directory):
         os.mkdir(directory)
     filepath = f"{directory}/{country_code}_stories.csv"
@@ -130,14 +126,6 @@ def create_dataset(stories, country_code):
 
 
 
-
-
-
-
-
-
-
-# ----- END OF TESTS -----#
 
 def main(num_story_per_topic, demonym, country_code, country_name):
     # Load the API key when the module is imported
@@ -157,12 +145,4 @@ if __name__ == "__main__":
     main()
 
 
-
-
-    # countries = ["American", "Indian", "Nigerian", "Norwegian", "Australian", "Russian", "Ukrainian", "Israelian", "Palestinian", "Chinese"]
-    
-    # # Generate stories based on countries and save to CSV
-    # for country in countries:
-    #     stories = generate_stories([country], 100)
-    #     dataset = create_dataset(stories, country)
     

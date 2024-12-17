@@ -33,7 +33,7 @@ def get_sentiment(text: str):
 
 
 
-def main():
+def main(countries, startfrom):
     directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/childrens_stories/summaries'
 
     for filename in os.listdir(directory):

@@ -1,14 +1,10 @@
 import click
 from generate_stories import main as generate_stories
-# from analyze_stories import main as analyze_stories
 from name_extraction import main as extract_names
 from noun_phrases import main as extract_noun_phrases
 from sentiment_analysis_textblob import main as tb_sentiment
-from sentiment_huggingface import main as hf_sentiment
-from word_compare import main as word_compare
 from word_freq import main as word_freq
 import csv
-import os
 
 
 
@@ -20,19 +16,24 @@ def cli():
 @cli.command()
 @click.argument('countries', nargs=-1, type=str) # country codes or 'all' for all countries
 @click.argument('num_story_per_topic', type=int)
-def run(countries, num_story_per_topic):
+@click.option('-s', '--startfrom', type=str, default='', help='Start from a specific country code when generating all')
+def generate(countries, num_story_per_topic, startfrom):
     """Generate stories."""
     print("Generating stories...")
     # Read the country codes from the CSV file
+
     with open ("country_codes.csv", 'r', encoding="utf-8") as f:
         reader = csv.reader(f)
         next(reader) 
         for line in reader:
+            if startfrom != "" and startfrom != line[0]:
+                continue
+
+            startfrom = ""
             if line [3] != "":
                 country_code = line[0]
                 country_name = line[1]
                 demonym = line[3]
-
                 if 'all' in countries and len(countries) == 1:
                     generate_stories(num_story_per_topic, demonym, country_code, country_name)
 
@@ -45,19 +46,19 @@ def run(countries, num_story_per_topic):
 
 @cli.command()
 @click.argument('countries', nargs=-1, type=str) # country codes or 'all' for all countries
-def analyze(countries):
-    for dirpath in os.listdir('../test_data'):
-        print(dirpath)
-    
-        if 'all' in countries:
-            analyze_stories(dirpath)
-        elif dirpath.split('/')[-1] in countries:
-            analyze_stories(dirpath)
+@click.option('-a', '--analysis', type=str, default='all', help='Type of analysis to perform: names, noun_phrases, tb_sentiment, word_freq')
+@click.option('-s', '--startfrom', type=str, default='', help='Start from a specific country code when analysing all')
+def analyze(analysis, countries, startfrom):
+    if analysis == 'names' or analysis == 'all':
+        extract_names(countries, startfrom)
+    if analysis == 'nouns' or analysis == 'all':
+        extract_noun_phrases(countries, startfrom)
+    if analysis == 'textblob' or analysis == 'all':
+        tb_sentiment(countries, startfrom)
+    if analysis == 'words' or analysis == 'all':
+        word_freq(countries, startfrom) 
 
 
-    
-def analyze_stories(dir):
-    extract_names(dir)
 
 
 # @cli.command()
@@ -91,7 +92,8 @@ def analyze_stories(dir):
 #     click.echo(f"Context contents: {ctx.obj}")
 
 
-cli.add_command(run)
+cli.add_command(generate)
+cli.add_command(analyze)
 # cli.add_command(extract_names)
 # cli.add_command(extract_noun_phrases)
 # cli.add_command(tb_sentiment_analysis)
