@@ -146,7 +146,7 @@ def main(countries, startfrom):
     
     
     else:
-        for dir in os.listdir("../test_data"):
+        for dir in sorted(os.listdir("../test_data")):
             if dir in countries:
                 analyzed_dataframe = analyze_stories(dir)
                 print(f"analyzed dataframe:\n{analyzed_dataframe}")
@@ -160,6 +160,9 @@ def main(countries, startfrom):
 
                 print(f"Results for {filepath}:")
                 print(name_count.head())  # Display top counts for each file
+
+
+  
     
 
 
