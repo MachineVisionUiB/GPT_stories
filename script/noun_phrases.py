@@ -3,7 +3,7 @@ from textblob import TextBlob
 from collections import Counter
 import os
 
-def extract_noun_phrases(file):
+def extract_noun_phrases(dir):
     """
     Extract and count multi-word noun phrases (containing a space) from a specified 
     column in a CSV file and save the counts to a new CSV file.
@@ -14,8 +14,11 @@ def extract_noun_phrases(file):
     Returns:
         pd.DataFrame: DataFrame containing filtered noun phrases and their counts.
     """
+
+    filepath = f'../test_data/{dir}/{dir}_stories.csv'
+    print(f'\nExtracting noun phrases from {filepath}...\n')
     
-    df = pd.read_csv(file)
+    df = pd.read_csv(filepath)
     # Extract stories from the fifth column
     stories = df.iloc[:, 4].tolist()  # Adjust if the column index is different
 
@@ -35,26 +38,34 @@ def extract_noun_phrases(file):
     # Create a DataFrame for the output
     output_df = pd.DataFrame(sorted_noun_phrases, columns=['Noun Phrase', 'Count'])
 
-    return output_df
+    # Location and name of output file
+    output_filepath = f'../test_data/{dir}/{dir}_noun_phrases.csv'
+    output_df.to_csv(output_filepath, index=False)
+
+    
 
 
-def main():
+
+
+def main(countries, startfrom):
     """
     Process all CSV files in the specified directory to extract multi-word noun phrases,
     count their occurrences, and save each result to a new CSV file.
     """
     
-    directory = '/Users/hermannwigers/Documents/AI STORIES/GPT_stories/data/childrens_stories/summaries'
-    for filename in os.listdir(directory):
-        print(filename)
-        f = os.path.join(directory, filename)
-        if os.path.isfile(f):
-            output_df = extract_noun_phrases(f)
-            # Save the output to a CSV file
-            # output_file = 'filtered_noun_phrases_' + os.path.basename(f)
-            # output_df.to_csv(output_file, index=False)
-    
-    return output_df
+    if 'all' in countries and len(countries) == 1:
+        for dir in sorted(os.listdir("../test_data")):
+            if startfrom != "" and startfrom != dir:
+                continue
+            else:
+                startfrom = ""
+                extract_noun_phrases(dir)
+    else:
+        for dir in sorted(os.listdir("../test_data")):
+            if dir in countries:
+                extract_noun_phrases(dir)
+
+                
         
 
 
