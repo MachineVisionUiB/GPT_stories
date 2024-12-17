@@ -121,11 +121,24 @@ def count_names(dict_with_names):
     return counts_df
 
 
+def analyse_and_save(dir):
+    analyzed_dataframe = analyze_stories(dir)
+    print(f"\nanalyzed dataframe:\n{analyzed_dataframe}\n")
+
+    # Count names in the analyzed DataFrames
+    name_count = count_names(analyzed_dataframe)
+    filepath = f"../test_data/{dir}/{dir}_names.csv"
+
+    name_count.to_csv(filepath, index=False)
+
+    print(f"\nResults for {filepath}:")
+    print(f'{name_count.head()}\n\n --------------------\n')  # Display top counts for each file
+
+
+
 def main(countries, startfrom):
     # Load the API key
     load_api_key()
-
-
 
     if 'all' in countries and len(countries) == 1:
         for dir in sorted(os.listdir("../test_data")):
@@ -133,37 +146,13 @@ def main(countries, startfrom):
                 continue
             else:
                 startfrom = ""
-                print(f'\n\n{startfrom}\n\n')
-                analyzed_dataframe = analyze_stories(dir)
-                print(f"analyzed dataframe:\n{analyzed_dataframe}")
-                # Count names in the analyzed DataFrames
-                name_count = count_names(analyzed_dataframe)
-                filepath = f"../test_data/{dir}/{dir}_names.csv"
-
-                name_count.to_csv(filepath, index=False)
-                print(f"Results for {filepath}:")
-                print(name_count.head())  # Display top counts for each file
-    
+                analyse_and_save(dir)
     
     else:
         for dir in sorted(os.listdir("../test_data")):
             if dir in countries:
-                analyzed_dataframe = analyze_stories(dir)
-                print(f"analyzed dataframe:\n{analyzed_dataframe}")
-                
-                
-                # Count names in the analyzed DataFrames
-                name_count = count_names(analyzed_dataframe)
-                filepath = f"../test_data/{dir}/{dir}_names.csv"
+                analyse_and_save(dir)
 
-                name_count.to_csv(filepath, index=False)
-
-                print(f"Results for {filepath}:")
-                print(name_count.head())  # Display top counts for each file
-
-
-  
-    
 
 
 if __name__ == "__main__":
