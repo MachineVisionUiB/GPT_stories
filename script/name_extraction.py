@@ -42,7 +42,7 @@ The path was narrow, winding like a serpent, flanked by towering stalks that swa
     return messages
 
 
-def analyze_stories(dir_name):
+def analyze_stories(countries):
     """
     Analyzes stories from CSV files in a directory using OpenAI's GPT model.
 
@@ -57,8 +57,10 @@ def analyze_stories(dir_name):
         A dictionary of DataFrames, where keys are filenames and values are DataFrames
         with the original stories and identified names/places.
     """
-    df_with_names = {}
-    filepath = filepath = f"../test_data/{dir_name}/{dir_name}_stories.csv"
+    
+    
+
+    filepath = filepath = f"../test_data/{countries}/{countries}_stories.csv"
 
     results_names = []
     df = pd.read_csv(filepath)
@@ -119,24 +121,46 @@ def count_names(dict_with_names):
     return counts_df
 
 
-def main(dir_name):
+def main(countries, startfrom):
     # Load the API key
     load_api_key()
 
 
-    # Analyze stories and get DataFrames
-    analyzed_dataframe = analyze_stories(dir_name)
-    print("analyzed dataframe:\n")
-    print(analyzed_dataframe)
 
-    # Count names in the analyzed DataFrames
-    name_count = count_names(analyzed_dataframe)
-    filepath = f"../test_data/{dir_name}/{dir_name}_names.csv"
+    if 'all' in countries and len(countries) == 1:
+        for dir in sorted(os.listdir("../test_data")):
+            if startfrom != "" and startfrom != dir:
+                continue
+            else:
+                startfrom = ""
+                print(f'\n\n{startfrom}\n\n')
+                analyzed_dataframe = analyze_stories(dir)
+                print(f"analyzed dataframe:\n{analyzed_dataframe}")
+                # Count names in the analyzed DataFrames
+                name_count = count_names(analyzed_dataframe)
+                filepath = f"../test_data/{dir}/{dir}_names.csv"
 
-    name_count.to_csv(filepath, index=False)
+                name_count.to_csv(filepath, index=False)
+                print(f"Results for {filepath}:")
+                print(name_count.head())  # Display top counts for each file
     
-    print(f"Results for {filepath}:")
-    print(name_count.head())  # Display top counts for each file
+    
+    else:
+        for dir in os.listdir("../test_data"):
+            if dir in countries:
+                analyzed_dataframe = analyze_stories(dir)
+                print(f"analyzed dataframe:\n{analyzed_dataframe}")
+                
+                
+                # Count names in the analyzed DataFrames
+                name_count = count_names(analyzed_dataframe)
+                filepath = f"../test_data/{dir}/{dir}_names.csv"
+
+                name_count.to_csv(filepath, index=False)
+
+                print(f"Results for {filepath}:")
+                print(name_count.head())  # Display top counts for each file
+    
 
 
 if __name__ == "__main__":
