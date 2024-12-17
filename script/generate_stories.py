@@ -71,6 +71,7 @@ def generate_stories(number_of_stories_per_topic: int, demonym: str, country_cod
     
 
     for story_iteration in range(number_of_stories_per_topic):
+        print(f"\nGenerating story {story_iteration+1} for {country_name}...\n")
         messages = [{"role": "system", "content": ""}]  # Initial system message
         messages.append({"role": "user", "content": prompt})
         response = openai.chat.completions.create(
@@ -80,6 +81,7 @@ def generate_stories(number_of_stories_per_topic: int, demonym: str, country_cod
         )
         # Extract generated story from the response
         story = response.choices[0].message.content
+        print(f'{story}\n---------------------------------\n\n')
         # Create a unique identifier for each story
         story_id = f"{country_code}_{story_iteration+1}"
 
@@ -122,7 +124,7 @@ def create_dataset(stories, country_code):
     # Save the DataFrame to a CSV file
     df.to_csv(filepath, index=False, quoting=csv.QUOTE_ALL)
 
-    print(f"\nDataset saved to {filepath}\n")
+    print(f"Dataset saved to {filepath}\n")
 
     return df
 
@@ -131,28 +133,7 @@ def create_dataset(stories, country_code):
 
 
 
-def prompt_counter_print(prompts, prompt_number):
-    """
-    Prints the current prompt number and its content.
 
-    This function displays which prompt is currently being processed.
-
-    Parameters
-    ----------
-    prompts : list
-        A list of generated prompts.
-    prompt_number : int
-        The index of the current prompt being processed.
-    """
-    num_of_prompts = len(prompts)
-    print(
-        "\n---------------------------------\n\nPrompt",
-        prompt_number + 1,
-        "of",
-        num_of_prompts,
-        ":",
-        prompts[prompt_number],
-    )
 
 
 
@@ -163,14 +144,11 @@ def main(num_story_per_topic, demonym, country_code, country_name):
     load_api_key()
     # Generate stories based on countries and save to CSV
 
-    
-
     stories = generate_stories(num_story_per_topic, demonym, country_code, country_name)
-    print(stories)
     dataset = create_dataset(stories, country_code)
     # time program execution
-    end_time = time.time()
-    print(f"Execution time: {end_time - start_time} seconds")
+    # end_time = time.time()
+    # print(f"Execution time: {end_time - start_time} seconds")
     return dataset
 
 
