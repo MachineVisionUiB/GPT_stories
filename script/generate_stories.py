@@ -162,6 +162,9 @@ def main(num_story_per_topic, demonym, country_code, country_name):
     # Load the API key when the module is imported
     load_api_key()
     # Generate stories based on countries and save to CSV
+
+    
+
     stories = generate_stories(num_story_per_topic, demonym, country_code, country_name)
     print(stories)
     dataset = create_dataset(stories, country_code)
