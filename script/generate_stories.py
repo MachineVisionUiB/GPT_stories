@@ -7,8 +7,6 @@ from datetime import date
 import time
 
 
-# time program execution
-start_time = time.time()
 
 def load_api_key():
     """
