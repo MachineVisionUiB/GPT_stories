@@ -29,8 +29,8 @@ def extract_noun_phrases(dir):
         blob = TextBlob(story)
         noun_phrases.extend(blob.noun_phrases)
 
-    # Filter noun phrases to include only those with a space
-    multi_word_phrases = [phrase for phrase in noun_phrases if ' ' in phrase]
+    # Filter noun phrases to include only those with more than one word
+    multi_word_phrases = [phrase for phrase in noun_phrases if ' ' in phrase or "*" in phrase]
 
     # Count and sort noun phrases
     noun_phrase_counts = Counter(multi_word_phrases)
