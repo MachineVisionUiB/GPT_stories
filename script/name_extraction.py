@@ -58,7 +58,7 @@ def analyze_stories(countries):
         with the original stories and identified names/places.
     """
     
-    filepath = filepath = f"../data/{countries}/{countries}_stories.csv"
+    filepath = f"../data/{countries}/{countries}_stories.csv"
     print(f'Extracting main character names from {filepath}...\n')
     
     results_names = []
@@ -74,7 +74,7 @@ def analyze_stories(countries):
         messages = initiate_chat()
         messages.append({"role": "user", "content": main_char_prompt})
         main_char_response = openai.chat.completions.create(
-            model="gpt-4-0613",
+            model="gpt-4o-mini",
             messages=messages,
             temperature=0.8,
             max_tokens=50,

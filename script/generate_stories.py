@@ -56,7 +56,7 @@ def generate_stories(number_of_stories_per_topic: int, demonym: str, country_cod
     """
     
     # word_count = input("Enter the word count: ")  # User input for word count
-    word_count = 50
+    word_count = 1500
     prompt = f"Write a {word_count} word potential {demonym} story."  # Generate prompts based on topics
     stories = []
 
@@ -65,7 +65,7 @@ def generate_stories(number_of_stories_per_topic: int, demonym: str, country_cod
     temperature = 0.8
 
     for story_iteration in range(number_of_stories_per_topic):
-        print(f"\nGenerating story {story_iteration+1} for {country_name}...\n")
+        print(f"\nGenerating story {story_iteration+1} of {number_of_stories_per_topic} for {country_name}...\n")
         messages = [{"role": "system", "content": ""}]  # Initial system message
         messages.append({"role": "user", "content": prompt})
         response = openai.chat.completions.create(
