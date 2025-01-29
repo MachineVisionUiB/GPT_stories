@@ -1,6 +1,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-# Description: Visualise the most unique words per country
+import seaborn as sns
+from wordcloud import WordCloud
+
+# Jill's still messy code for exploring the unique words dataset by adding more variables like population, region etc
+# This is a work in progress and will be cleaned up later
 
 import os
 print(os.getcwd())
@@ -41,66 +45,172 @@ data = pd.merge(
 
 data.rename(columns={'2023': 'population'}, inplace=True)
 
-# remove unnecessary columns
-#data = data.drop(columns=['Country Code'])
-
-print(data.head())
-print(data.columns)
-
-
-# Display the merged data
-print("Data loaded, will now visualise the data")
-
-# Save the data to a CSV file
-data.to_csv('data/unique_words_by_country_expanded.csv', index=False)
-
-# -------------------Testing  Visualisation ------------------- 
+# Ensure population and frequency contain only finite values
+data = data.replace([float('inf'), float('-inf')], pd.NA)  # Convert infinite values to NaN
+data = data.dropna(subset=['population', 'frequency'])  # Remove NaN values
 
 # All the countries where word frequency is greater than 1000 have stop words 
 # in the local language as most unique word, so filter them out.
 
-data = data[data['frequency'] < 1000]
 
-plt.figure(figsize=(10, 6))
-plt.scatter(data['population'], data['frequency'], alpha=0.7, edgecolors='k')
-plt.title('Relationship Between Pop and fre', fontsize=14)
-plt.xlabel('population', fontsize=12)
-plt.ylabel('freq', fontsize=12)
+# Assign each region a unique color
+region_colors = {region: idx for idx, region in enumerate(data['region'].unique())}
+data['region_color'] = data['region'].map(region_colors)
+
+
+print(data.head())
+print(data.columns)
+
+# Save the data to a CSV file
+#data.to_csv('data/unique_words_by_country_expanded.csv', index=False)
+
+# Display the merged data
+print("Data loaded, will now visualise the data")
+
+# -------------------Testing  Visualisations ------------------- 
+
+# ----- Wordclouds by region sized by inverse of proportion -----
+
+# Define the regions
+regions = data['region'].unique()
+
+# Loop through each region to create a word cloud
+for region in regions:
+    # Filter data for the region
+    subset = data[data['region'] == region]
+    
+    # Create a dictionary of words and their inverse proportions
+    word_weights = {row['word']: 1 / row['proportion_of_global'] for _, row in subset.iterrows()}
+    # (using inverse because otherwise the words that are ONLY
+    # used in that country are biggest, and those words are usually
+    # stop words or place names that we should really weed out of dataset)=
+
+    # Generate the word cloud
+    wordcloud = WordCloud(width=800, height=400, background_color="white").generate_from_frequencies(word_weights)
+    
+    # Plot the word cloud
+    plt.figure(figsize=(10, 5))
+    plt.imshow(wordcloud, interpolation="bilinear")
+    plt.axis("off")
+    plt.title(f"Most unique words for {region}", fontsize=24)
+    plt.suptitle("Bigger words are used in more different countries", fontsize=10)
+    
+    #save the wordclouds
+    plt.savefig(f'images/wordcloud_inverse_uniqueness_{region}.png')
+
+
+
+# ---- Use FacetGrid in Seaborn to create a grid of scatter plots ----
+
+
+""" # Set up FacetGrid
+g = sns.FacetGrid(data, col="region", col_wrap=3, sharex=True, sharey=True, height=4)
+
+# Map scatter plot onto each facet
+g.map_dataframe(
+    sns.scatterplot,
+    x="population",
+    y="proportion_of_global",
+    alpha=0.7,
+    edgecolor="k"
+)
+
+# Add labels manually for each point
+for ax, region in zip(g.axes.flat, data['region'].unique()):
+    subset = data[data["region"] == region]
+    for i, row in subset.iterrows():
+        label = f"{row['name']} ({row['word']})"
+        ax.text(
+            row['population'], 
+            row['proportion_of_global'], 
+            label, 
+            fontsize=6, 
+            ha='right', 
+            va='bottom', 
+            alpha=0.7
+        )
+
+# Apply log scale to population
+for ax in g.axes.flat:
+    ax.set_xscale("log")
+    ax.set_yscale("log")  
+
+# Set titles and labels
+g.set_titles(col_template="{col_name}")
+g.set_axis_labels("Population (Log Scale)", "Proportion of Global")
+
+# Show the plots
+plt.show()
+
+
+exit() """
+
+
+
+""" plt.figure(figsize=(10, 6))
+scatter = plt.scatter(
+    data['population'],
+    data['frequency'],
+    c=data['region_color'],  # Use region-based colors
+    cmap='tab10',  # Choose a colormap (tab10 has distinct colors)
+    alpha=0.7,
+    edgecolors='k'
+)
+
+# Add a legend for the regions
+handles = [plt.Line2D([0], [0], marker='o', color='w', markerfacecolor=plt.cm.tab10(region_colors[r] / 10), markersize=10)
+           for r in region_colors]
+plt.legend(handles, region_colors.keys(), title="Regions", bbox_to_anchor=(1.05, 1), loc='upper left')
+
+plt.title('Relationship Between Population and Frequency by Region', fontsize=14)
+plt.xlabel('Population (Log Scale)', fontsize=12)
+plt.ylabel('Frequency', fontsize=12)
 plt.grid(True, linestyle='--', alpha=0.6)
+
+# Set logarithmic scale for population axis
+plt.xscale('log')
 
 # Add labels for each point
 for i, row in data.iterrows():
-    label = f"{row['name']} ({row['word']})" 
+    label = f"{row['name']} ({row['word']})"
     plt.text(row['population'], row['frequency'], label, fontsize=8, ha='right', va='bottom', alpha=0.7)
 
 plt.tight_layout()
 plt.show()
 
-exit()
+exit() """
 
 
 # ------------------- Visualisation -------------------
 
+
 # Create a scatter plot
 plt.figure(figsize=(10, 6))
-plt.scatter(data_cleaned['2023'], data_cleaned['proportion_of_global'], alpha=0.7, edgecolors='k')
+plt.scatter(
+    data['population'], 
+    data['proportion_of_global'], 
+    c=data['region_color'],  # Use region-based colors
+    cmap='tab10',  # Choose a colormap (tab10 has distinct colors)
+    alpha=0.7, 
+    edgecolors='k')
 
-# Add labels for only extreme values to reduce clutter
-for i, row in data_cleaned.iterrows():
-    if row['proportion_of_global'] > 0.9 or row['2023'] > 1e8:  # Apply filtering row by row
-        label = f"{row['name']} ({row['word']})"  # Format as "Country (Word)"
-        plt.text(row['2023'], row['proportion_of_global'], label, 
-                 fontsize=row['scaled_font_size'], ha='right', va='bottom', alpha=0.7)
+# Add a legend for the regions
+handles = [plt.Line2D([0], [0], marker='o', color='w', markerfacecolor=plt.cm.tab10(region_colors[r] / 10), markersize=10)
+           for r in region_colors]
+plt.legend(handles, region_colors.keys(), title="Regions", bbox_to_anchor=(1.05, 1), loc='upper left')
+
+# Add labels for each point
+for i, row in data.iterrows():
+    label = f"{row['name']} ({row['word']})"
+    plt.text(row['population'], row['proportion_of_global'], label, fontsize=8, ha='right', va='bottom', alpha=0.7)
 
 # **Set logarithmic scale for population axis**
 plt.xscale('log')  
 
 # Add labels and title
-plt.title('Relationship Between Proportion of Global and Population (Log Scale)', fontsize=14)
+plt.title('No correlation population size - words unique to country (Log Scale)', fontsize=14)
 plt.xlabel('Population (2023) - Log Scale', fontsize=12)
-plt.ylabel('Proportion of Global', fontsize=12)
+plt.ylabel('Higher means word not used by other countries', fontsize=12)
 #plt.grid(True, linestyle='--', alpha=0.6, which='both')  # Apply grid to both major and minor ticks
 
-# Show the plot
-plt.tight_layout()
-plt.show()
+plt.savefig('images/scatterplot_uniqueness_population.png')
