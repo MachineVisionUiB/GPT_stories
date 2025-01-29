@@ -62,7 +62,7 @@ print(data.head())
 print(data.columns)
 
 # Save the data to a CSV file
-#data.to_csv('data/unique_words_by_country_expanded.csv', index=False)
+data.to_csv('data/analysed_data/unique_words_by_country_expanded.csv', index=False)
 
 # Display the merged data
 print("Data loaded, will now visualise the data")
