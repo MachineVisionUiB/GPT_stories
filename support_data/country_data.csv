@@ -1,0 +1,253 @@
+alpha-2,country_name,flag_emoji,demonym,alpha-3,region,sub-region,population
+AD,Andorra,🇦🇩,Andorran,AND,Europe,Southern Europe,80856.0
+AE,United Arab Emirates (the),🇦🇪,Emirian,ARE,Asia,Western Asia,10483751.0
+AF,Afghanistan,🇦🇫,Afghani,AFG,Asia,Southern Asia,41454761.0
+AG,Antigua and Barbuda,🇦🇬,Antiguan,ATG,Americas,Latin America and the Caribbean,93316.0
+AI,Anguilla,🇦🇮,Anguillan,AIA,Americas,Latin America and the Caribbean,
+AL,Albania,🇦🇱,Albanian,ALB,Europe,Southern Europe,2745972.0
+AM,Armenia,🇦🇲,Armenian,ARM,Asia,Western Asia,2990900.0
+AO,Angola,🇦🇴,Angolan,AGO,Africa,Sub-Saharan Africa,36749906.0
+AQ,Antarctica,🇦🇶,Antarctic,ATA,,,
+AR,Argentina,🇦🇷,Argentine,ARG,Americas,Latin America and the Caribbean,45538401.0
+AS,American Samoa,🇦🇸,Samoan,ASM,Oceania,Polynesia,47521.0
+AT,Austria,🇦🇹,Austrian,AUT,Europe,Western Europe,9131761.0
+AU,Australia,🇦🇺,Australian,AUS,Oceania,Australia and New Zealand,26658948.0
+AW,Aruba,🇦🇼,Arubian,ABW,Americas,Latin America and the Caribbean,107359.0
+AX,Åland Islands,🇦🇽,Ålandic,ALA,Europe,Northern Europe,
+AZ,Azerbaijan,🇦🇿,Azerbaijani,AZE,Asia,Western Asia,10153958.0
+BA,Bosnia and Herzegovina,🇧🇦,Bosnian,BIH,Europe,Southern Europe,3185073.0
+BB,Barbados,🇧🇧,Barbadian,BRB,Americas,Latin America and the Caribbean,282336.0
+BD,Bangladesh,🇧🇩,Bangladeshi,BGD,Asia,Southern Asia,171466990.0
+BE,Belgium,🇧🇪,Belgian,BEL,Europe,Western Europe,11787423.0
+BF,Burkina Faso,🇧🇫,Burkinabe,BFA,Africa,Sub-Saharan Africa,23025776.0
+BG,Bulgaria,🇧🇬,Bulgarian,BGR,Europe,Eastern Europe,6446596.0
+BH,Bahrain,🇧🇭,Bahrainian,BHR,Asia,Western Asia,1577059.0
+BI,Burundi,🇧🇮,Burundian,BDI,Africa,Sub-Saharan Africa,13689450.0
+BJ,Benin,🇧🇯,Beninese,BEN,Africa,Sub-Saharan Africa,14111034.0
+BL,Saint Barthélemy,🇧🇱,Barthélemois,BLM,Americas,Latin America and the Caribbean,
+BM,Bermuda,🇧🇲,Bermudan,BMU,Americas,Northern America,64698.0
+BN,Brunei Darussalam,🇧🇳,Bruneian,BRN,Asia,South-eastern Asia,458949.0
+BO,Bolivia (Plurinational State of),🇧🇴,Bolivian,BOL,Americas,Latin America and the Caribbean,12244159.0
+BQ,"Bonaire, Sint Eustatius and Saba",🇧🇶,,BES,Americas,Latin America and the Caribbean,
+BR,Brazil,🇧🇷,Brazilian,BRA,Americas,Latin America and the Caribbean,211140729.0
+BS,Bahamas (the),🇧🇸,Bahameese,BHS,Americas,Latin America and the Caribbean,399440.0
+BT,Bhutan,🇧🇹,Bhutanese,BTN,Asia,Southern Asia,786385.0
+BV,Bouvet Island,🇧🇻,,BVT,Americas,Latin America and the Caribbean,
+BW,Botswana,🇧🇼,Motswana,BWA,Africa,Sub-Saharan Africa,2480244.0
+BY,Belarus,🇧🇾,Belarusian,BLR,Europe,Eastern Europe,9178298.0
+BZ,Belize,🇧🇿,Belizean,BLZ,Americas,Latin America and the Caribbean,411106.0
+CA,Canada,🇨🇦,Canadian,CAN,Americas,Northern America,40097761.0
+CC,Cocos (Keeling) Islands (the),🇨🇨,Cocossian,CCK,Oceania,Australia and New Zealand,
+CD,Congo (the Democratic Republic of the),🇨🇩,Congolese,COD,Africa,Sub-Saharan Africa,105789731.0
+CF,Central African Republic (the),🇨🇫,Central African,CAF,Africa,Sub-Saharan Africa,5152421.0
+CG,Congo (the),🇨🇬,Congolese,COG,Africa,Sub-Saharan Africa,6182885.0
+CH,Switzerland,🇨🇭,Swiss,CHE,Europe,Western Europe,8888093.0
+CI,Côte d'Ivoire,🇨🇮,Ivorian,CIV,Africa,Sub-Saharan Africa,31165654.0
+CK,Cook Islands (the),🇨🇰,Cook Islander,COK,Oceania,Polynesia,
+CL,Chile,🇨🇱,Chilean,CHL,Americas,Latin America and the Caribbean,19658835.0
+CM,Cameroon,🇨🇲,Cameroonian,CMR,Africa,Sub-Saharan Africa,28372687.0
+CN,China,🇨🇳,Chinese,CHN,Asia,Eastern Asia,1410710000.0
+CO,Colombia,🇨🇴,Colombian,COL,Americas,Latin America and the Caribbean,52321152.0
+CR,Costa Rica,🇨🇷,Costa Rican,CRI,Americas,Latin America and the Caribbean,5105525.0
+CU,Cuba,🇨🇺,Cuban,CUB,Americas,Latin America and the Caribbean,11019931.0
+CV,Cabo Verde,🇨🇻,Cape Verdean,CPV,Africa,Sub-Saharan Africa,522331.0
+CW,Curaçao,🇨🇼,Curaçaoan,CUW,Americas,Latin America and the Caribbean,147862.0
+CX,Christmas Island,🇨🇽,Christmas Islander,CXR,Oceania,Australia and New Zealand,
+CY,Cyprus,🇨🇾,Cypriot,CYP,Asia,Western Asia,1344976.0
+CZ,Czechia,🇨🇿,Czech,CZE,Europe,Eastern Europe,10864042.0
+DE,Germany,🇩🇪,German,DEU,Europe,Western Europe,83280000.0
+DJ,Djibouti,🇩🇯,Djiboutian,DJI,Africa,Sub-Saharan Africa,1152944.0
+DK,Denmark,🇩🇰,Danish,DNK,Europe,Northern Europe,5946952.0
+DM,Dominica,🇩🇲,Dominican,DMA,Americas,Latin America and the Caribbean,66510.0
+DO,Dominican Republic (the),🇩🇴,Dominican,DOM,Americas,Latin America and the Caribbean,11331265.0
+DZ,Algeria,🇩🇿,Algerian,DZA,Africa,Northern Africa,46164219.0
+EC,Ecuador,🇪🇨,Ecuadorean,ECU,Americas,Latin America and the Caribbean,17980083.0
+EE,Estonia,🇪🇪,Estonian,EST,Europe,Northern Europe,1370286.0
+EG,Egypt,🇪🇬,Egyptian,EGY,Africa,Northern Africa,114535772.0
+EH,Western Sahara,🇪🇭,Western Saharan,ESH,Africa,Northern Africa,
+ER,Eritrea,🇪🇷,Eritrean,ERI,Africa,Sub-Saharan Africa,3470390.0
+ES,Spain,🇪🇸,Spanish,ESP,Europe,Southern Europe,48347910.0
+ET,Ethiopia,🇪🇹,Ethiopian,ETH,Africa,Sub-Saharan Africa,128691692.0
+FI,Finland,🇫🇮,Finnish,FIN,Europe,Northern Europe,5583911.0
+FJ,Fiji,🇫🇯,Fijian,FJI,Oceania,Melanesia,924145.0
+FK,Falkland Islands (the) [Malvinas],🇫🇰,Falkland Islander,FLK,Americas,Latin America and the Caribbean,
+FM,Micronesia (Federated States of),🇫🇲,Micronesian,FSM,Oceania,Micronesia,112630.0
+FO,Faroe Islands (the),🇫🇴,Faroese,FRO,Europe,Northern Europe,54482.0
+FR,France,🇫🇷,French,FRA,Europe,Western Europe,68287487.0
+GA,Gabon,🇬🇦,Gabonese,GAB,Africa,Sub-Saharan Africa,2484789.0
+GB,United Kingdom of Great Britain and Northern Ireland (the),🇬🇧,British,GBR,Europe,Northern Europe,68350000.0
+GD,Grenada,🇬🇩,Grenadian,GRD,Americas,Latin America and the Caribbean,117081.0
+GE,Georgia,🇬🇪,Georgian,GEO,Asia,Western Asia,3715483.0
+GF,French Guiana,🇬🇫,French Guianese,GUF,Americas,Latin America and the Caribbean,
+GG,Guernsey,🇬🇬,,GGY,Europe,Northern Europe,
+GH,Ghana,🇬🇭,Ghanaian,GHA,Africa,Sub-Saharan Africa,33787914.0
+GI,Gibraltar,🇬🇮,Gibraltarian,GIB,Europe,Southern Europe,38471.0
+GL,Greenland,🇬🇱,Greenlander,GRL,Americas,Northern America,56865.0
+GM,Gambia (the),🇬🇲,Gambian,GMB,Africa,Sub-Saharan Africa,2697845.0
+GN,Guinea,🇬🇳,Guinean,GIN,Africa,Sub-Saharan Africa,14405468.0
+GP,Guadeloupe,🇬🇵,Guadeloupean,GLP,Americas,Latin America and the Caribbean,
+GQ,Equatorial Guinea,🇬🇶,Equatorial Guinean,GNQ,Africa,Sub-Saharan Africa,1847549.0
+GR,Greece,🇬🇷,Greek,GRC,Europe,Southern Europe,10405588.0
+GS,South Georgia and the South Sandwich Islands,🇬🇸,,SGS,Americas,Latin America and the Caribbean,
+GT,Guatemala,🇬🇹,Guatemalan,GTM,Americas,Latin America and the Caribbean,18124838.0
+GU,Guam,🇬🇺,Guamanian,GUM,Oceania,Micronesia,166506.0
+GW,Guinea-Bissau,🇬🇼,Guinean,GNB,Africa,Sub-Saharan Africa,2153339.0
+GY,Guyana,🇬🇾,Guyanese,GUY,Americas,Latin America and the Caribbean,826353.0
+HK,Hong Kong,🇭🇰,Hong Konger,HKG,Asia,Eastern Asia,7536100.0
+HM,Heard Island and McDonald Islands,🇭🇲,,HMD,Oceania,Australia and New Zealand,
+HN,Honduras,🇭🇳,Honduran,HND,Americas,Latin America and the Caribbean,10644851.0
+HR,Croatia,🇭🇷,Croatian,HRV,Europe,Southern Europe,3859686.0
+HT,Haiti,🇭🇹,Haitian,HTI,Americas,Latin America and the Caribbean,11637398.0
+HU,Hungary,🇭🇺,Hungarian,HUN,Europe,Eastern Europe,9592186.0
+ID,Indonesia,🇮🇩,Indonesian,IDN,Asia,South-eastern Asia,281190067.0
+IE,Ireland,🇮🇪,Irish,IRL,Europe,Northern Europe,5307600.0
+IL,Israel,🇮🇱,Israeli,ISR,Asia,Western Asia,9756600.0
+IM,Isle of Man,🇮🇲,Manx,IMN,Europe,Northern Europe,84165.0
+IN,India,🇮🇳,Indian,IND,Asia,Southern Asia,1438069596.0
+IO,British Indian Ocean Territory (the),🇮🇴,,IOT,Africa,Sub-Saharan Africa,
+IQ,Iraq,🇮🇶,Iraqi,IRQ,Asia,Western Asia,45074049.0
+IR,Iran (Islamic Republic of),🇮🇷,Iranian,IRN,Asia,Southern Asia,90608707.0
+IS,Iceland,🇮🇸,Icelander,ISL,Europe,Northern Europe,393349.0
+IT,Italy,🇮🇹,Italian,ITA,Europe,Southern Europe,58993475.0
+JE,Jersey,🇯🇪,,JEY,Europe,Northern Europe,
+JM,Jamaica,🇯🇲,Jamaican,JAM,Americas,Latin America and the Caribbean,2839786.0
+JO,Jordan,🇯🇴,Jordanian,JOR,Asia,Western Asia,11439213.0
+JP,Japan,🇯🇵,Japanese,JPN,Asia,Eastern Asia,124516650.0
+KE,Kenya,🇰🇪,Kenyan,KEN,Africa,Sub-Saharan Africa,55339003.0
+KG,Kyrgyzstan,🇰🇬,Kyrgyzstani,KGZ,Asia,Central Asia,7099750.0
+KH,Cambodia,🇰🇭,Cambodian,KHM,Asia,South-eastern Asia,17423880.0
+KI,Kiribati,🇰🇮,I-Kiribati,KIR,Oceania,Micronesia,132530.0
+KM,Comoros (the),🇰🇲,Comoran,COM,Africa,Sub-Saharan Africa,850387.0
+KN,Saint Kitts and Nevis,🇰🇳,Kittian,KNA,Americas,Latin America and the Caribbean,46758.0
+KP,Korea (the Democratic People's Republic of),🇰🇵,North Korean,PRK,Asia,Eastern Asia,26418204.0
+KR,Korea (the Republic of),🇰🇷,South Korean,KOR,Asia,Eastern Asia,51712619.0
+KW,Kuwait,🇰🇼,Kuwaiti,KWT,Asia,Western Asia,4853420.0
+KY,Cayman Islands (the),🇰🇾,Caymanian,CYM,Americas,Latin America and the Caribbean,73038.0
+KZ,Kazakhstan,🇰🇿,Kazakhstani,KAZ,Asia,Central Asia,20330104.0
+LA,Lao People's Democratic Republic (the),🇱🇦,Laotian,LAO,Asia,South-eastern Asia,7664993.0
+LB,Lebanon,🇱🇧,Lebanese,LBN,Asia,Western Asia,5773493.0
+LC,Saint Lucia,🇱🇨,Saint Lucian,LCA,Americas,Latin America and the Caribbean,179285.0
+LI,Liechtenstein,🇱🇮,Liechtensteiner,LIE,Europe,Western Europe,39850.0
+LK,Sri Lanka,🇱🇰,Sri Lankan,LKA,Asia,Southern Asia,22037000.0
+LR,Liberia,🇱🇷,Liberian,LBR,Africa,Sub-Saharan Africa,5493031.0
+LS,Lesotho,🇱🇸,Mosotho,LSO,Africa,Sub-Saharan Africa,2311472.0
+LT,Lithuania,🇱🇹,Lithunian,LTU,Europe,Northern Europe,2871585.0
+LU,Luxembourg,🇱🇺,Luxembourger,LUX,Europe,Western Europe,666430.0
+LV,Latvia,🇱🇻,Latvian,LVA,Europe,Northern Europe,1877445.0
+LY,Libya,🇱🇾,Libyan,LBY,Africa,Northern Africa,7305659.0
+MA,Morocco,🇲🇦,Moroccan,MAR,Africa,Northern Africa,37712505.0
+MC,Monaco,🇲🇨,Monacan,MCO,Europe,Western Europe,38956.0
+MD,Moldova (the Republic of),🇲🇩,Moldovan,MDA,Europe,Eastern Europe,2457783.0
+ME,Montenegro,🇲🇪,Montenegrin,MNE,Europe,Southern Europe,616177.0
+MF,Saint Martin (French part),🇲🇫,,MAF,Americas,Latin America and the Caribbean,27515.0
+MG,Madagascar,🇲🇬,Malagasy,MDG,Africa,Sub-Saharan Africa,31195932.0
+MH,Marshall Islands (the),🇲🇭,Marshallese,MHL,Oceania,Micronesia,38827.0
+MK,North Macedonia,🇲🇰,Macedonian,MKD,Europe,Southern Europe,1827816.0
+ML,Mali,🇲🇱,Malian,MLI,Africa,Sub-Saharan Africa,23769127.0
+MM,Myanmar,🇲🇲,Myanmarese,MMR,Asia,South-eastern Asia,54133798.0
+MN,Mongolia,🇲🇳,Mongolian,MNG,Asia,Eastern Asia,3481145.0
+MO,Macao,🇲🇴,Macanese,MAC,Asia,Eastern Asia,678800.0
+MP,Northern Mariana Islands (the),🇲🇵,Northern Mariana Islander,MNP,Oceania,Micronesia,45143.0
+MQ,Martinique,🇲🇶,Martinican,MTQ,Americas,Latin America and the Caribbean,
+MR,Mauritania,🇲🇷,Mauritanian,MRT,Africa,Sub-Saharan Africa,5022441.0
+MS,Montserrat,🇲🇸,Montserratian,MSR,Americas,Latin America and the Caribbean,
+MT,Malta,🇲🇹,Maltese,MLT,Europe,Southern Europe,552747.0
+MU,Mauritius,🇲🇺,Mauritian,MUS,Africa,Sub-Saharan Africa,1261041.0
+MV,Maldives,🇲🇻,Maldivan,MDV,Asia,Southern Asia,525994.0
+MW,Malawi,🇲🇼,Malawian,MWI,Africa,Sub-Saharan Africa,21104482.0
+MX,Mexico,🇲🇽,Mexican,MEX,Americas,Latin America and the Caribbean,129739759.0
+MY,Malaysia,🇲🇾,Malaysian,MYS,Asia,South-eastern Asia,35126298.0
+MZ,Mozambique,🇲🇿,Mozambican,MOZ,Africa,Sub-Saharan Africa,33635160.0
+,Namibia,🇳🇦,Namibian,NAM,Africa,Sub-Saharan Africa,2963095.0
+NC,New Caledonia,🇳🇨,New Caledonian,NCL,Oceania,Melanesia,289870.0
+NE,Niger (the),🇳🇪,Nigerien,NER,Africa,Sub-Saharan Africa,26159867.0
+NF,Norfolk Island,🇳🇫,Norfolk Islander,NFK,Oceania,Australia and New Zealand,
+NG,Nigeria,🇳🇬,Nigerian,NGA,Africa,Sub-Saharan Africa,227882945.0
+NI,Nicaragua,🇳🇮,Nicaraguan,NIC,Americas,Latin America and the Caribbean,6823613.0
+NL,Netherlands (the),🇳🇱,Dutch,NLD,Europe,Western Europe,17877117.0
+NO,Norway,🇳🇴,Norwegian,NOR,Europe,Northern Europe,5519594.0
+NP,Nepal,🇳🇵,Nepalese,NPL,Asia,Southern Asia,29694614.0
+NR,Nauru,🇳🇷,Nauruan,NRU,Oceania,Micronesia,11875.0
+NU,Niue,🇳🇺,Niuean,NIU,Oceania,Polynesia,
+NZ,New Zealand,🇳🇿,New Zealander,NZL,Oceania,Australia and New Zealand,5223100.0
+OM,Oman,🇴🇲,Omani,OMN,Asia,Western Asia,5049269.0
+PA,Panama,🇵🇦,Panamanian,PAN,Americas,Latin America and the Caribbean,4458759.0
+PE,Peru,🇵🇪,Peruvian,PER,Americas,Latin America and the Caribbean,33845617.0
+PF,French Polynesia,🇵🇫,French Polynesian,PYF,Oceania,Polynesia,281118.0
+PG,Papua New Guinea,🇵🇬,Papua New Guinean,PNG,Oceania,Melanesia,10389635.0
+PH,Philippines (the),🇵🇭,Filipino,PHL,Asia,South-eastern Asia,114891199.0
+PK,Pakistan,🇵🇰,Pakistani,PAK,Asia,Southern Asia,247504495.0
+PL,Poland,🇵🇱,Polish,POL,Europe,Eastern Europe,36687353.0
+PM,Saint Pierre and Miquelon,🇵🇲,Saint-Pierrais,SPM,Americas,Northern America,
+PN,Pitcairn,🇵🇳,Pitcairn Islander,PCN,Oceania,Polynesia,
+PR,Puerto Rico,🇵🇷,Puerto Rican,PRI,Americas,Latin America and the Caribbean,3205691.0
+PS,"Palestine, State of",🇵🇸,Palestinian,PSE,Asia,Western Asia,5165775.0
+PT,Portugal,🇵🇹,Portuguese,PRT,Europe,Southern Europe,10578174.0
+PW,Palau,🇵🇼,Palauan,PLW,Oceania,Micronesia,17727.0
+PY,Paraguay,🇵🇾,Paraguayan,PRY,Americas,Latin America and the Caribbean,6844146.0
+QA,Qatar,🇶🇦,Qatari,QAT,Asia,Western Asia,2656032.0
+RE,Réunion,🇷🇪,,REU,Africa,Sub-Saharan Africa,
+RO,Romania,🇷🇴,Romanian,ROU,Europe,Eastern Europe,19059479.0
+RS,Serbia,🇷🇸,Serbian,SRB,Europe,Southern Europe,6623183.0
+RU,Russian Federation (the),🇷🇺,Russian,RUS,Europe,Eastern Europe,143826130.0
+RW,Rwanda,🇷🇼,Rwandan,RWA,Africa,Sub-Saharan Africa,13954471.0
+SA,Saudi Arabia,🇸🇦,Saudi Arabian,SAU,Asia,Western Asia,33264292.0
+SB,Solomon Islands,🇸🇧,Solomon Islander,SLB,Oceania,Melanesia,800005.0
+SC,Seychelles,🇸🇨,Seychellois,SYC,Africa,Sub-Saharan Africa,119773.0
+SD,Sudan,🇸🇩,Sudanese,SDN,Africa,Northern Africa,50042791.0
+SE,Sweden,🇸🇪,Swedish,SWE,Europe,Northern Europe,10536632.0
+SG,Singapore,🇸🇬,Singaporean,SGP,Asia,South-eastern Asia,5917648.0
+SH,"Saint Helena, Ascension and Tristan da Cunha",🇸🇭,Saint Helenian,SHN,Africa,Sub-Saharan Africa,
+SI,Slovenia,🇸🇮,Slovenian,SVN,Europe,Southern Europe,2120461.0
+SJ,Svalbard and Jan Mayen,🇸🇯,,SJM,Europe,Northern Europe,
+SK,Slovakia,🇸🇰,Slovakian,SVK,Europe,Eastern Europe,5426740.0
+SL,Sierra Leone,🇸🇱,Sierra Leonean,SLE,Africa,Sub-Saharan Africa,8460512.0
+SM,San Marino,🇸🇲,Sanmarinese,SMR,Europe,Southern Europe,33860.0
+SN,Senegal,🇸🇳,Senegalese,SEN,Africa,Sub-Saharan Africa,18077573.0
+SO,Somalia,🇸🇴,Somali,SOM,Africa,Sub-Saharan Africa,18358615.0
+SR,Suriname,🇸🇷,Surinamer,SUR,Americas,Latin America and the Caribbean,628886.0
+SS,South Sudan,🇸🇸,Sudanese,SSD,Africa,Sub-Saharan Africa,11483374.0
+ST,Sao Tome and Principe,🇸🇹,São Tomean,STP,Africa,Sub-Saharan Africa,230871.0
+SV,El Salvador,🇸🇻,Salvadorean,SLV,Americas,Latin America and the Caribbean,6309624.0
+SX,Sint Maarten (Dutch part),🇸🇽,,SXM,Americas,Latin America and the Caribbean,42749.0
+SY,Syrian Arab Republic (the),🇸🇾,Syrian,SYR,Asia,Western Asia,23594623.0
+SZ,Eswatini,🇸🇿,Swazi,SWZ,Africa,Sub-Saharan Africa,1230506.0
+TC,Turks and Caicos Islands (the),🇹🇨,Turks and Caicos Islander,TCA,Americas,Latin America and the Caribbean,46198.0
+TD,Chad,🇹🇩,Chadian,TCD,Africa,Sub-Saharan Africa,19319064.0
+TF,French Southern Territories (the),🇹🇫,,ATF,Africa,Sub-Saharan Africa,
+TG,Togo,🇹🇬,Togolese,TGO,Africa,Sub-Saharan Africa,9304337.0
+TH,Thailand,🇹🇭,Thai,THA,Asia,South-eastern Asia,71702435.0
+TJ,Tajikistan,🇹🇯,Tajikistani,TJK,Asia,Central Asia,10389799.0
+TK,Tokelau,🇹🇰,Tokelauan,TKL,Oceania,Polynesia,
+TL,Timor-Leste,🇹🇱,Timorese,TLS,Asia,South-eastern Asia,1384286.0
+TM,Turkmenistan,🇹🇲,Turkmen,TKM,Asia,Central Asia,7364438.0
+TN,Tunisia,🇹🇳,Tunisian,TUN,Africa,Northern Africa,12200431.0
+TO,Tonga,🇹🇴,Tongan,TON,Oceania,Polynesia,104597.0
+TR,Türkiye,🇹🇷,Turkish,TUR,Asia,Western Asia,85325965.0
+TT,Trinidad and Tobago,🇹🇹,Trinidadian,TTO,Americas,Latin America and the Caribbean,1367510.0
+TV,Tuvalu,🇹🇻,Tuvaluan,TUV,Oceania,Polynesia,9816.0
+TW,Taiwan (Province of China),🇹🇼,Taiwanese,TWN,,,
+TZ,"Tanzania, the United Republic of",🇹🇿,Tanzanian,TZA,Africa,Sub-Saharan Africa,66617606.0
+UA,Ukraine,🇺🇦,Ukrainian,UKR,Europe,Eastern Europe,37732836.0
+UG,Uganda,🇺🇬,Ugandan,UGA,Africa,Sub-Saharan Africa,48656601.0
+UM,United States Minor Outlying Islands (the),🇺🇲,,UMI,Oceania,Micronesia,
+US,United States of America (the),🇺🇸,American,USA,Americas,Northern America,334914895.0
+UY,Uruguay,🇺🇾,Uruguayan,URY,Americas,Latin America and the Caribbean,3388081.0
+UZ,Uzbekistan,🇺🇿,Uzbekistani,UZB,Asia,Central Asia,35652307.0
+VA,Holy See (the),🇻🇦,,VAT,Europe,Southern Europe,
+VC,Saint Vincent and the Grenadines,🇻🇨,Saint Vincentian,VCT,Americas,Latin America and the Caribbean,101323.0
+VE,Venezuela (Bolivarian Republic of),🇻🇪,Venezuelan,VEN,Americas,Latin America and the Caribbean,28300854.0
+VG,Virgin Islands (British),🇻🇬,Virgin Islander,VGB,Americas,Latin America and the Caribbean,38985.0
+VI,Virgin Islands (U.S.),🇻🇮,Virgin Islander,VIR,Americas,Latin America and the Caribbean,104917.0
+VN,Viet Nam,🇻🇳,Vietnamese,VNM,Asia,South-eastern Asia,100352192.0
+VU,Vanuatu,🇻🇺,Ni-Vanuatu,VUT,Oceania,Melanesia,320409.0
+WF,Wallis and Futuna,🇼🇫,Wallisian,WLF,Oceania,Polynesia,
+WS,Samoa,🇼🇸,Samoan,WSM,Oceania,Polynesia,216663.0
+XB,Canary Islands,,,,,,
+XC,Ceuta and Melilla,,,,,,
+XK,Kosovo,,,,,,
+YE,Yemen,🇾🇪,Yemeni,YEM,Asia,Western Asia,39390799.0
+YT,Mayotte,🇾🇹,Mahoran,MYT,Africa,Sub-Saharan Africa,
+ZA,South Africa,🇿🇦,South African,ZAF,Africa,Sub-Saharan Africa,63212384.0
+ZM,Zambia,🇿🇲,Zambian,ZMB,Africa,Sub-Saharan Africa,20723965.0
+ZW,Zimbabwe,🇿🇼,Zimbabwean,ZWE,Africa,Sub-Saharan Africa,16340822.0
