@@ -38,6 +38,9 @@ def word_frequency_with_lemmatization(dir, nlp):
         None
     """
 
+    list_of_names = get_names(dir)
+    print(f'List of names: {list_of_names}')
+
     filepath = f'../data/{dir}/{dir}_stories.csv'
     print(f'\nCalculating word frequencies for {filepath}...\n')
 
@@ -52,6 +55,9 @@ def word_frequency_with_lemmatization(dir, nlp):
     # Convert the frequency data to a DataFrame and sort by frequency
     word_freq_df = pd.DataFrame(word_freq.items(), columns=['Word', 'Frequency'])
     word_freq_df = word_freq_df.sort_values(by='Frequency', ascending=False)
+
+    # Filter out names
+    word_freq_df = word_freq_df[~word_freq_df['Word'].isin(list_of_names)]
 
     print(f"Top results for {filepath}:\n")
     print(f'{word_freq_df.head()}')  # Display top counts for each file
@@ -82,7 +88,15 @@ def main(countries, startfrom):
                 word_frequency_with_lemmatization(dir, nlp)
     
     
-
+def get_names(dir):
+    """
+    Get a list of names from a text file and lower.
+    """
+    with open(f'../data/{dir}/{dir}_names.csv', 'r') as f:
+        df = pd.read_csv(f)
+        names = df['Name'].str.lower().tolist()
+        
+    return names
 
 if __name__ == "__main__":
     main()
