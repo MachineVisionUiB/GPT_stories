@@ -57,7 +57,10 @@ def generate_stories(number_of_stories_per_topic: int, demonym: str, country_cod
     
     # word_count = input("Enter the word count: ")  # User input for word count
     word_count = 1500
-    prompt = f"Write a {word_count} word potential {demonym} story."  # Generate prompts based on topics
+    if country_code == 'XX':
+        prompt = f"Write a {word_count} word potential story."
+    else:
+        prompt = f"Write a {word_count} word potential {demonym} story."  # Generate prompts based on topics
     stories = []
 
     # Choose GPT model and temperature
