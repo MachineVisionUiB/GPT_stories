@@ -32,33 +32,38 @@ def load_api_key():
 
 def generate_stories(number_of_stories_per_topic: int, demonym: str, country_code: str, country_name: str):
     """
-    Generates plot summaries based on a list of topics using the OpenAI API.
+    Generates potential stories using the OpenAI API.
 
-    This function takes a list of topics and generates a prompt for each topic.
-    For each topic, the specified number of stories are generated 
-    and stored in a list.
+    This function takes a takes a demonym, country code and country name from a specific counrty.
+    For each country, the specified number of stories are generated 
+    and saved as a pdf and a list of tuples is returned.
 
     Parameters
     ----------
-    topics : list[str]
-        A list of topics, such as cultures or countries, used to generate story prompts.
     number_of_stories_per_topic : int
         The number of stories to generate for each topic.
+    demonym : str
+        The demonym for the country.
+    country_code : str
+        The ISO-3166-1 alpha-2 code for the country.
+    country_name : str
+        The name of the country.
 
     Returns
     -------
     list
-        A list of tuples, each containing (story_id, story, prompt, topic).
+        A list of tuples containing the story_id, story, prompt, topic, and time.
 
     Example
     -------
     >>> generate_stories(["Norwegian", "Japanese"], 2)
     """
     
-    # word_count = input("Enter the word count: ")  # User input for word count
-    word_count = 1500
-    if country_code == 'XX':
-        prompt = f"Write a {word_count} word potential story."
+    word_count = 1500 # Number of words for each story
+
+    # Generate prompts based on country
+    if country_code == 'XX':    
+        prompt = f"Write a {word_count} word potential story." 
     else:
         prompt = f"Write a {word_count} word potential {demonym} story."  # Generate prompts based on topics
     stories = []
@@ -67,6 +72,7 @@ def generate_stories(number_of_stories_per_topic: int, demonym: str, country_cod
     gpt_model = "gpt-4o-mini"
     temperature = 0.8
 
+    # Calling the OpenAI API to generate stories
     for story_iteration in range(number_of_stories_per_topic):
         print(f"\nGenerating story {story_iteration+1} of {number_of_stories_per_topic} for {country_name}...\n")
         messages = [{"role": "system", "content": ""}]  # Initial system message
@@ -85,9 +91,6 @@ def generate_stories(number_of_stories_per_topic: int, demonym: str, country_cod
         time = date.today().strftime("%d-%m-%Y")
         stories.append((story_id, country_code, country_name, demonym, story, prompt, time, gpt_model, temperature))
         
-        # Print the generated story
-        # print(f"\nVersion {story_iteration+1}: {story}")
-
     return stories
 
 
@@ -101,21 +104,19 @@ def create_dataset(stories, country_code):
     Parameters
     ----------
     stories : list of tuples
-        Each tuple contains (story_id, story, prompt, topic).
+        Each tuple contains (story_id, country_code, country_name, demonym, story, prompt, date, gpt_model, temperature).
 
-    Returns
-    -------
-    pandas.DataFrame
-        A DataFrame containing the stories, prompts, and topics.
     """
     # Create a DataFrame from the stories list
     df = pd.DataFrame(stories, columns=['Story_ID', 'ISO-3361', 'Country_Name', 'Demonym', 'Story', 'Prompt', 'Date', 'GPT_Model', 'Temperature'])
 
-    # Generate a unique filename from user input
-
+    
+    # Create a directory to store the data if it does not exist
     directory = "../data/"+country_code
     if not os.path.exists(directory):
         os.mkdir(directory)
+    
+    # Create a unique filename for the dataset based on the country code
     filepath = f"{directory}/{country_code}_stories.csv"
 
     # Save the DataFrame to a CSV file
@@ -123,22 +124,15 @@ def create_dataset(stories, country_code):
 
     print(f"Dataset saved to {filepath}\n")
 
-    return df
-
-
-
 
 def main(num_story_per_topic, demonym, country_code, country_name):
     # Load the API key when the module is imported
     load_api_key()
-    # Generate stories based on countries and save to CSV
 
+    # Generate stories based on countries and save to CSV
     stories = generate_stories(num_story_per_topic, demonym, country_code, country_name)
-    dataset = create_dataset(stories, country_code)
-    # time program execution
-    # end_time = time.time()
-    # print(f"Execution time: {end_time - start_time} seconds")
-    return dataset
+    create_dataset(stories, country_code)
+    
 
 
 
