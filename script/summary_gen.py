@@ -23,14 +23,14 @@ def load_api_key():
 
 
 
-def generate_summary(countries):
+def generate_summary(dir):
     """
-    Analyzes stories from CSV files in a directory using OpenAI's GPT model.
+    Create summaries of stories from CSV files in a directory using OpenAI's GPT model.
 
     Parameters
     ----------
     directory : str
-        Path to the directory containing CSV files with stories.
+        Name of directory containing CSV files with stories.
 
     Returns
     -------
@@ -39,7 +39,7 @@ def generate_summary(countries):
         with the original stories and identified names/places.
     """
     
-    filepath = f"../data/{countries}/{countries}_stories.csv"
+    filepath = f"../data/{dir}/{dir}_stories.csv"
     print(f'Generating plot summary from {filepath}...\n')
     
     results = []
@@ -62,9 +62,9 @@ def generate_summary(countries):
         plot_sum = main_char_response.choices[0].message.content.strip()
         results.append(plot_sum)
     df.insert(5, 'Summaries', results)
-    df["Prompt"] = "Write a 100 word plot summary of this story: [story]"
+    df["Prompt"] = "Write a 50 word plot summary of this story: [story]"
     df["Date"] = date.today().strftime("%d-%m-%Y")
-    output_filepath = f'../data/{countries}/{countries}_summaries_100.csv'
+    output_filepath = f'../data/{dir}/{dir}_summaries.csv'
     df.to_csv(output_filepath, index=False)
     return df
 
