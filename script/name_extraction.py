@@ -138,6 +138,8 @@ def main(countries, startfrom):
 
     if 'all' in countries and len(countries) == 1:
         for dir in sorted(os.listdir("../data")):
+            if dir == '.DS_Store':
+                continue
             if startfrom != "" and startfrom != dir:
                 continue
             else:

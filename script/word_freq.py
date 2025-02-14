@@ -68,6 +68,15 @@ def word_frequency_with_lemmatization(dir, nlp):
     word_freq_df.to_csv(output_file, index=False)
     print(f'\nWord frequency saved to {output_file}\n\n--------------------\n')
 
+def get_names(dir):
+    """
+    Get a list of names from a text file and lower.
+    """
+    with open(f'../data/{dir}/{dir}_names.csv', 'r') as f:
+        df = pd.read_csv(f)
+        names = df['Name'].str.lower().tolist()
+        
+    return names
 
 
 def main(countries, startfrom):
@@ -88,16 +97,7 @@ def main(countries, startfrom):
             if dir in countries:
                 word_frequency_with_lemmatization(dir, nlp)
     
-    
-def get_names(dir):
-    """
-    Get a list of names from a text file and lower.
-    """
-    with open(f'../data/{dir}/{dir}_names.csv', 'r') as f:
-        df = pd.read_csv(f)
-        names = df['Name'].str.lower().tolist()
-        
-    return names
+
 
 if __name__ == "__main__":
     main()
