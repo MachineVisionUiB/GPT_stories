@@ -21,21 +21,21 @@ def cli():
 def generate(countries, num_story_per_topic, startfrom):
     """Generate stories."""
     print("Generating stories...")
-    # Read the country codes from the CSV file
 
+    # Read the country codes from the CSV file
     with open ("country_codes.csv", 'r', encoding="utf-8") as f:
         reader = csv.reader(f)
         next(reader) 
         for line in reader:
-            if startfrom != "" and startfrom != line[0]:
+            if startfrom != "" and startfrom != line[0]: # Skip countries until startfrom country
                 continue
 
-            startfrom = ""
-            if line [3] != "":
+            startfrom = "" 
+            if line [3] != "": # Skip countries without demonym
                 country_code = line[0]
                 country_name = line[1]
                 demonym = line[3]
-                if 'all' in countries and len(countries) == 1:
+                if 'all' in countries and len(countries) == 1: 
                     generate_stories(num_story_per_topic, demonym, country_code, country_name)
 
                 elif country_code in countries:
