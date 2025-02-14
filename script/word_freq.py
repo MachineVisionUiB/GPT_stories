@@ -39,7 +39,6 @@ def word_frequency_with_lemmatization(dir, nlp):
     """
 
     list_of_names = get_names(dir)
-    print(f'List of names: {list_of_names}')
 
     filepath = f'../data/{dir}/{dir}_stories.csv'
     print(f'\nCalculating word frequencies for {filepath}...\n')
@@ -77,6 +76,8 @@ def main(countries, startfrom):
     
     if 'all' in countries and len(countries) == 1:
         for dir in sorted(os.listdir(f'../data/')):
+            if dir == '.DS_Store':
+                continue
             if startfrom != "" and startfrom != dir:
                 continue
             else:
