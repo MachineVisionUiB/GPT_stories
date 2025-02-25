@@ -50,22 +50,29 @@ def generate_summary(dir):
         print(f"•Processing story {index + 1} of {len(df)}...")
 
         prompt = f"Write a 50 word plot summary of this story:\n\n{story}"
-
+        model = "gpt-4o-mini"
         # Get main character name
         messages = messages = [{"role": "system", "content": ""}]
         messages.append({"role": "user", "content": prompt})
         main_char_response = openai.chat.completions.create(
-            model="gpt-4o-mini",
+            model=model,
             messages=messages,
             temperature=0.8,
         )
         plot_sum = main_char_response.choices[0].message.content.strip()
+        print('-------------------\n' + plot_sum + '\n-------------------\n\n')
         results.append(plot_sum)
-    df.insert(5, 'Summaries', results)
-    df["Prompt"] = "Write a 50 word plot summary of this story: [story]"
-    df["Date"] = date.today().strftime("%d-%m-%Y")
+
+    summary_df = pd.DataFrame()
+    story_ids = df.iloc[:, 0].tolist()
+    summary_df['Story_ID'] = story_ids
+    summary_df['Summaries'] = results
+    summary_df['Prompt'] = "Write a 50 word plot summary of this story: [STORY]"
+    summary_df['Model'] = model
+    summary_df['Date'] = date.today().strftime("%d-%m-%Y") 
+
     output_filepath = f'../data/{dir}/{dir}_summaries.csv'
-    df.to_csv(output_filepath, index=False)
+    summary_df.to_csv(output_filepath, index=False)
     return df
 
 
@@ -76,6 +83,8 @@ def main(countries, startfrom):
 
     if 'all' in countries and len(countries) == 1:
         for dir in sorted(os.listdir("../data")):
+            if dir == '.DS_Store':
+                continue
             if startfrom != "" and startfrom != dir:
                 continue
             else:
