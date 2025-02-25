@@ -8,6 +8,7 @@ def sentiment_analysis(directory):
     """
     Perform sentiment analysis on all CSV files in a directory and return a concatenated DataFrame.
     """
+    print(f"\n--------------------\n\nPerforming sentiment analysis on {directory}...\n\n--------------------\n")
     # dfs = []
     model_name = "bhadresh-savani/distilbert-base-uncased-emotion"
     tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -21,7 +22,7 @@ def sentiment_analysis(directory):
     df = pd.read_csv(filepath)
 
     # Extract text data from the specified columns (adjust the index if needed)
-    texts = df.iloc[:, 5].tolist()
+    texts = df.iloc[:, 1].tolist()
     story_ids = df.iloc[:, 0].tolist()
 
     # Apply sentiment analysis to the list of texts
