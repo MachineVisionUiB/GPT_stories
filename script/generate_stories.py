@@ -4,7 +4,6 @@ import pandas as pd
 from dotenv import load_dotenv
 import csv
 from datetime import date
-import time
 
 
 
@@ -112,7 +111,7 @@ def create_dataset(stories, country_code):
 
     
     # Create a directory to store the data if it does not exist
-    directory = "../data/"+country_code
+    directory = "../data2/"+country_code
     if not os.path.exists(directory):
         os.mkdir(directory)
     

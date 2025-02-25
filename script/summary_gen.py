@@ -2,8 +2,6 @@ import pandas as pd
 import openai
 import os
 from dotenv import load_dotenv
-from collections import Counter
-import re
 from datetime import date
 
 
