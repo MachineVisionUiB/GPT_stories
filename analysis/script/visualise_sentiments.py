@@ -5,26 +5,6 @@ from adjustText import adjust_text  # Prevent overlapping labels
 #note: requires installing adjustText package
 #pip install adjustText
 
-import matplotlib.pyplot as plt
-import pandas as pd
-from adjustText import adjust_text  # Prevent overlapping labels
-
-import matplotlib.pyplot as plt
-import pandas as pd
-from adjustText import adjust_text  # Prevent overlapping labels
-
-import matplotlib.pyplot as plt
-import pandas as pd
-from adjustText import adjust_text  # Prevent overlapping labels
-
-import matplotlib.pyplot as plt
-import pandas as pd
-from adjustText import adjust_text  # Prevent overlapping labels
-
-import matplotlib.pyplot as plt
-import pandas as pd
-from adjustText import adjust_text  # Prevent overlapping labels
-
 def make_boxplot():
     df = pd.read_csv("analysis/data/all_countries_sentiments.csv")
 
