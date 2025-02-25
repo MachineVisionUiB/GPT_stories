@@ -9,6 +9,7 @@ This is not yet fully functional, and the readme is under construction.
 
 ## How to use
 - Install the required libraries by running the command `pip install -r requirements.txt`.
+-- There is a chance that the versions in requirements.txt are outdated. If you have any issues installing the dependencies using this file, it can also be done manually by writing `pip install openai`, `pip install pandas` etc. You also need Spacy's English language model, which can be downloaded with `python -m spacy download en_core_web_sm`
 - Set up your OpenAI API.
 -- You need an API key from OpenAI. 
 ---If you do not already have one, create an account here https://auth0.openai.com/u/login/. When you are logged in, click your profile picture in the top right corner of the OpenAI platform homepage, and select "View API keys" from the dropdown menu. New users get some free credit; after that is used up you have to pay.
