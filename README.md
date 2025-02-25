@@ -12,7 +12,7 @@ This is not yet fully functional, and the readme is under construction.
 - Set up your OpenAI API.
 -- You need an API key from OpenAI. 
 ---If you do not already have one, create an account here https://auth0.openai.com/u/login/. When you are logged in, click your profile picture in the top right corner of the OpenAI platform homepage, and select "View API keys" from the dropdown menu. New users get some free credit; after that is used up you have to pay.
--- Paste the key in the empty text file called key.txt 
+-- Create a .env file inside the repository and input the line: OPENAI_API_KEY="YOUR_API_KEY" where YOUR_API_KEY will the key you created on OpenAIs website. (the .env file is mentioned in the .gitignore file and should not be uploaded to GitHub. If it's uploaded by mistake it will be deactivated immediately and you will have to generate a new one) 
 ---There are other options for managing your key, like using the keychain library to store it in your password manager. The important thing is to never share your key, so make sure to never push key.txt to Git or send it to anyone. You should also make sure the spending limit on your OpenAI account is set to an amount that you can afford.
 -- Run [filename]
 
