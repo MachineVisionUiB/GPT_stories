@@ -158,7 +158,7 @@ MW,Malawi,🇲🇼,Malawian,,,
 MX,Mexico,🇲🇽,Mexican,,,
 MY,Malaysia,🇲🇾,Malaysian,,,
 MZ,Mozambique,🇲🇿,Mozambican,,,Portuguese colony until 1975.
-,Namibia,🇳🇦,Namibian,,,"Formerly part of South Africa (ZA, ZAF, 710, 358)."
+NA,Namibia,🇳🇦,Namibian,,,"Formerly part of South Africa (ZA, ZAF, 710, 358)."
 NC,New Caledonia,🇳🇨,New Caledonian,New Caledonians,,
 NE,Niger (the),🇳🇪,Nigerien,,,
 NF,Norfolk Island,🇳🇫,Norfolk Islander,,,
@@ -251,3 +251,4 @@ YT,Mayotte,🇾🇹,Mahoran,,,"Separated from Comoros (KM, COM, 174, 219) i 1976
 ZA,South Africa,🇿🇦,South African,,,"Formerly part of South Africa (ZA, ZAF, 710, 359). Continues without Namibia (NA, NAM, 516, 308)."
 ZM,Zambia,🇿🇲,Zambian,,,
 ZW,Zimbabwe,🇿🇼,Zimbabwean,,,"Former Southern Rhodesia (RH, RHO, 716, 326)."
+XX,Default,,Default,,,
