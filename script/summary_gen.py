@@ -27,14 +27,13 @@ def generate_summary(dir):
 
     Parameters
     ----------
-    directory : str
+    dir : str
         Name of directory containing CSV files with stories.
 
     Returns
     -------
-    dict
-        A dictionary of DataFrames, where keys are filenames and values are DataFrames
-        with the original stories and identified names/places.
+    df
+        
     """
     
     filepath = f"../data/{dir}/{dir}_stories.csv"
@@ -47,7 +46,7 @@ def generate_summary(dir):
         story = row['Story']
         print(f"•Processing story {index + 1} of {len(df)}...")
 
-        prompt = f"Write a 50 word plot summary of this story:\n\n{story}"
+        prompt = f"In English, write a 50 word plot summary of this story:\n\n{story}"
         model = "gpt-4o-mini"
         # Get main character name
         messages = messages = [{"role": "system", "content": ""}]
@@ -65,7 +64,7 @@ def generate_summary(dir):
     story_ids = df.iloc[:, 0].tolist()
     summary_df['Story_ID'] = story_ids
     summary_df['Summaries'] = results
-    summary_df['Prompt'] = "Write a 50 word plot summary of this story: [STORY]"
+    summary_df['Prompt'] = "In English, write a 50 word plot summary of this story: [STORY]"
     summary_df['Model'] = model
     summary_df['Date'] = date.today().strftime("%d-%m-%Y") 
 
