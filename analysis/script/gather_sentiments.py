@@ -32,6 +32,21 @@ def gather_sentiment_data(base_dir, output_file):
     # merge data with country_data
     combined_df = pd.merge(combined_df, country_data, on='alpha-2', how='left')
 
+    # Change the value "United States of America (the)" to "USA"
+    # add replacements for Bolivia (Plurinational State of), United Kingdom of Great Britain and Northern Ireland (the), Korea (the Republic of), Korea (the Democratic People's Republic of)
+    combined_df['country_name'] = combined_df['country_name'].replace({
+        "United States of America (the)": "USA",
+        "Palestine, State of": "Palestine",
+        "United Kingdom of Great Britain and Northern Ireland (the)": "United Kingdom",
+        "Korea (the Republic of)": "South Korea",
+        "Korea (the Democratic People's Republic of)": "North Korea",
+        "Bolivia (Plurinational State of)": "Bolivia",
+        "Taiwan (Province of China)": "Taiwan",
+        "Russian Federation (the)": "Russia",
+        "Iran (Islamic Republic of)": "Iran",
+        "Venezuela (Bolivarian Republic of)": "Venezuela",
+    })
+
     combined_df.to_csv(output_file, index=False)
     print(f"Combined sentiment data saved to {output_file}")
 
