@@ -1,2 +1,0 @@
-story_id,sentiment,confidence,model,date
-XX_1,joy,0.94,bhadresh-savani/distilbert-base-uncased-emotion,26-02-2025
