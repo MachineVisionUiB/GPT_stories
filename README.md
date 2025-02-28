@@ -2,6 +2,8 @@
 
 By Hermann Wigers and Jill Walker Rettberg
 
+[![DOI](https://zenodo.org/badge/650551217.svg)](https://doi.org/10.5281/zenodo.14938999)
+
 ## Introduction
 This repository contains python scripts that generate stories by calling the GPT-API and for analysing them using different methods. The scripts and dataset were developed as part of the research project AI STORIES: Narrative Archetypes for Artificial Intelligence, which has received funding from the European Research Council (ERC) under the European Union’s Horizon 2020 research and innovation programme (Grant agreement No. 101142306). The project is also supported by the Center for Digital Narrative which is funded by the Research Council of Norway through its Centres of Excellence scheme, project number 332643.
 
